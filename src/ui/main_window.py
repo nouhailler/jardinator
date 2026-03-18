@@ -14,6 +14,7 @@ from .detail_dialog import DetailDialog
 from .calendar_widget import MonthCalendarWidget
 from .flow_layout import FlowLayout
 from .meteo_dialog import MeteoDialog
+from .help_dialog import HelpDialog
 from .styles import MAIN_STYLE
 
 MONTHS_FR = {
@@ -168,6 +169,18 @@ class MainWindow(QMainWindow):
         dl.clicked.connect(self._download_all)
         lay.addWidget(dl)
 
+        # Help button
+        help_btn = QPushButton("❓")
+        help_btn.setToolTip("Aide — documentation de l'application")
+        help_btn.setFixedSize(36, 36)
+        help_btn.setStyleSheet(
+            "QPushButton{background:rgba(255,255,255,0.18);color:white;border-radius:18px;"
+            "font-size:16px;font-weight:bold;border:none;}"
+            "QPushButton:hover{background:rgba(255,255,255,0.32);}"
+        )
+        help_btn.clicked.connect(self._show_help)
+        lay.addWidget(help_btn)
+
         return hdr
 
     def _make_tabs(self) -> QTabWidget:
@@ -276,6 +289,11 @@ class MainWindow(QMainWindow):
             dlg = DetailDialog(veg, self.service, self)
             dlg.exec()
             self._load_tab(self._tabs.currentIndex())
+
+    # ── help dialog ───────────────────────────────────────────────────────
+    def _show_help(self):
+        dlg = HelpDialog(self)
+        dlg.exec()
 
     # ── meteo dialog ─────────────────────────────────────────────────────
     def _toggle_meteo(self, checked: bool):
