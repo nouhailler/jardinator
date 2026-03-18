@@ -1,0 +1,1378 @@
+{
+  "Artichaut": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Asperge": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 21,
+    "germination_jours_max": 42,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Difficile",
+    "facilite_culture": "Difficile"
+  },
+  "Aubergine": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 80,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Bette": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Betterave": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Brocoli": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 70,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Carotte": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Céleri branche": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 14,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Difficile",
+    "facilite_culture": "Difficile"
+  },
+  "Céleri rave": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 14,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Difficile",
+    "facilite_culture": "Difficile"
+  },
+  "Chou blanc": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou rouge": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou frisé": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou kale": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 80,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou chinois": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 4,
+    "germination_jours_max": 8,
+    "hauteur_plants_cm": 45,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Chou-rave": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou de Bruxelles": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 90,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Chou Milan": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 55,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou pointu": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 45,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou cabus": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou palmier": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 120,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Concombre": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 200,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Cornichon": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge butternut": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge musquée": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge spaghetti": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge patidou": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courgette": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 4,
+    "germination_jours_max": 8,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Cresson": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 20,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Daikon": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Endive": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Difficile"
+  },
+  "Épinard": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Fenouil": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 80,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Fève": {
+    "profondeur_semis_cm": 5.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 100,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Flageolet": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Haricot vert": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Haricot beurre": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Haricot mungo": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Haricot azuki": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Laitue": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 25,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Laitue romaine": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 35,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Laitue batavia": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 25,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Laitue feuille de chêne": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 25,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Laitue iceberg": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Mâche": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 15,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Maïs doux": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 180,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Melon": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Mizuna": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Navet": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 35,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Oignon jaune": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Oignon rouge": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Oignon blanc": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Oignon cébette": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Pak choï": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 35,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Panais": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 80,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Patate douce": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 14,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Pâtisson": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Petit pois": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 80,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Piment": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 70,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Poireau": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Poivron": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 70,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Pomme de terre": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 70,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Pourpier": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 20,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Radis": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 3,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 20,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Radis noir": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Radis daikon": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Raifort": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 100,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Roquette": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 25,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Rutabaga": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Salsifis": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Scorsonère": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Topinambour": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 250,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Tomate": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Tomatillo": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 120,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Ail": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Échalote": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 14,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Gingembre": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 21,
+    "germination_jours_max": 42,
+    "hauteur_plants_cm": 100,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Difficile"
+  },
+  "Gombo": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Potiron": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Potimarron": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Pois chiche vert": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Pois mange-tout": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 100,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Pois cassé": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 80,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Rhubarbe": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 100,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Roquette sauvage": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Tétragone": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Tomate cerise": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Tomate prune": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Tomate noire": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Tomate jaune": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Tomate ananas": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 180,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Tomate raisin": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Tomate italienne": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Tomate verte": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Topinambour rouge": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 250,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge longue de Nice": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge delicata": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 45,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge kabocha": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge turban": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge Hubbard": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge acorn": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 45,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge buttercup": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courgette trompette": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 4,
+    "germination_jours_max": 8,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Oseille": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Persil tubéreux": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Piment doux": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 70,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Piment fort": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 70,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Quinoa feuille": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Radis pastèque": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Rave": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 35,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Souchet comestible": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Crosne du Japon": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 21,
+    "germination_jours_max": 35,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Dolique asperge": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 300,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Épinard de Malabar": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 300,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Amarante feuille": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 120,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Arroche": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Cardon": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 200,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Difficile"
+  },
+  "Chayote": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 400,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Chicorée frisée": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 35,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Chicorée scarole": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 35,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Chou pak choi": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 35,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou tatsoi": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 20,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou mizuna": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou komatsuna": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge galeuse": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge sucrine": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 45,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou vert": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 55,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou cavalier": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 100,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou sibérien": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 70,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou cabus précoce": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 45,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Chou cabus tardif": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Cerfeuil tubéreux": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Difficile",
+    "facilite_culture": "Difficile"
+  },
+  "Claytone de Cuba": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 20,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Margose": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 300,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Moutarde brune": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 80,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Okra": {
+    "profondeur_semis_cm": 2.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Oignon rocambole": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 14,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Ortie potagère": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 100,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Oseille sanguine": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Pak choi nain": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 4,
+    "germination_jours_max": 7,
+    "hauteur_plants_cm": 20,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Laitue asperge": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 100,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Haricot kilomètre": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 300,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge miniature": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge géante": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Courge verte d'Italie": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Zucchini": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 4,
+    "germination_jours_max": 8,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Wasabi": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 14,
+    "germination_jours_max": 30,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Difficile",
+    "facilite_culture": "Difficile"
+  },
+  "Catalonia": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Bardane": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 150,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Moyenne"
+  },
+  "Basilic": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 5,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Persil plat": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Ciboulette": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 10,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Aneth": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 80,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Coriandre": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Estragon": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 80,
+    "facilite_germination": "Difficile",
+    "facilite_culture": "Moyenne"
+  },
+  "Mélisse": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 70,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Menthe": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Origan": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Romarin": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 120,
+    "facilite_germination": "Difficile",
+    "facilite_culture": "Facile"
+  },
+  "Sauge": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Sarriette": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Thym": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 30,
+    "facilite_germination": "Difficile",
+    "facilite_culture": "Facile"
+  },
+  "Cerfeuil": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Bourrache": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Livèche": {
+    "profondeur_semis_cm": 0.5,
+    "germination_jours_min": 14,
+    "germination_jours_max": 28,
+    "hauteur_plants_cm": 200,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Marjolaine": {
+    "profondeur_semis_cm": 0.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 40,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Laurier sauce": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 30,
+    "germination_jours_max": 60,
+    "hauteur_plants_cm": 600,
+    "facilite_germination": "Difficile",
+    "facilite_culture": "Facile"
+  },
+  "Lentille verte": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 50,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Soja": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 5,
+    "germination_jours_max": 10,
+    "hauteur_plants_cm": 80,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Moyenne"
+  },
+  "Lupin blanc": {
+    "profondeur_semis_cm": 3.0,
+    "germination_jours_min": 7,
+    "germination_jours_max": 14,
+    "hauteur_plants_cm": 120,
+    "facilite_germination": "Facile",
+    "facilite_culture": "Facile"
+  },
+  "Câprier": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 30,
+    "germination_jours_max": 60,
+    "hauteur_plants_cm": 100,
+    "facilite_germination": "Difficile",
+    "facilite_culture": "Difficile"
+  },
+  "Carvi": {
+    "profondeur_semis_cm": 1.0,
+    "germination_jours_min": 10,
+    "germination_jours_max": 21,
+    "hauteur_plants_cm": 60,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Facile"
+  },
+  "Curcuma": {
+    "profondeur_semis_cm": null,
+    "germination_jours_min": 28,
+    "germination_jours_max": 42,
+    "hauteur_plants_cm": 100,
+    "facilite_germination": "Moyenne",
+    "facilite_culture": "Difficile"
+  }
+}

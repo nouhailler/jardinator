@@ -1,0 +1,594 @@
+{
+  "Artichaut": {
+    "favorables": ["Tagète", "Capucine", "Persil", "Fève"],
+    "defavorables": ["Pomme de terre", "Topinambour"]
+  },
+  "Asperge": {
+    "favorables": ["Tomate", "Persil", "Basilic", "Tagète"],
+    "defavorables": ["Oignon jaune", "Ail", "Pomme de terre"]
+  },
+  "Aubergine": {
+    "favorables": ["Basilic", "Poivron", "Tagète", "Haricot vert"],
+    "defavorables": ["Fenouil", "Pomme de terre"]
+  },
+  "Bette": {
+    "favorables": ["Laitue", "Oignon jaune", "Radis", "Capucine"],
+    "defavorables": ["Épinard", "Betterave"]
+  },
+  "Betterave": {
+    "favorables": ["Laitue", "Oignon jaune", "Chou blanc", "Radis"],
+    "defavorables": ["Haricot vert", "Épinard"]
+  },
+  "Brocoli": {
+    "favorables": ["Céleri branche", "Aneth", "Romarin", "Sauge", "Capucine"],
+    "defavorables": ["Tomate", "Haricot vert", "Fraise"]
+  },
+  "Carotte": {
+    "favorables": ["Poireau", "Oignon jaune", "Persil", "Romarin", "Ciboulette"],
+    "defavorables": ["Aneth", "Fenouil", "Radis"]
+  },
+  "Céleri branche": {
+    "favorables": ["Poireau", "Tomate", "Chou blanc", "Brocoli"],
+    "defavorables": ["Maïs doux", "Pomme de terre"]
+  },
+  "Céleri rave": {
+    "favorables": ["Poireau", "Tomate", "Chou blanc", "Persil"],
+    "defavorables": ["Maïs doux", "Pomme de terre"]
+  },
+  "Chou blanc": {
+    "favorables": ["Céleri branche", "Aneth", "Romarin", "Sauge", "Betterave"],
+    "defavorables": ["Tomate", "Haricot vert", "Fraise", "Fenouil"]
+  },
+  "Chou rouge": {
+    "favorables": ["Céleri branche", "Aneth", "Romarin", "Sauge"],
+    "defavorables": ["Tomate", "Haricot vert", "Fenouil"]
+  },
+  "Chou frisé": {
+    "favorables": ["Céleri branche", "Aneth", "Capucine", "Sauge"],
+    "defavorables": ["Tomate", "Haricot vert", "Fenouil"]
+  },
+  "Chou kale": {
+    "favorables": ["Aneth", "Sauge", "Capucine", "Céleri branche"],
+    "defavorables": ["Tomate", "Haricot vert", "Fenouil"]
+  },
+  "Chou chinois": {
+    "favorables": ["Aneth", "Capucine", "Sauge", "Laitue"],
+    "defavorables": ["Tomate", "Fenouil", "Haricot vert"]
+  },
+  "Chou-rave": {
+    "favorables": ["Aneth", "Sauge", "Betterave", "Laitue"],
+    "defavorables": ["Tomate", "Haricot vert", "Fenouil"]
+  },
+  "Chou de Bruxelles": {
+    "favorables": ["Céleri branche", "Aneth", "Romarin", "Sauge"],
+    "defavorables": ["Tomate", "Haricot vert", "Fenouil"]
+  },
+  "Chou Milan": {
+    "favorables": ["Céleri branche", "Aneth", "Sauge", "Capucine"],
+    "defavorables": ["Tomate", "Haricot vert", "Fenouil"]
+  },
+  "Chou pointu": {
+    "favorables": ["Céleri branche", "Aneth", "Sauge", "Capucine"],
+    "defavorables": ["Tomate", "Haricot vert", "Fenouil"]
+  },
+  "Chou cabus": {
+    "favorables": ["Céleri branche", "Aneth", "Sauge", "Romarin"],
+    "defavorables": ["Tomate", "Haricot vert", "Fenouil"]
+  },
+  "Chou palmier": {
+    "favorables": ["Aneth", "Sauge", "Capucine", "Laitue"],
+    "defavorables": ["Tomate", "Fenouil", "Haricot vert"]
+  },
+  "Concombre": {
+    "favorables": ["Haricot vert", "Maïs doux", "Capucine", "Aneth", "Radis"],
+    "defavorables": ["Pomme de terre", "Sauge", "Fenouil"]
+  },
+  "Cornichon": {
+    "favorables": ["Haricot vert", "Maïs doux", "Capucine", "Aneth"],
+    "defavorables": ["Pomme de terre", "Sauge", "Fenouil"]
+  },
+  "Courge butternut": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine", "Bourrache"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courge musquée": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine", "Bourrache"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courge spaghetti": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courge patidou": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courgette": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine", "Bourrache", "Aneth"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Cresson": {
+    "favorables": ["Laitue", "Radis", "Mâche"],
+    "defavorables": ["Fenouil"]
+  },
+  "Daikon": {
+    "favorables": ["Laitue", "Carotte", "Épinard"],
+    "defavorables": ["Fenouil", "Haricot vert"]
+  },
+  "Endive": {
+    "favorables": ["Laitue", "Mâche", "Radis"],
+    "defavorables": ["Fenouil", "Céleri branche"]
+  },
+  "Épinard": {
+    "favorables": ["Laitue", "Radis", "Fraise", "Ail"],
+    "defavorables": ["Betterave", "Bette"]
+  },
+  "Fenouil": {
+    "favorables": ["Aneth"],
+    "defavorables": ["Tomate", "Carotte", "Haricot vert", "Pois mange-tout", "Chou blanc"]
+  },
+  "Fève": {
+    "favorables": ["Artichaut", "Pomme de terre", "Chou blanc", "Laitue"],
+    "defavorables": ["Oignon jaune", "Ail", "Échalote"]
+  },
+  "Flageolet": {
+    "favorables": ["Carotte", "Laitue", "Radis", "Maïs doux"],
+    "defavorables": ["Oignon jaune", "Ail", "Fenouil"]
+  },
+  "Haricot vert": {
+    "favorables": ["Carotte", "Laitue", "Maïs doux", "Concombre", "Tagète"],
+    "defavorables": ["Oignon jaune", "Ail", "Fenouil", "Betterave"]
+  },
+  "Haricot beurre": {
+    "favorables": ["Carotte", "Laitue", "Maïs doux", "Concombre"],
+    "defavorables": ["Oignon jaune", "Ail", "Fenouil"]
+  },
+  "Haricot mungo": {
+    "favorables": ["Carotte", "Laitue", "Maïs doux"],
+    "defavorables": ["Oignon jaune", "Ail", "Fenouil"]
+  },
+  "Haricot azuki": {
+    "favorables": ["Carotte", "Laitue", "Maïs doux"],
+    "defavorables": ["Oignon jaune", "Ail", "Fenouil"]
+  },
+  "Laitue": {
+    "favorables": ["Carotte", "Radis", "Fraise", "Ciboulette", "Tagète"],
+    "defavorables": ["Céleri branche", "Persil"]
+  },
+  "Laitue romaine": {
+    "favorables": ["Carotte", "Radis", "Ciboulette", "Tagète"],
+    "defavorables": ["Céleri branche", "Fenouil"]
+  },
+  "Laitue batavia": {
+    "favorables": ["Carotte", "Radis", "Ciboulette", "Oignon jaune"],
+    "defavorables": ["Céleri branche", "Fenouil"]
+  },
+  "Laitue feuille de chêne": {
+    "favorables": ["Carotte", "Radis", "Ciboulette"],
+    "defavorables": ["Céleri branche", "Fenouil"]
+  },
+  "Laitue iceberg": {
+    "favorables": ["Carotte", "Radis", "Ciboulette"],
+    "defavorables": ["Céleri branche", "Fenouil"]
+  },
+  "Mâche": {
+    "favorables": ["Laitue", "Radis", "Épinard"],
+    "defavorables": ["Fenouil"]
+  },
+  "Maïs doux": {
+    "favorables": ["Haricot vert", "Courgette", "Courge butternut", "Concombre"],
+    "defavorables": ["Tomate", "Céleri branche"]
+  },
+  "Melon": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine", "Radis"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Mizuna": {
+    "favorables": ["Laitue", "Radis", "Mâche", "Épinard"],
+    "defavorables": ["Fenouil"]
+  },
+  "Navet": {
+    "favorables": ["Petit pois", "Laitue", "Radis"],
+    "defavorables": ["Haricot vert", "Fenouil"]
+  },
+  "Oignon jaune": {
+    "favorables": ["Carotte", "Betterave", "Tomate", "Laitue", "Tagète"],
+    "defavorables": ["Haricot vert", "Pois mange-tout", "Fève"]
+  },
+  "Oignon rouge": {
+    "favorables": ["Carotte", "Betterave", "Tomate", "Laitue"],
+    "defavorables": ["Haricot vert", "Pois mange-tout", "Fève"]
+  },
+  "Oignon blanc": {
+    "favorables": ["Carotte", "Betterave", "Tomate", "Laitue"],
+    "defavorables": ["Haricot vert", "Pois mange-tout", "Fève"]
+  },
+  "Oignon cébette": {
+    "favorables": ["Carotte", "Tomate", "Laitue"],
+    "defavorables": ["Haricot vert", "Pois mange-tout"]
+  },
+  "Pak choï": {
+    "favorables": ["Laitue", "Radis", "Aneth"],
+    "defavorables": ["Fenouil", "Tomate"]
+  },
+  "Panais": {
+    "favorables": ["Carotte", "Laitue", "Radis", "Oignon jaune"],
+    "defavorables": ["Fenouil", "Céleri branche"]
+  },
+  "Patate douce": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Courge butternut"]
+  },
+  "Pâtisson": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine", "Bourrache"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Petit pois": {
+    "favorables": ["Carotte", "Laitue", "Radis", "Navet", "Menthe"],
+    "defavorables": ["Oignon jaune", "Ail", "Échalote", "Fenouil"]
+  },
+  "Piment": {
+    "favorables": ["Basilic", "Tomate", "Tagète", "Carotte"],
+    "defavorables": ["Fenouil", "Haricot vert"]
+  },
+  "Poireau": {
+    "favorables": ["Carotte", "Céleri branche", "Laitue", "Persil"],
+    "defavorables": ["Haricot vert", "Petit pois", "Fenouil"]
+  },
+  "Poivron": {
+    "favorables": ["Basilic", "Tomate", "Tagète", "Carotte"],
+    "defavorables": ["Fenouil", "Haricot vert"]
+  },
+  "Pomme de terre": {
+    "favorables": ["Haricot vert", "Maïs doux", "Chou blanc", "Bourrache"],
+    "defavorables": ["Tomate", "Concombre", "Artichaut", "Fenouil"]
+  },
+  "Pourpier": {
+    "favorables": ["Laitue", "Radis", "Mâche"],
+    "defavorables": ["Fenouil"]
+  },
+  "Radis": {
+    "favorables": ["Laitue", "Carotte", "Épinard", "Concombre"],
+    "defavorables": ["Fenouil", "Hysope"]
+  },
+  "Radis noir": {
+    "favorables": ["Laitue", "Carotte", "Épinard"],
+    "defavorables": ["Fenouil", "Haricot vert"]
+  },
+  "Radis daikon": {
+    "favorables": ["Laitue", "Carotte", "Épinard"],
+    "defavorables": ["Fenouil", "Haricot vert"]
+  },
+  "Raifort": {
+    "favorables": ["Pomme de terre", "Chou blanc", "Tagète"],
+    "defavorables": ["Fenouil"]
+  },
+  "Roquette": {
+    "favorables": ["Laitue", "Radis", "Mâche", "Épinard"],
+    "defavorables": ["Fenouil"]
+  },
+  "Rutabaga": {
+    "favorables": ["Laitue", "Petit pois", "Radis"],
+    "defavorables": ["Fenouil", "Haricot vert"]
+  },
+  "Salsifis": {
+    "favorables": ["Carotte", "Laitue", "Radis"],
+    "defavorables": ["Fenouil"]
+  },
+  "Scorsonère": {
+    "favorables": ["Carotte", "Laitue", "Radis"],
+    "defavorables": ["Fenouil"]
+  },
+  "Topinambour": {
+    "favorables": ["Maïs doux", "Haricot vert"],
+    "defavorables": ["Artichaut", "Pomme de terre", "Fenouil"]
+  },
+  "Tomate": {
+    "favorables": ["Basilic", "Carotte", "Persil", "Bourrache", "Tagète"],
+    "defavorables": ["Fenouil", "Chou blanc", "Maïs doux", "Pomme de terre"]
+  },
+  "Tomatillo": {
+    "favorables": ["Basilic", "Carotte", "Tagète", "Bourrache"],
+    "defavorables": ["Fenouil", "Chou blanc", "Pomme de terre"]
+  },
+  "Ail": {
+    "favorables": ["Tomate", "Carotte", "Laitue", "Betterave", "Fraise"],
+    "defavorables": ["Haricot vert", "Pois mange-tout", "Fève"]
+  },
+  "Échalote": {
+    "favorables": ["Carotte", "Tomate", "Laitue", "Betterave"],
+    "defavorables": ["Haricot vert", "Pois mange-tout", "Fève"]
+  },
+  "Gingembre": {
+    "favorables": ["Basilic", "Coriandre"],
+    "defavorables": []
+  },
+  "Gombo": {
+    "favorables": ["Basilic", "Poivron", "Tagète"],
+    "defavorables": ["Fenouil"]
+  },
+  "Potiron": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine", "Bourrache"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Potimarron": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine", "Bourrache"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Pois chiche vert": {
+    "favorables": ["Carotte", "Laitue", "Maïs doux"],
+    "defavorables": ["Oignon jaune", "Ail", "Fenouil"]
+  },
+  "Pois mange-tout": {
+    "favorables": ["Carotte", "Laitue", "Radis", "Menthe"],
+    "defavorables": ["Oignon jaune", "Ail", "Échalote", "Fenouil"]
+  },
+  "Pois cassé": {
+    "favorables": ["Carotte", "Laitue", "Maïs doux"],
+    "defavorables": ["Oignon jaune", "Ail", "Fenouil"]
+  },
+  "Rhubarbe": {
+    "favorables": ["Ail", "Chou blanc", "Capucine"],
+    "defavorables": ["Fenouil", "Concombre"]
+  },
+  "Roquette sauvage": {
+    "favorables": ["Laitue", "Radis", "Mâche"],
+    "defavorables": ["Fenouil"]
+  },
+  "Tétragone": {
+    "favorables": ["Laitue", "Radis", "Carotte"],
+    "defavorables": ["Betterave", "Bette"]
+  },
+  "Tomate cerise": {
+    "favorables": ["Basilic", "Carotte", "Persil", "Bourrache", "Tagète"],
+    "defavorables": ["Fenouil", "Chou blanc", "Pomme de terre"]
+  },
+  "Tomate prune": {
+    "favorables": ["Basilic", "Carotte", "Persil", "Bourrache"],
+    "defavorables": ["Fenouil", "Chou blanc", "Pomme de terre"]
+  },
+  "Tomate noire": {
+    "favorables": ["Basilic", "Carotte", "Tagète", "Bourrache"],
+    "defavorables": ["Fenouil", "Chou blanc", "Pomme de terre"]
+  },
+  "Tomate jaune": {
+    "favorables": ["Basilic", "Carotte", "Tagète", "Bourrache"],
+    "defavorables": ["Fenouil", "Chou blanc", "Pomme de terre"]
+  },
+  "Tomate ananas": {
+    "favorables": ["Basilic", "Carotte", "Tagète", "Bourrache"],
+    "defavorables": ["Fenouil", "Chou blanc", "Pomme de terre"]
+  },
+  "Tomate raisin": {
+    "favorables": ["Basilic", "Carotte", "Persil", "Bourrache"],
+    "defavorables": ["Fenouil", "Chou blanc", "Pomme de terre"]
+  },
+  "Tomate italienne": {
+    "favorables": ["Basilic", "Carotte", "Persil", "Bourrache"],
+    "defavorables": ["Fenouil", "Chou blanc", "Pomme de terre"]
+  },
+  "Tomate verte": {
+    "favorables": ["Basilic", "Carotte", "Tagète"],
+    "defavorables": ["Fenouil", "Chou blanc", "Pomme de terre"]
+  },
+  "Topinambour rouge": {
+    "favorables": ["Maïs doux", "Haricot vert"],
+    "defavorables": ["Artichaut", "Topinambour", "Fenouil"]
+  },
+  "Courge longue de Nice": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courge delicata": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courge kabocha": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courge turban": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courge Hubbard": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courge acorn": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courge buttercup": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine", "Bourrache"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courgette trompette": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine", "Bourrache"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Oseille": {
+    "favorables": ["Laitue", "Radis", "Mâche", "Thym"],
+    "defavorables": ["Fenouil"]
+  },
+  "Persil tubéreux": {
+    "favorables": ["Tomate", "Carotte", "Laitue", "Asperge"],
+    "defavorables": ["Laitue", "Oignon jaune"]
+  },
+  "Piment doux": {
+    "favorables": ["Basilic", "Tomate", "Tagète", "Carotte"],
+    "defavorables": ["Fenouil", "Haricot vert"]
+  },
+  "Piment fort": {
+    "favorables": ["Basilic", "Tomate", "Tagète", "Carotte"],
+    "defavorables": ["Fenouil", "Haricot vert"]
+  },
+  "Quinoa feuille": {
+    "favorables": ["Laitue", "Radis", "Épinard"],
+    "defavorables": []
+  },
+  "Radis pastèque": {
+    "favorables": ["Laitue", "Carotte", "Épinard"],
+    "defavorables": ["Fenouil"]
+  },
+  "Rave": {
+    "favorables": ["Laitue", "Petit pois", "Radis"],
+    "defavorables": ["Fenouil", "Haricot vert"]
+  },
+  "Souchet comestible": {
+    "favorables": ["Laitue", "Radis"],
+    "defavorables": []
+  },
+  "Crosne du Japon": {
+    "favorables": ["Laitue", "Radis"],
+    "defavorables": []
+  },
+  "Dolique asperge": {
+    "favorables": ["Maïs doux", "Laitue", "Radis"],
+    "defavorables": ["Oignon jaune", "Ail", "Fenouil"]
+  },
+  "Épinard de Malabar": {
+    "favorables": ["Laitue", "Radis", "Maïs doux"],
+    "defavorables": ["Betterave", "Bette"]
+  },
+  "Amarante feuille": {
+    "favorables": ["Maïs doux", "Laitue", "Radis"],
+    "defavorables": []
+  },
+  "Arroche": {
+    "favorables": ["Laitue", "Radis", "Épinard"],
+    "defavorables": ["Betterave", "Bette"]
+  },
+  "Cardon": {
+    "favorables": ["Artichaut", "Tagète", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Chayote": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Chicorée frisée": {
+    "favorables": ["Laitue", "Radis", "Mâche"],
+    "defavorables": ["Fenouil", "Céleri branche"]
+  },
+  "Chicorée scarole": {
+    "favorables": ["Laitue", "Radis", "Mâche"],
+    "defavorables": ["Fenouil", "Céleri branche"]
+  },
+  "Chou pak choi": {
+    "favorables": ["Laitue", "Radis", "Aneth"],
+    "defavorables": ["Fenouil", "Tomate"]
+  },
+  "Chou tatsoi": {
+    "favorables": ["Laitue", "Radis", "Aneth"],
+    "defavorables": ["Fenouil", "Tomate"]
+  },
+  "Chou mizuna": {
+    "favorables": ["Laitue", "Radis", "Mâche"],
+    "defavorables": ["Fenouil"]
+  },
+  "Chou komatsuna": {
+    "favorables": ["Laitue", "Radis", "Aneth"],
+    "defavorables": ["Fenouil", "Tomate"]
+  },
+  "Courge galeuse": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courge sucrine": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Chou vert": {
+    "favorables": ["Céleri branche", "Aneth", "Sauge", "Capucine"],
+    "defavorables": ["Tomate", "Haricot vert", "Fenouil"]
+  },
+  "Chou cavalier": {
+    "favorables": ["Aneth", "Sauge", "Capucine", "Laitue"],
+    "defavorables": ["Tomate", "Fenouil"]
+  },
+  "Chou sibérien": {
+    "favorables": ["Aneth", "Sauge", "Capucine"],
+    "defavorables": ["Tomate", "Fenouil"]
+  },
+  "Chou cabus précoce": {
+    "favorables": ["Céleri branche", "Aneth", "Sauge", "Romarin"],
+    "defavorables": ["Tomate", "Haricot vert", "Fenouil"]
+  },
+  "Chou cabus tardif": {
+    "favorables": ["Céleri branche", "Aneth", "Sauge", "Romarin"],
+    "defavorables": ["Tomate", "Haricot vert", "Fenouil"]
+  },
+  "Cerfeuil tubéreux": {
+    "favorables": ["Carotte", "Laitue", "Radis"],
+    "defavorables": ["Fenouil"]
+  },
+  "Claytone de Cuba": {
+    "favorables": ["Laitue", "Radis", "Mâche"],
+    "defavorables": []
+  },
+  "Margose": {
+    "favorables": ["Basilic", "Maïs doux"],
+    "defavorables": []
+  },
+  "Moutarde brune": {
+    "favorables": ["Laitue", "Radis", "Carotte"],
+    "defavorables": ["Fenouil"]
+  },
+  "Okra": {
+    "favorables": ["Basilic", "Poivron", "Tagète"],
+    "defavorables": ["Fenouil"]
+  },
+  "Oignon rocambole": {
+    "favorables": ["Carotte", "Tomate", "Laitue"],
+    "defavorables": ["Haricot vert", "Pois mange-tout"]
+  },
+  "Ortie potagère": {
+    "favorables": ["Tomate", "Laitue", "Menthe"],
+    "defavorables": []
+  },
+  "Oseille sanguine": {
+    "favorables": ["Laitue", "Radis", "Thym"],
+    "defavorables": ["Fenouil"]
+  },
+  "Pak choi nain": {
+    "favorables": ["Laitue", "Radis", "Aneth"],
+    "defavorables": ["Fenouil", "Tomate"]
+  },
+  "Laitue asperge": {
+    "favorables": ["Carotte", "Radis", "Ciboulette"],
+    "defavorables": ["Céleri branche", "Fenouil"]
+  },
+  "Haricot kilomètre": {
+    "favorables": ["Maïs doux", "Laitue", "Radis"],
+    "defavorables": ["Oignon jaune", "Ail", "Fenouil"]
+  },
+  "Courge miniature": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courge géante": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Courge verte d'Italie": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine", "Bourrache"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Zucchini": {
+    "favorables": ["Maïs doux", "Haricot vert", "Capucine", "Bourrache"],
+    "defavorables": ["Pomme de terre", "Fenouil"]
+  },
+  "Wasabi": {
+    "favorables": ["Cresson"],
+    "defavorables": []
+  },
+  "Catalonia": {
+    "favorables": ["Laitue", "Radis", "Mâche"],
+    "defavorables": ["Fenouil"]
+  },
+  "Bardane": {
+    "favorables": ["Laitue", "Radis"],
+    "defavorables": ["Topinambour", "Artichaut"]
+  }
+}

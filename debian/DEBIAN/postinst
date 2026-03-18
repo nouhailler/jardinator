@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+# Mettre à jour la base de données des applications .desktop
+if command -v update-desktop-database &>/dev/null; then
+    update-desktop-database /usr/share/applications || true
+fi
+
+# Mettre à jour le cache des icônes
+if command -v gtk-update-icon-cache &>/dev/null; then
+    gtk-update-icon-cache /usr/share/pixmaps || true
+fi
+
+echo "✅  Jardinator installé avec succès !"
+echo "   Lancez l'application via le menu Applications ou avec la commande : jardinator"
+
+exit 0

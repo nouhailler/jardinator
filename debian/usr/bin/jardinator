@@ -1,0 +1,3 @@
+#!/bin/bash
+# Jardinator launcher
+exec python3 /usr/lib/jardinator/main.py "$@"
