@@ -1,320 +1,264 @@
-# 🌱 Jardinator — Calendrier du Jardinier
+<div align="center">
 
-> **Planifiez vos semis, plantations et récoltes en toute sérénité.**
-> Une application de bureau complète pour les jardiniers européens, avec plus de **173 variétés** de légumes, aromatiques, légumineuses et condimentaires.
+# 🌱 Jardinator
 
----
+### Calendrier du Jardinier — Planifiez vos semis, plantations et récoltes
 
-## 🪴 Aperçu
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
+[![Zustand](https://img.shields.io/badge/Zustand-5-orange)](https://zustand-demo.pmnd.rs)
+[![OpenRouter](https://img.shields.io/badge/IA-OpenRouter-7C3AED?logo=openai&logoColor=white)](https://openrouter.ai)
+[![Licence MIT](https://img.shields.io/badge/Licence-MIT-green)](LICENSE)
 
-Jardinator est une application de bureau écrite en **Python / PyQt6** qui centralise toutes les informations dont un jardinier a besoin :
-calendrier de culture mois par mois, températures, associations de plantes, distances de plantation, types de semis, types de sol et bien plus encore.
+**208 variétés** de légumes, aromatiques, légumineuses, céréales et condimentaires  
+Accessible depuis n'importe quel navigateur — aucune installation requise
 
----
+[🚀 Démarrer](#-démarrage-rapide) · [✨ Fonctionnalités](#-fonctionnalités) · [📦 Télécharger](https://github.com/nouhailler/jardinator/releases) · [🤝 Contribuer](#-contribuer)
 
-## 🌿 Fonctionnalités principales
-
-| 🗓️ Calendrier de culture | Semis intérieur / extérieur, plantation et récolte sur les 12 mois |
-|---|---|
-| 🔍 Recherche & filtres | Par nom, famille botanique ou groupe de plantes |
-| 🃏 Fiches détaillées | 12 sections d'information par plante |
-| 🌡️ Météo du jour | Recommandations selon la plage de température en temps réel |
-| 🖼️ Images | Téléchargement Wikimedia Commons ou import depuis votre disque |
-| 📆 Vue calendrier | Navigation mois par mois pour toutes les activités du potager |
+</div>
 
 ---
 
-## 🍀 Installation
+## ✨ Fonctionnalités
+
+<table>
+<tr>
+<td width="50%">
+
+### 🗓️ Calendrier de culture
+Visualisez sur 12 mois les semis intérieur/extérieur, plantations et récoltes pour chaque plante. Navigation mois par mois avec mise en évidence du mois en cours.
+
+</td>
+<td width="50%">
+
+### 🔍 Recherche & filtres intelligents
+Recherche en temps réel par nom, nom latin ou famille botanique. Filtres par groupe fonctionnel et famille, cumulables.
+
+</td>
+</tr>
+<tr>
+<td>
+
+### 🃏 Fiches détaillées complètes
+Chaque plante dispose d'une fiche avec 12 sections : températures, entretien, distances, associations, types de sol, sous-variétés, types de semis…
+
+</td>
+<td>
+
+### 🤖 Conseils IA intégrés
+Obtenez des conseils de culture personnalisés via **OpenRouter** (accès aux modèles gratuits). Sauvegardez les conseils et consultez-les hors-ligne.
+
+</td>
+</tr>
+<tr>
+<td>
+
+### 🖼️ Images personnalisables
+Choisissez des images depuis **Wikimedia Commons** (recherche intégrée), collez une URL personnalisée ou restaurez l'image par défaut. Tout est sauvegardé localement.
+
+</td>
+<td>
+
+### 🌡️ Météo du jardin
+Double curseur de température pour filtrer en temps réel les plantes adaptées à vos conditions du jour : zone froide, tempérée ou chaude.
+
+</td>
+</tr>
+<tr>
+<td>
+
+### 💾 Export / Import
+Exportez toutes vos personnalisations (images + conseils IA) en un fichier JSON. Importez-les sur une autre machine en un clic.
+
+</td>
+<td>
+
+### 📆 Vue calendrier mensuelle
+Naviguez mois par mois et voyez toutes les activités du potager : semis, plantations, récoltes — pour toutes vos plantes simultanément.
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🌿 Catalogue des plantes
+
+| Catégorie | Exemples | Nb |
+|-----------|---------|:--:|
+| 🥕 Légumes-racines | Carotte (4 var.), Betterave (3 var.), Navet (3 var.), Pomme de terre (4 var.), Radis (4 var.) | 40+ |
+| 🍅 Légumes-fruits | Tomate (9 var.), Poivron (4 var.), Aubergine (3 var.), Piment (3 var.), Melon (5 var.) | 35+ |
+| 🥒 Cucurbitacées | Courgette, Concombre (3 var.), Courge (14 var.), Citrouille, Pastèque | 20+ |
+| 🥬 Légumes-feuilles | Laitue (6 var.), Chou (20 var.), Épinard, Roquette, Mâche | 35+ |
+| 🌿 Aromatiques | Basilic (4 var.), Menthe, Thym, Persil, Coriandre, Aneth… | 15+ |
+| 🫘 Légumineuses | Haricot (6 var.), Petit pois, Pois mange-tout, Fève, Soja | 12+ |
+| 🌾 Céréales | Blé tendre, Blé dur, Blé noir (sarrasin), Épeautre, Petit épeautre | 5 |
+| 🌸 Autres | Asperge (3 var.), Fraise (2 var.), Artichaut, Topinambour… | 20+ |
+
+> **208 entrées** au total, chacune avec calendrier de culture, températures, associations, distances, sous-variétés et infos complémentaires.
+
+---
+
+## 🚀 Démarrage rapide
 
 ### Prérequis
 
-- Python **3.10+**
-- PyQt6
-- requests
+- [Node.js](https://nodejs.org) 18+
+- npm 9+
 
-```bash
-pip install PyQt6 requests
-```
-
-### Lancer l'application
+### Installation
 
 ```bash
 git clone https://github.com/nouhailler/jardinator.git
-cd jardinator
-python main.py
+cd jardinator/jardinator-web
+npm install
+npm run dev
 ```
 
-> Les données (base de données SQLite + images) sont stockées dans `~/.local/share/jardinator/`
-> et créées automatiquement au premier lancement.
+Ouvrez [http://localhost:5173](http://localhost:5173) dans votre navigateur.
+
+### Build de production
+
+```bash
+npm run build
+# Les fichiers sont générés dans jardinator-web/dist/
+```
+
+Servez le contenu du dossier `dist/` avec n'importe quel serveur HTTP statique (nginx, Apache, Caddy, GitHub Pages…).
 
 ---
 
-## 🌻 Interface — les onglets
+## 📦 Installation via paquet .deb (Linux)
 
-L'application est organisée autour d'une barre de navigation principale :
+Pour Debian, Ubuntu et leurs dérivés, un paquet `.deb` est disponible pour la version **Python/PyQt6** de l'application.
 
-| Onglet | Description |
-|---|---|
-| 🌿 **Tous** | L'intégralité du catalogue (173 plantes) |
-| 📅 **Mois en cours** | Plantes à semer ou planter ce mois-ci |
-| 🌸 **Printemps** | Mars · Avril · Mai |
-| ☀️ **Été** | Juin · Juillet · Août |
-| 🍂 **Automne** | Septembre · Octobre · Novembre |
-| ❄️ **Hiver** | Décembre · Janvier · Février |
-| 📆 **Calendrier** | Vue mensuelle complète de toutes les activités |
+```bash
+# Télécharger depuis la page Releases
+wget https://github.com/nouhailler/jardinator/releases/download/v2.0.0/jardinator_2.0.0_amd64.deb
 
----
+# Installer
+sudo dpkg -i jardinator_2.0.0_amd64.deb
+sudo apt-get install -f  # résoudre les dépendances si besoin
+```
 
-## 🔍 Filtres
-
-Trois outils de filtrage disponibles simultanément dans la barre de titre :
-
-- **🔍 Recherche libre** — par nom français, nom latin ou famille botanique
-- **🏷️ Groupe** — légume-feuille, légume-racine, légume-fruit, légume-bulbe, légume-tige, cucurbitacée, aromatique, légumineuse, condimentaire
-- **🌿 Famille** — Astéracées, Solanacées, Cucurbitacées, Fabacées, etc.
+➡️ [Voir la page Releases](https://github.com/nouhailler/jardinator/releases)
 
 ---
 
-## 🃏 La fiche légume
-
-Cliquez sur n'importe quelle carte pour ouvrir la fiche complète.
-Elle est divisée en **12 sections** :
-
----
-
-### 📷 En-tête
-
-| Élément | Description |
-|---|---|
-| Photo | Image de la plante adulte (Wikimedia ou personnelle) |
-| Nom scientifique | Nom latin officiel de l'espèce |
-| Badge groupe | Catégorie colorée (légume-fruit, aromatique, cucurbitacée…) |
-| Famille botanique | Famille taxonomique |
-| Image de la graine | Vignette des graines si disponible |
-| 📥 Wikimedia | Télécharge automatiquement une image libre de droits |
-| 📂 Depuis le disque | Importe une photo personnelle (JPG, PNG, WebP…) |
-
----
-
-### 📝 Description
-
-Présentation générale : caractéristiques botaniques, usages culinaires, origine géographique et particularités de culture.
-
----
-
-### 📅 Calendrier de culture
-
-Grille des **12 mois** avec 4 lignes d'activités :
-
-| Couleur | Activité |
-|---|---|
-| 🔵 Bleu | Semis **intérieur** — démarrage sous abri chauffé avant repiquage |
-| 🟠 Orange | Semis **extérieur** — semis direct en pleine terre |
-| 🟢 Vert | **Plantation** — mise en place de plants levés |
-| 🔴 Rouge | **Récolte** — fenêtre de récolte |
-
-> Le mois en cours est mis en évidence par un fond vert clair.
-
----
-
-### 🌡️ Températures
-
-Seuils thermiques indispensables pour ne pas perdre vos plants :
-
-| Indicateur | Signification |
-|---|---|
-| 🌳 Extérieur min | Température minimale tolérée à l'extérieur |
-| 🌳 Extérieur max | Au-delà, stress thermique ou montée en graine |
-| 🏠 Serre min | Minimum sous abri froid / tunnel |
-| 🏠 Serre max | Aérer obligatoirement au-dessus de ce seuil |
-
-Affichage avec code couleur : 🔵 froid (≤ 5 °C) · 🩵 frais (≤ 15 °C) · 🟢 tempéré (≤ 25 °C) · 🟠 chaud (> 25 °C)
-
----
-
-### 🚿 Soins
-
-- **💧 Besoins en eau** — Faible / Moyen / Élevé
-- **☀️ Ensoleillement** — Plein soleil · Mi-ombre · Ombre
-
----
-
-### ℹ️ Informations complémentaires
-
-| 📏 Profondeur de semis | En centimètres, ou « Surface » si la lumière est nécessaire à la germination |
-|---|---|
-| 🌡️ Germination | Fourchette de jours avant la levée des plantules |
-| 📐 Hauteur adulte | Hauteur maximale de la plante à maturité (cm) |
-| 🌱 Facilité de germination | Facile · Moyenne · Difficile |
-| 👨‍🌾 Facilité de culture | Évaluation globale jusqu'à la récolte |
-| 📅 Bisannuelle | Cycle sur deux ans (végétation + floraison/graine l'année suivante) |
-
----
-
-### 🌿 Sous-variétés et cultivars
-
-Liste des variétés sélectionnées les plus courantes.
-Chaque cultivar est affiché sous forme de badge vert — utile pour choisir la variété adaptée à votre climat ou vos goûts.
-
----
-
-### 🕳️ Type de semis
-
-Méthode(s) recommandée(s) pour semer cette plante :
-
-| Méthode | Description |
-|---|---|
-| 🕳️ En poquet | 2-3 graines par trou, puis éclaircissage — cucurbitacées, haricots |
-| ➖ En ligne | Sillon continu puis éclaircissage — carottes, radis, betteraves |
-| 🌬️ À la volée | Répartition aléatoire puis ratissage — salades, mâche, engrais verts |
-| 🫙 En surface | Graine non recouverte, lumière nécessaire — basilic, laitue |
-
-> Les méthodes actives sont affichées en vert, les inactives en gris.
-
----
-
-### 🌍 Type de sol
-
-| 🌊 Frais et bien drainé | Humidité régulière sans excès — convient à la majorité des légumes |
-|---|---|
-| 💧 Humide | Sol constamment frais — céleri, poireau, mâche |
-| 🏜️ Sec | Sol léger et ressuyé — aromatiques méditerranéens (thym, romarin) |
-
----
-
-### 🌱 Compost
-
-| Type | Exigence | Convient à |
-|---|---|---|
-| 🦠 Bactérien | Peu exigeant | Légumineuses, légumes-racines |
-| 🦠 Bactérien | Exigeant | Légumes-feuilles, légumes-fruits |
-| 🍄 Fongique | Peu exigeant | Aromatiques, vivaces |
-| 🍄 Fongique | Exigeant | Ligneux, arbustifs (mycorhizes importantes) |
-
----
-
-### 📏 Distances de plantation
-
-| ↔️ Sur le rang | Distance entre deux plants consécutifs |
-|---|---|
-| ↕️ Entre les rangs | Distance entre deux rangées — détermine la largeur des allées |
-| ✂️ Éclaircissage | Distance à laisser après éclaircissage des semis en ligne |
-
----
-
-### 🤝 Associations de plantes
-
-| ✅ Associations favorables | Voisins qui se bénéficient mutuellement (ex. Tomate + Basilic, Carotte + Poireau) |
-|---|---|
-| ❌ Associations défavorables | Voisins à éviter — compétition, inhibition ou maladies communes |
-
-> Le compagnonnage réduit les besoins en pesticides et optimise l'utilisation de l'espace.
-
----
-
-## 🌡️ La Météo du jour
-
-Cliquez sur **🌡️ Météo du jour** (barre de titre) pour ouvrir la fenêtre météo.
-Elle reste visible en permanence, en dehors de la fenêtre principale.
-
-### Comment l'utiliser
-
-1. **Réglez les deux poignées** du curseur sur la température minimale et maximale attendue dans la journée.
-2. **Choisissez le contexte** : Plein air ou Sous abri (serre, tunnel, voile).
-3. **Lisez les résultats** : les plantes sont réparties en trois zones.
-
-### Les zones de résultat
-
-| Zone | Critère | Action recommandée |
-|---|---|---|
-| 🟢 **Conditions optimales** | Températures de la journée dans la plage idéale de la plante | Mettez en place sans hésiter |
-| 🟡 **Conditions limites** | La journée est assez chaude mais la nuit reste froide (ou inverse) | Protection conseillée (voile, tunnel) |
-| 🔴 **Conditions défavorables** | Il fait trop froid toute la journée | Attendez ou gardez sous abri |
-
----
-
-## 🖼️ Gestion des images
-
-Les images sont stockées localement dans `~/.local/share/jardinator/images/`.
-
-### Téléchargement global
-
-Le bouton **📥 Télécharger les images** de la barre principale télécharge en tâche de fond les images manquantes pour toutes les plantes depuis **Wikimedia Commons**.
-Un indicateur de progression permet de suivre l'avancement et d'annuler à tout moment.
-
-### Téléchargement individuel
-
-Dans une fiche, **📥 Télécharger depuis Wikimedia** récupère uniquement les images de cette plante (photo + graine).
-
-### Import personnel
-
-**📂 Choisir une image depuis le disque** permet d'utiliser vos propres photos.
-Le fichier est copié dans le dossier de données — l'original n'est jamais modifié.
-
----
-
-## 🗂️ Structure du projet
+## 🏗️ Architecture
 
 ```
 jardinator/
 │
-├── main.py                      # Point d'entrée
+├── jardinator-web/              # 🌐 Application React (version web — recommandée)
+│   ├── src/
+│   │   ├── components/          # Composants React
+│   │   │   ├── Header.jsx       # Onglets, recherche, filtres, météo, export
+│   │   │   ├── PlantGrid.jsx    # Grille des cartes plantes
+│   │   │   ├── DetailModal.jsx  # Fiche plante complète
+│   │   │   ├── GeminiPanel.jsx  # Conseils IA (OpenRouter streaming)
+│   │   │   ├── AdvicePanel.jsx  # Lecture des conseils sauvegardés
+│   │   │   ├── ImagePicker.jsx  # Sélection d'images (Wikimedia + URL)
+│   │   │   ├── CalendarView.jsx # Vue calendrier mensuelle
+│   │   │   ├── MeteoWidget.jsx  # Filtre par température
+│   │   │   └── ExportImport.jsx # Export/import JSON des personnalisations
+│   │   ├── services/
+│   │   │   ├── vegetableService.js  # Fusion des JSONs → objets plantes
+│   │   │   ├── imageService.js      # CRUD images localStorage + Wikimedia API
+│   │   │   └── aiService.js         # OpenRouter streaming + cache modèles
+│   │   ├── store/
+│   │   │   └── useStore.js      # État global Zustand
+│   │   └── data/                # 11 fichiers JSON (données statiques)
+│   │       ├── legumes.json         # 175 légumes principaux
+│   │       ├── plantes_extra.json   # 33 aromatiques / céréales / condimentaires
+│   │       ├── associations.json    # Compagnonnage (favorables/défavorables)
+│   │       ├── distances.json       # Espacements de plantation
+│   │       ├── semis.json           # Calendriers de semis
+│   │       ├── types_semis.json     # Méthodes (poquet, ligne, volée, surface)
+│   │       ├── sol_compost.json     # Types de sol et compost
+│   │       ├── sous_varietes.json   # Cultivars et variétés
+│   │       ├── infos_complementaires.json
+│   │       ├── groupes.json
+│   │       └── plant_images.json    # URLs d'images par défaut
+│   └── package.json
 │
-├── src/
-│   ├── database.py              # Couche SQLite (CRUD pur)
-│   ├── service.py               # Logique métier + téléchargements Wikimedia
-│   └── ui/
-│       ├── main_window.py       # Fenêtre principale
-│       ├── detail_dialog.py     # Fiche légume complète
-│       ├── calendar_widget.py   # Vue calendrier mensuelle
-│       ├── vegetable_card.py    # Carte de la grille principale
-│       ├── meteo_dialog.py      # Fenêtre météo + curseur double-poignée
-│       ├── help_dialog.py       # Aide et documentation intégrée
-│       ├── flow_layout.py       # Layout en flux pour les cartes
-│       └── styles.py            # Feuilles de style globales
-│
-├── legumes.json                 # 148 légumes de base
-├── plantes_extra.json           # 25 aromatiques / légumineuses / condimentaires
-├── associations.json            # Compagnonnage favorable et défavorable
-├── distances.json               # Espacements de plantation
-├── semis.json                   # Calendriers de semis intérieur / extérieur
-├── types_semis.json             # Méthodes de semis (poquet, ligne, volée, surface)
-├── sol_compost.json             # Types de sol, compost, bisannuelle
-├── sous_varietes.json           # Cultivars et sous-variétés
-├── infos_complementaires.json   # Profondeur, germination, hauteur, difficulté
-└── groupes.json                 # Classification par groupe fonctionnel
+├── main.py                      # 🖥️ Application Python/PyQt6 (version desktop)
+├── src/                         # Sources Python
+├── debian/                      # Packaging Debian
+├── build_deb.sh                 # Script de construction du .deb
+└── *.json                       # Données partagées
 ```
 
 ---
 
-## 🌱 Données
+## 🖥️ Interface
 
-| Fichier JSON | Contenu |
-|---|---|
-| `legumes.json` | 148 légumes européens avec noms, familles, calendriers, températures |
-| `plantes_extra.json` | 25 aromatiques, légumineuses et condimentaires supplémentaires |
-| `associations.json` | Associations favorables et défavorables pour 173 plantes |
-| `distances.json` | Espacements sur le rang, entre les rangs et éclaircissage |
-| `semis.json` | Mois de semis intérieur et extérieur |
-| `types_semis.json` | Méthodes de semis applicables |
-| `sol_compost.json` | Préférences de sol, type de compost, caractère bisannuel |
-| `sous_varietes.json` | Cultivars référencés par espèce |
-| `infos_complementaires.json` | Profondeur de semis, germination, hauteur adulte, difficulté |
-| `groupes.json` | Groupe fonctionnel de chaque plante |
+### Onglets de navigation
 
-> Toutes les données sont chargées au démarrage via `UPDATE WHERE name=?`.
-> Pour corriger ou enrichir une donnée, il suffit d'éditer le fichier JSON correspondant et de relancer l'application.
+| Onglet | Description |
+|--------|-------------|
+| 🌿 **Tous** | L'intégralité du catalogue (208 plantes) |
+| 📅 **Mois en cours** | Ce qu'il faut semer ou planter ce mois-ci |
+| 🌸 **Printemps** | Mars · Avril · Mai |
+| ☀️ **Été** | Juin · Juillet · Août |
+| 🍂 **Automne** | Septembre · Octobre · Novembre |
+| ❄️ **Hiver** | Décembre · Janvier · Février |
+| 📆 **Calendrier** | Vue mensuelle de toutes les activités |
+
+### Calendrier de culture — code couleur
+
+| Couleur | Activité |
+|---------|---------|
+| 🔵 Bleu | Semis **intérieur** — démarrage sous abri chauffé |
+| 🟠 Orange | Semis **extérieur** — semis direct en pleine terre |
+| 🟢 Vert | **Plantation** — mise en place des plants |
+| 🔴 Rouge | **Récolte** — fenêtre de récolte optimale |
 
 ---
 
-## ⚙️ Détails techniques
+## 🤖 Conseils IA
 
-- **Interface** : PyQt6 (QMainWindow, QDialog, QThread, custom widgets)
-- **Base de données** : SQLite via le module standard `sqlite3`, avec migrations automatiques
-- **Images** : Wikimedia Commons API (libre de droits, User-Agent déclaré)
-- **Téléchargements** : `QThread` pour ne pas bloquer l'interface
-- **Stockage local** : `~/.local/share/jardinator/` (base + images)
-- **Pas de dépendance externe** au-delà de PyQt6 et requests
+Jardinator intègre [OpenRouter](https://openrouter.ai) pour générer des conseils de culture personnalisés.
+
+1. **Ouvrez** la fiche d'une plante
+2. **Cliquez** sur ✨ IA
+3. **Entrez** votre clé OpenRouter gratuite (`sk-or-v1-…`)  
+   *(stockée uniquement dans votre navigateur)*
+4. **Choisissez** un modèle parmi les gratuits disponibles
+5. **Sauvegardez** les conseils pour les consulter sans relancer l'IA
+
+> Les modèles gratuits ne consomment aucun crédit. La liste est récupérée dynamiquement depuis l'API OpenRouter.
+
+---
+
+## 💾 Persistance des données
+
+Toutes les personnalisations sont stockées dans le **localStorage** de votre navigateur :
+
+| Clé localStorage | Contenu |
+|-----------------|---------|
+| `jardinator_images_v2` | Images personnalisées (URL ou data-URL) |
+| `jardinator_ai_advice` | Conseils IA sauvegardés par plante |
+| `jardinator_openrouter_key` | Clé API OpenRouter |
+| `jardinator_model` | Modèle IA sélectionné |
+| `jardinator_models_cache` | Cache de la liste des modèles (1h) |
+
+Pour **sauvegarder** ou **transférer** vos données → bouton **💾 Exporter** dans la barre de navigation.
+
+---
+
+## 🔧 Stack technique
+
+| Technologie | Rôle | Version |
+|-------------|------|---------|
+| [React](https://react.dev) | Interface utilisateur | 19 |
+| [Vite](https://vitejs.dev) | Build tool & dev server | 8 |
+| [Zustand](https://zustand-demo.pmnd.rs) | État global | 5 |
+| [OpenRouter API](https://openrouter.ai/docs) | Conseils IA streaming | — |
+| [Wikimedia Commons API](https://commons.wikimedia.org) | Recherche d'images libres | — |
+| JSON statiques | Base de données plantes | — |
+
+**Aucun backend requis** — l'application est 100% front-end et peut être hébergée sur n'importe quel CDN statique (GitHub Pages, Netlify, Vercel…).
 
 ---
 
@@ -322,25 +266,38 @@ jardinator/
 
 Les contributions sont les bienvenues !
 
-1. Forkez le dépôt
-2. Créez une branche : `git checkout -b feature/ma-fonctionnalite`
-3. Commitez vos changements : `git commit -m "Ajouter ma fonctionnalité"`
-4. Pushez : `git push origin feature/ma-fonctionnalite`
-5. Ouvrez une **Pull Request**
+```bash
+# 1. Forker le dépôt, puis :
+git clone https://github.com/VOTRE_PSEUDO/jardinator.git
+cd jardinator/jardinator-web
+npm install
+npm run dev
 
-### Idées d'améliorations
+# 2. Créer une branche
+git checkout -b feature/ma-fonctionnalite
 
-- 🌍 Localisation par région / zone climatique
-- 📊 Statistiques et historique des cultures
-- 🗺️ Plan du potager interactif
-- 📱 Export PDF du calendrier annuel
-- 🌧️ Intégration d'une API météo en temps réel
+# 3. Commiter et pousser
+git commit -m "feat: description de la fonctionnalité"
+git push origin feature/ma-fonctionnalite
+
+# 4. Ouvrir une Pull Request
+```
+
+### 💡 Idées d'améliorations
+
+- 🗺️ Plan du potager interactif (placement des cultures)
+- 📊 Historique des cultures et rotations
+- 🌍 Filtrage par zone climatique (USDA / Europe)
+- 📱 Progressive Web App (installation mobile)
+- 📄 Export PDF du calendrier annuel personnalisé
+- 🌧️ Intégration API météo temps réel
 
 ---
 
 ## 📄 Licence
 
-Ce projet est distribué sous licence **MIT**.
+Distribué sous licence **MIT**. Voir [LICENSE](LICENSE) pour plus de détails.
+
 Les données botaniques et les images Wikimedia sont sous leurs licences respectives (Creative Commons).
 
 ---
@@ -349,6 +306,6 @@ Les données botaniques et les images Wikimedia sont sous leurs licences respect
 
 🌱 **Bon jardinage !** 🌱
 
-*Jardinator — cultivez avec méthode*
+*Jardinator — cultivez avec méthode, récoltez avec joie*
 
 </div>

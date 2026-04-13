@@ -1,0 +1,1244 @@
+{
+  "Artichaut": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Asperge": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Aubergine": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Bette": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Betterave": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Brocoli": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Carotte": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Céleri branche": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Céleri rave": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Chou blanc": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou rouge": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou frisé": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou kale": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou chinois": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou-rave": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou de Bruxelles": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou Milan": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou pointu": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou cabus": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou palmier": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Concombre": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Cornichon": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge butternut": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge musquée": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge spaghetti": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge patidou": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courgette": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Cresson": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": true
+  },
+  "Daikon": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Endive": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Épinard": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Fenouil": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Fève": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Flageolet": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Haricot vert": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Haricot beurre": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Haricot mungo": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Haricot azuki": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Laitue": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Laitue romaine": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Laitue batavia": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Laitue feuille de chêne": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Laitue iceberg": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Mâche": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Maïs doux": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Melon": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Mizuna": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Navet": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Oignon jaune": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Oignon rouge": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Oignon blanc": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Oignon cébette": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Pak choï": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Panais": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Patate douce": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Pâtisson": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Petit pois": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Piment": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Poireau": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Poivron": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Pomme de terre": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Pourpier": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": true
+  },
+  "Radis": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Radis noir": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Radis daikon": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Raifort": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Roquette": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Rutabaga": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Salsifis": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Scorsonère": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Topinambour": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Tomate": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Tomatillo": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Ail": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Échalote": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Gingembre": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Gombo": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Potiron": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Potimarron": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Pois chiche vert": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Pois mange-tout": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Pois cassé": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Rhubarbe": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Roquette sauvage": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Tétragone": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Tomate cerise": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Tomate prune": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Tomate noire": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Tomate jaune": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Tomate ananas": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Tomate raisin": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Tomate italienne": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Tomate verte": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Topinambour rouge": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge longue de Nice": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge delicata": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge kabocha": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge turban": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge Hubbard": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge acorn": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge buttercup": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courgette trompette": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Oseille": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Persil tubéreux": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Piment doux": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Piment fort": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Quinoa feuille": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Radis pastèque": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Rave": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Souchet comestible": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Crosne du Japon": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Dolique asperge": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Épinard de Malabar": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Amarante feuille": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": true
+  },
+  "Arroche": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Cardon": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Chayote": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Chicorée frisée": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chicorée scarole": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou pak choi": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou tatsoi": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou mizuna": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Chou komatsuna": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Courge galeuse": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge sucrine": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Chou vert": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou cavalier": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou sibérien": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou cabus précoce": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Chou cabus tardif": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Cerfeuil tubéreux": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Claytone de Cuba": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": true
+  },
+  "Margose": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Moutarde brune": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Okra": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Oignon rocambole": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Ortie potagère": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": true
+  },
+  "Oseille sanguine": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Pak choi nain": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Laitue asperge": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Haricot kilomètre": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Courge miniature": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge géante": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Courge verte d'Italie": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Zucchini": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Wasabi": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Catalonia": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Bardane": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Basilic": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": true
+  },
+  "Persil plat": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Ciboulette": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Aneth": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": true
+  },
+  "Coriandre": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Estragon": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Mélisse": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Menthe": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Origan": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Romarin": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Sauge": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Sarriette": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": true
+  },
+  "Thym": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": true
+  },
+  "Cerfeuil": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": true
+  },
+  "Bourrache": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Livèche": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": true
+  },
+  "Marjolaine": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": true
+  },
+  "Laurier sauce": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Lentille verte": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Soja": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Lupin blanc": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Câprier": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Carvi": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Curcuma": {
+    "poquet": false,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Melon Charentais": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Melon Cantaloup": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Melon Galia": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Melon Honeydew": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Haricot grimpant": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Fraise": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Citrouille": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Asperge blanche": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Asperge violette": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Betterave jaune": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Betterave Chioggia": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Aubergine blanche": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Aubergine longue": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Carotte Nantaise": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Carotte Chantenay": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Carotte violette": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Concombre mini": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Concombre de serre": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Fraise remontante": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Navet boule d'or": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Navet de Milan": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Poivron rouge": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Poivron jaune": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Poivron corne": {
+    "poquet": true,
+    "ligne": false,
+    "volee": false,
+    "surface": false
+  },
+  "Pomme de terre primeur": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Pomme de terre à chair ferme": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Pomme de terre vitelotte": {
+    "poquet": true,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Basilic thaï": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Basilic pourpre": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Basilic citron": {
+    "poquet": false,
+    "ligne": true,
+    "volee": false,
+    "surface": false
+  },
+  "Blé tendre": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Blé dur": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Blé noir": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Épeautre": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  },
+  "Petit épeautre": {
+    "poquet": false,
+    "ligne": true,
+    "volee": true,
+    "surface": false
+  }
+}

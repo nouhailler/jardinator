@@ -1,0 +1,1512 @@
+{
+  "Artichaut": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Asperge": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Aubergine": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Bette": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Betterave": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Brocoli": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Carotte": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Céleri branche": {
+    "type_sol": [
+      "frais et bien drainé",
+      "humide"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Céleri rave": {
+    "type_sol": [
+      "frais et bien drainé",
+      "humide"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Chou blanc": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Chou rouge": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Chou frisé": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Chou kale": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou chinois": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou-rave": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou de Bruxelles": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou Milan": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou pointu": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou cabus": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Chou palmier": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Concombre": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Cornichon": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge butternut": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge musquée": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge spaghetti": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge patidou": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courgette": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Cresson": {
+    "type_sol": [
+      "humide"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Daikon": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Endive": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Épinard": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Fenouil": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Fève": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Flageolet": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Haricot vert": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Haricot beurre": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Haricot mungo": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Haricot azuki": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Laitue": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Laitue romaine": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Laitue batavia": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Laitue feuille de chêne": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Laitue iceberg": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Mâche": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Maïs doux": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Melon": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Mizuna": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Navet": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Oignon jaune": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Oignon rouge": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Oignon blanc": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Oignon cébette": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Pak choï": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Panais": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Patate douce": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Pâtisson": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Petit pois": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Piment": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Poireau": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Poivron": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Pomme de terre": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Pourpier": {
+    "type_sol": [
+      "sec",
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Radis": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Radis noir": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Radis daikon": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Raifort": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Roquette": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Rutabaga": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Salsifis": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Scorsonère": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Topinambour": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Tomate": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Tomatillo": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Ail": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Échalote": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Gingembre": {
+    "type_sol": [
+      "frais et bien drainé",
+      "humide"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Gombo": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Potiron": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Potimarron": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Pois chiche vert": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Pois mange-tout": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Pois cassé": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Rhubarbe": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Roquette sauvage": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Tétragone": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Tomate cerise": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Tomate prune": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Tomate noire": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Tomate jaune": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Tomate ananas": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Tomate raisin": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Tomate italienne": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Tomate verte": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Topinambour rouge": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Courge longue de Nice": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge delicata": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge kabocha": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge turban": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge Hubbard": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge acorn": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge buttercup": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courgette trompette": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Oseille": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Persil tubéreux": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Piment doux": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Piment fort": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Quinoa feuille": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Radis pastèque": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Rave": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Souchet comestible": {
+    "type_sol": [
+      "frais et bien drainé",
+      "humide"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Crosne du Japon": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Dolique asperge": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Épinard de Malabar": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Amarante feuille": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Arroche": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Cardon": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chayote": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chicorée frisée": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chicorée scarole": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou pak choi": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou tatsoi": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou mizuna": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou komatsuna": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge galeuse": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge sucrine": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou vert": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou cavalier": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou sibérien": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Chou cabus précoce": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Chou cabus tardif": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Cerfeuil tubéreux": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Claytone de Cuba": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Margose": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Moutarde brune": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Okra": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Oignon rocambole": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Ortie potagère": {
+    "type_sol": [
+      "frais et bien drainé",
+      "humide"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Oseille sanguine": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Pak choi nain": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Laitue asperge": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Haricot kilomètre": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge miniature": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge géante": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Courge verte d'Italie": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Zucchini": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Wasabi": {
+    "type_sol": [
+      "frais et bien drainé",
+      "humide"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Catalonia": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Bardane": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Basilic": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Persil plat": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Ciboulette": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Aneth": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Coriandre": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Estragon": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Mélisse": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Menthe": {
+    "type_sol": [
+      "frais et bien drainé",
+      "humide"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Origan": {
+    "type_sol": [
+      "sec",
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Romarin": {
+    "type_sol": [
+      "sec",
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Sauge": {
+    "type_sol": [
+      "sec",
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Sarriette": {
+    "type_sol": [
+      "sec",
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Thym": {
+    "type_sol": [
+      "sec",
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Cerfeuil": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Bourrache": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Livèche": {
+    "type_sol": [
+      "frais et bien drainé",
+      "humide"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Marjolaine": {
+    "type_sol": [
+      "sec",
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Laurier sauce": {
+    "type_sol": [
+      "sec",
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant fongique",
+    "bisannuelle": false
+  },
+  "Lentille verte": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Soja": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Lupin blanc": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Câprier": {
+    "type_sol": [
+      "sec"
+    ],
+    "compost_type": "exigeant fongique",
+    "bisannuelle": false
+  },
+  "Carvi": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Curcuma": {
+    "type_sol": [
+      "frais et bien drainé",
+      "humide"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Melon Charentais": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Melon Cantaloup": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Melon Galia": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Melon Honeydew": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Haricot grimpant": {
+    "type_sol": [
+      "léger",
+      "bien drainé"
+    ],
+    "compost_type": "peu exigeant",
+    "bisannuelle": false
+  },
+  "Fraise": {
+    "type_sol": [
+      "léger",
+      "humifère",
+      "bien drainé"
+    ],
+    "compost_type": "modéré fongique",
+    "bisannuelle": false
+  },
+  "Citrouille": {
+    "type_sol": [
+      "riche",
+      "humifère"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Asperge blanche": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Asperge violette": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sec"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Betterave jaune": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Betterave Chioggia": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Aubergine blanche": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Aubergine longue": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Carotte Nantaise": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sableux"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Carotte Chantenay": {
+    "type_sol": [
+      "argileux",
+      "lourd",
+      "bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Carotte violette": {
+    "type_sol": [
+      "frais et bien drainé",
+      "sableux"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Concombre mini": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Concombre de serre": {
+    "type_sol": [
+      "frais et bien drainé",
+      "riche"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Fraise remontante": {
+    "type_sol": [
+      "léger",
+      "humifère",
+      "bien drainé"
+    ],
+    "compost_type": "modéré fongique",
+    "bisannuelle": false
+  },
+  "Navet boule d'or": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Navet de Milan": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": true
+  },
+  "Poivron rouge": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Poivron jaune": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Poivron corne": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Pomme de terre primeur": {
+    "type_sol": [
+      "frais et bien drainé",
+      "meuble"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Pomme de terre à chair ferme": {
+    "type_sol": [
+      "frais et bien drainé",
+      "meuble"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Pomme de terre vitelotte": {
+    "type_sol": [
+      "frais et bien drainé",
+      "meuble"
+    ],
+    "compost_type": "exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Basilic thaï": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Basilic pourpre": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Basilic citron": {
+    "type_sol": [
+      "frais et bien drainé"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Blé tendre": {
+    "type_sol": [
+      "frais et bien drainé",
+      "argileux"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Blé dur": {
+    "type_sol": [
+      "frais et bien drainé",
+      "calcaire"
+    ],
+    "compost_type": "peu exigeant bactérien",
+    "bisannuelle": false
+  },
+  "Blé noir": {
+    "type_sol": [
+      "acide",
+      "pauvre",
+      "bien drainé"
+    ],
+    "compost_type": "peu exigeant",
+    "bisannuelle": false
+  },
+  "Épeautre": {
+    "type_sol": [
+      "pauvre",
+      "bien drainé",
+      "calcaire"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  },
+  "Petit épeautre": {
+    "type_sol": [
+      "pauvre",
+      "sec",
+      "calcaire"
+    ],
+    "compost_type": "peu exigeant fongique",
+    "bisannuelle": false
+  }
+}

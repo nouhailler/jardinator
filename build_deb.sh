@@ -2,7 +2,7 @@
 # build_deb.sh — Construit le paquet .deb de Jardinator
 set -e
 
-VERSION="1.0.0"
+VERSION="2.0.0"
 ARCH="amd64"
 PKG_NAME="jardinator_${VERSION}_${ARCH}"
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
