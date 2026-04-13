@@ -125,7 +125,7 @@ export function getPlantById(id) {
   return getAllPlants().find(p => p.id === id) || null;
 }
 
-export function filterPlants({ plants = null, search = '', groupe = '', family = '', tab = 'all' }) {
+export function filterPlants({ plants = null, search = '', groupe = '', family = '', tab = 'all', climateZone = '' }) {
   let list = plants || getAllPlants();
 
   // Tab filter
@@ -146,6 +146,9 @@ export function filterPlants({ plants = null, search = '', groupe = '', family =
 
   // Family filter
   if (family) list = list.filter(p => p.family === family);
+
+  // Climate zone filter
+  if (climateZone) list = list.filter(p => plantCompatibleWithRegion(p, climateZone));
 
   // Search filter
   if (search.trim()) {
@@ -168,6 +171,39 @@ export function getByMonth(month) {
     planting: plants.filter(p => p.planting.includes(month)),
     harvest: plants.filter(p => p.harvest.includes(month)),
   };
+}
+
+// ─── Climate Zones ────────────────────────────────────────────────────────────
+
+// European regions with characteristic minimum winter temperatures (°C)
+export const EU_REGIONS = [
+  { id: 'nordique',       label: '🧊 Nordique / Montagne',   minTemp: -25, description: 'Alpes, Pyrénées >1000m, Scandinavie' },
+  { id: 'continental',   label: '❄️ Continental',            minTemp: -20, description: 'Alsace, Lorraine, Europe centrale' },
+  { id: 'semi_cont',     label: '🌨️ Semi-continental',       minTemp: -15, description: 'Île-de-France, Centre, Bourgogne' },
+  { id: 'atlantique',    label: '🌧️ Atlantique',             minTemp: -10, description: 'Bretagne, Normandie, Pays de Loire' },
+  { id: 'sud_ouest',     label: '🌤️ Sud-Ouest',              minTemp:  -5, description: 'Aquitaine, Midi-Pyrénées, Limousin' },
+  { id: 'mediterraneen', label: '☀️ Méditerranéen',          minTemp:   0, description: 'PACA, Languedoc, Côte d\'Azur, Corse' },
+];
+
+// USDA Hardiness Zones relevant for Europe
+export const USDA_ZONES = [
+  { id: '5', label: 'Zone USDA 5', minTemp: -29, maxTemp: -23 },
+  { id: '6', label: 'Zone USDA 6', minTemp: -23, maxTemp: -18 },
+  { id: '7', label: 'Zone USDA 7', minTemp: -18, maxTemp: -12 },
+  { id: '8', label: 'Zone USDA 8', minTemp: -12, maxTemp:  -7 },
+  { id: '9', label: 'Zone USDA 9', minTemp:  -7, maxTemp:  -1 },
+  { id: '10',label: 'Zone USDA 10',minTemp:  -1, maxTemp:   4 },
+];
+
+/** Returns true if this plant can be grown (even under glass) in the given EU region */
+export function plantCompatibleWithRegion(plant, regionId) {
+  const region = EU_REGIONS.find(r => r.id === regionId);
+  if (!region) return true;
+  // Plant is compatible if its outdoor minimum is above the region's coldest temperature
+  // OR if its greenhouse minimum is survivable
+  if (plant.tempOutdoorMin !== null && plant.tempOutdoorMin <= region.minTemp + 10) return true;
+  if (plant.tempGreenhouseMin !== null && plant.tempGreenhouseMin <= region.minTemp + 15) return true;
+  return false;
 }
 
 export const GROUPE_COLORS = {
