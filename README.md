@@ -1,19 +1,23 @@
 <div align="center">
 
+<img src="debian/usr/share/pixmaps/jardinator.svg" width="96" height="96" alt="Jardinator"/>
+
 # 🌱 Jardinator
 
 ### Calendrier du Jardinier — Planifiez vos semis, plantations et récoltes
 
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev)
-[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
-[![Zustand](https://img.shields.io/badge/Zustand-5-orange)](https://zustand-demo.pmnd.rs)
-[![OpenRouter](https://img.shields.io/badge/IA-OpenRouter-7C3AED?logo=openai&logoColor=white)](https://openrouter.ai)
-[![Licence MIT](https://img.shields.io/badge/Licence-MIT-green)](LICENSE)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white&style=flat-square)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white&style=flat-square)](https://vitejs.dev)
+[![Zustand](https://img.shields.io/badge/Zustand-5-FF6B35?style=flat-square)](https://zustand-demo.pmnd.rs)
+[![OpenRouter](https://img.shields.io/badge/IA-OpenRouter-7C3AED?logo=openai&logoColor=white&style=flat-square)](https://openrouter.ai)
+[![Open-Meteo](https://img.shields.io/badge/Météo-Open--Meteo-0EA5E9?logo=cloudflare&logoColor=white&style=flat-square)](https://open-meteo.com)
+[![Licence MIT](https://img.shields.io/badge/Licence-MIT-22C55E?style=flat-square)](LICENSE)
+[![Releases](https://img.shields.io/github/v/release/nouhailler/jardinator?style=flat-square&color=2E7D32&label=Release)](https://github.com/nouhailler/jardinator/releases)
 
 **208 variétés** de légumes, aromatiques, légumineuses, céréales et condimentaires  
 Accessible depuis n'importe quel navigateur — aucune installation requise
 
-[🚀 Démarrer](#-démarrage-rapide) · [✨ Fonctionnalités](#-fonctionnalités) · [📦 Télécharger](https://github.com/nouhailler/jardinator/releases) · [🤝 Contribuer](#-contribuer)
+[🚀 Démarrer](#-démarrage-rapide) · [✨ Fonctionnalités](#-fonctionnalités) · [📦 Télécharger le .deb](https://github.com/nouhailler/jardinator/releases/latest) · [🤝 Contribuer](#-contribuer)
 
 </div>
 
@@ -26,13 +30,13 @@ Accessible depuis n'importe quel navigateur — aucune installation requise
 <td width="50%">
 
 ### 🗓️ Calendrier de culture
-Visualisez sur 12 mois les semis intérieur/extérieur, plantations et récoltes pour chaque plante. Navigation mois par mois avec mise en évidence du mois en cours.
+Visualisez sur 12 mois les semis intérieur/extérieur, plantations et récoltes. Navigation mois par mois avec mise en évidence du mois en cours.
 
 </td>
 <td width="50%">
 
 ### 🔍 Recherche & filtres intelligents
-Recherche en temps réel par nom, nom latin ou famille botanique. Filtres par groupe fonctionnel et famille, cumulables.
+Recherche en temps réel par nom, nom latin ou famille. Filtres groupe, famille et **zone climatique européenne** (6 régions), cumulables.
 
 </td>
 </tr>
@@ -40,13 +44,41 @@ Recherche en temps réel par nom, nom latin ou famille botanique. Filtres par gr
 <td>
 
 ### 🃏 Fiches détaillées complètes
-Chaque plante dispose d'une fiche avec 12 sections : températures, entretien, distances, associations, types de sol, sous-variétés, types de semis…
+Chaque plante dispose d'une fiche avec **12 sections** : températures, entretien, distances, associations, types de sol, sous-variétés, types de semis…
 
 </td>
 <td>
 
 ### 🤖 Conseils IA intégrés
-Obtenez des conseils de culture personnalisés via **OpenRouter** (accès aux modèles gratuits). Sauvegardez les conseils et consultez-les hors-ligne.
+Conseils de culture personnalisés via **OpenRouter** (modèles gratuits). Streaming en temps réel, sauvegarde locale, consultation hors-ligne.
+
+</td>
+</tr>
+<tr>
+<td>
+
+### 🪴 Plan du potager interactif
+Créez des **planches de culture** avec dimensions personnalisées. Interface **drag & drop** pour placer vos plants. Avertissements d'associations défavorables en temps réel.
+
+</td>
+<td>
+
+### 📅 Historique des cultures & rotations
+Enregistrement automatique par cellule et par année. **Alertes de rotation** : détection des mauvaises successions. Notes personnalisées par culture.
+
+</td>
+</tr>
+<tr>
+<td>
+
+### 🌡️ Météo en temps réel
+Connecté à **Open-Meteo** (sans clé API). Température actuelle + prévisions 7 jours. Double curseur synchronisé automatiquement pour filtrer les plantes adaptées.
+
+</td>
+<td>
+
+### 🌍 Filtrage par zone climatique
+**6 régions européennes** : Nordique, Continental, Semi-continental, Atlantique, Sud-Ouest, Méditerranéen. Compatible avec tous les autres filtres.
 
 </td>
 </tr>
@@ -54,27 +86,13 @@ Obtenez des conseils de culture personnalisés via **OpenRouter** (accès aux mo
 <td>
 
 ### 🖼️ Images personnalisables
-Choisissez des images depuis **Wikimedia Commons** (recherche intégrée), collez une URL personnalisée ou restaurez l'image par défaut. Tout est sauvegardé localement.
+Recherche intégrée **Wikimedia Commons**, URL personnalisée ou image par défaut. Tout est sauvegardé dans votre navigateur.
 
 </td>
 <td>
 
-### 🌡️ Météo du jardin
-Double curseur de température pour filtrer en temps réel les plantes adaptées à vos conditions du jour : zone froide, tempérée ou chaude.
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 💾 Export / Import
-Exportez toutes vos personnalisations (images + conseils IA) en un fichier JSON. Importez-les sur une autre machine en un clic.
-
-</td>
-<td>
-
-### 📆 Vue calendrier mensuelle
-Naviguez mois par mois et voyez toutes les activités du potager : semis, plantations, récoltes — pour toutes vos plantes simultanément.
+### 📄 Export PDF du calendrier
+Calendrier annuel complet en tableau **A4 paysage**. Export de la vue filtrée ou de toutes les plantes.
 
 </td>
 </tr>
@@ -86,62 +104,64 @@ Naviguez mois par mois et voyez toutes les activités du potager : semis, planta
 
 | Catégorie | Exemples | Nb |
 |-----------|---------|:--:|
-| 🥕 Légumes-racines | Carotte (4 var.), Betterave (3 var.), Navet (3 var.), Pomme de terre (4 var.), Radis (4 var.) | 40+ |
-| 🍅 Légumes-fruits | Tomate (9 var.), Poivron (4 var.), Aubergine (3 var.), Piment (3 var.), Melon (5 var.) | 35+ |
-| 🥒 Cucurbitacées | Courgette, Concombre (3 var.), Courge (14 var.), Citrouille, Pastèque | 20+ |
-| 🥬 Légumes-feuilles | Laitue (6 var.), Chou (20 var.), Épinard, Roquette, Mâche | 35+ |
-| 🌿 Aromatiques | Basilic (4 var.), Menthe, Thym, Persil, Coriandre, Aneth… | 15+ |
-| 🫘 Légumineuses | Haricot (6 var.), Petit pois, Pois mange-tout, Fève, Soja | 12+ |
-| 🌾 Céréales | Blé tendre, Blé dur, Blé noir (sarrasin), Épeautre, Petit épeautre | 5 |
-| 🌸 Autres | Asperge (3 var.), Fraise (2 var.), Artichaut, Topinambour… | 20+ |
+| 🥕 **Légumes-racines** | Carotte (4 var.), Betterave (3 var.), Navet (3 var.), Radis (4 var.) | 40+ |
+| 🍅 **Légumes-fruits** | Tomate (9 var.), Poivron (4 var.), Aubergine (3 var.), Melon (5 var.) | 35+ |
+| 🥒 **Cucurbitacées** | Courgette, Concombre (3 var.), Courge (14 var.), Citrouille, Pastèque | 20+ |
+| 🥬 **Légumes-feuilles** | Laitue (6 var.), Chou (20 var.), Épinard, Roquette, Mâche | 35+ |
+| 🌿 **Aromatiques** | Basilic (4 var.), Menthe, Thym, Persil, Coriandre, Aneth | 15+ |
+| 🫘 **Légumineuses** | Haricot (6 var.), Petit pois, Pois mange-tout, Fève, Soja | 12+ |
+| 🌾 **Céréales** | Blé tendre, Blé dur, Sarrasin, Épeautre, Petit épeautre | 5 |
+| 🌸 **Autres** | Asperge (3 var.), Fraise (2 var.), Artichaut, Topinambour | 20+ |
 
-> **208 entrées** au total, chacune avec calendrier de culture, températures, associations, distances, sous-variétés et infos complémentaires.
+> **208 entrées** au total — calendrier, températures, associations, distances, sous-variétés, infos complémentaires.
 
 ---
 
 ## 🚀 Démarrage rapide
 
-### Prérequis
+### Version web (recommandée)
 
-- [Node.js](https://nodejs.org) 18+
-- npm 9+
-
-### Installation
+**Prérequis** : [Node.js](https://nodejs.org) 18+ · npm 9+
 
 ```bash
 git clone https://github.com/nouhailler/jardinator.git
 cd jardinator/jardinator-web
 npm install
 npm run dev
+# Ouvrez http://localhost:5173
 ```
-
-Ouvrez [http://localhost:5173](http://localhost:5173) dans votre navigateur.
 
 ### Build de production
 
 ```bash
 npm run build
-# Les fichiers sont générés dans jardinator-web/dist/
+# Fichiers générés dans jardinator-web/dist/
+# Servez avec nginx, Apache, GitHub Pages, Netlify…
 ```
-
-Servez le contenu du dossier `dist/` avec n'importe quel serveur HTTP statique (nginx, Apache, Caddy, GitHub Pages…).
 
 ---
 
-## 📦 Installation via paquet .deb (Linux)
+## 📦 Installation Linux via paquet .deb
 
-Pour Debian, Ubuntu et leurs dérivés, un paquet `.deb` est disponible pour la version **Python/PyQt6** de l'application.
+Le paquet `.deb` embarque **l'application web complète** (React buildé) et un lanceur local.  
+Compatible avec **Debian 11+**, **Ubuntu 22.04+** et leurs dérivés.
 
 ```bash
-# Télécharger depuis la page Releases
-wget https://github.com/nouhailler/jardinator/releases/download/v2.0.0/jardinator_2.0.0_amd64.deb
+# 1. Télécharger la dernière release
+wget https://github.com/nouhailler/jardinator/releases/latest/download/jardinator_2.1.0_all.deb
 
-# Installer
-sudo dpkg -i jardinator_2.0.0_amd64.deb
-sudo apt-get install -f  # résoudre les dépendances si besoin
+# 2. Installer
+sudo dpkg -i jardinator_2.1.0_all.deb
+sudo apt-get install -f   # résoudre les dépendances si besoin
+
+# 3. Lancer
+jardinator
+# ou depuis le menu Applications → Éducation → Jardinator
 ```
 
-➡️ [Voir la page Releases](https://github.com/nouhailler/jardinator/releases)
+> **Comment ça fonctionne ?** Le lanceur démarre un serveur HTTP local sur `localhost:8765` et ouvre automatiquement votre navigateur. Toutes les données restent sur votre machine (localStorage).
+
+➡️ [Voir toutes les releases](https://github.com/nouhailler/jardinator/releases)
 
 ---
 
@@ -150,42 +170,35 @@ sudo apt-get install -f  # résoudre les dépendances si besoin
 ```
 jardinator/
 │
-├── jardinator-web/              # 🌐 Application React (version web — recommandée)
+├── jardinator-web/              # 🌐 Application React (version principale)
 │   ├── src/
-│   │   ├── components/          # Composants React
+│   │   ├── components/          # Composants UI
 │   │   │   ├── Header.jsx       # Onglets, recherche, filtres, météo, export
-│   │   │   ├── PlantGrid.jsx    # Grille des cartes plantes
-│   │   │   ├── DetailModal.jsx  # Fiche plante complète
-│   │   │   ├── GeminiPanel.jsx  # Conseils IA (OpenRouter streaming)
-│   │   │   ├── AdvicePanel.jsx  # Lecture des conseils sauvegardés
-│   │   │   ├── ImagePicker.jsx  # Sélection d'images (Wikimedia + URL)
+│   │   │   ├── CardGrid.jsx     # Grille des cartes plantes
+│   │   │   ├── DetailModal.jsx  # Fiche plante (12 sections)
+│   │   │   ├── GeminiPanel.jsx  # Conseils IA OpenRouter (streaming)
+│   │   │   ├── AdvicePanel.jsx  # Conseils sauvegardés
+│   │   │   ├── ImagePicker.jsx  # Wikimedia Commons + URL custom
 │   │   │   ├── CalendarView.jsx # Vue calendrier mensuelle
-│   │   │   ├── MeteoWidget.jsx  # Filtre par température
-│   │   │   └── ExportImport.jsx # Export/import JSON des personnalisations
+│   │   │   ├── MeteoWidget.jsx  # Météo temps réel + curseurs
+│   │   │   ├── GardenPlanner.jsx# Plan potager drag & drop
+│   │   │   ├── PdfExport.jsx    # Export PDF A4 paysage
+│   │   │   └── ExportImport.jsx # Export/import JSON personnalisations
 │   │   ├── services/
-│   │   │   ├── vegetableService.js  # Fusion des JSONs → objets plantes
-│   │   │   ├── imageService.js      # CRUD images localStorage + Wikimedia API
-│   │   │   └── aiService.js         # OpenRouter streaming + cache modèles
+│   │   │   ├── vegetableService.js  # Fusion JSONs + filtres + zones climatiques
+│   │   │   ├── imageService.js      # CRUD images + Wikimedia API
+│   │   │   ├── aiService.js         # OpenRouter streaming + cache modèles
+│   │   │   ├── weatherService.js    # Open-Meteo API + géolocalisation
+│   │   │   └── gardenService.js     # Planches de culture + historique
 │   │   ├── store/
 │   │   │   └── useStore.js      # État global Zustand
-│   │   └── data/                # 11 fichiers JSON (données statiques)
-│   │       ├── legumes.json         # 175 légumes principaux
-│   │       ├── plantes_extra.json   # 33 aromatiques / céréales / condimentaires
-│   │       ├── associations.json    # Compagnonnage (favorables/défavorables)
-│   │       ├── distances.json       # Espacements de plantation
-│   │       ├── semis.json           # Calendriers de semis
-│   │       ├── types_semis.json     # Méthodes (poquet, ligne, volée, surface)
-│   │       ├── sol_compost.json     # Types de sol et compost
-│   │       ├── sous_varietes.json   # Cultivars et variétés
-│   │       ├── infos_complementaires.json
-│   │       ├── groupes.json
-│   │       └── plant_images.json    # URLs d'images par défaut
+│   │   └── data/                # 11 fichiers JSON statiques (208 plantes)
 │   └── package.json
 │
-├── main.py                      # 🖥️ Application Python/PyQt6 (version desktop)
-├── src/                         # Sources Python
-├── debian/                      # Packaging Debian
-├── build_deb.sh                 # Script de construction du .deb
+├── main.py                      # 🖥️ Application Python/PyQt6 (version desktop legacy)
+├── src/                         # Sources Python (ui, service, database)
+├── debian/                      # 📦 Packaging Debian (app web)
+├── requirements.txt             # Dépendances Python
 └── *.json                       # Données partagées
 ```
 
@@ -204,30 +217,30 @@ jardinator/
 | 🍂 **Automne** | Septembre · Octobre · Novembre |
 | ❄️ **Hiver** | Décembre · Janvier · Février |
 | 📆 **Calendrier** | Vue mensuelle de toutes les activités |
+| 🪴 **Potager** | Plan interactif + historique des cultures |
 
-### Calendrier de culture — code couleur
+### Code couleur du calendrier
 
 | Couleur | Activité |
 |---------|---------|
-| 🔵 Bleu | Semis **intérieur** — démarrage sous abri chauffé |
-| 🟠 Orange | Semis **extérieur** — semis direct en pleine terre |
-| 🟢 Vert | **Plantation** — mise en place des plants |
-| 🔴 Rouge | **Récolte** — fenêtre de récolte optimale |
+| 🔵 **Bleu** | Semis **intérieur** — démarrage sous abri chauffé |
+| 🟠 **Orange** | Semis **extérieur** — semis direct en pleine terre |
+| 🟢 **Vert** | **Plantation** — mise en place des plants |
+| 🔴 **Rouge** | **Récolte** — fenêtre de récolte optimale |
 
 ---
 
 ## 🤖 Conseils IA
 
-Jardinator intègre [OpenRouter](https://openrouter.ai) pour générer des conseils de culture personnalisés.
+Jardinator intègre [OpenRouter](https://openrouter.ai) pour des conseils de culture personnalisés.
 
-1. **Ouvrez** la fiche d'une plante
-2. **Cliquez** sur ✨ IA
-3. **Entrez** votre clé OpenRouter gratuite (`sk-or-v1-…`)  
-   *(stockée uniquement dans votre navigateur)*
-4. **Choisissez** un modèle parmi les gratuits disponibles
-5. **Sauvegardez** les conseils pour les consulter sans relancer l'IA
+1. Ouvrir la fiche d'une plante
+2. Cliquer sur **✨ IA**
+3. Entrer une clé OpenRouter gratuite (`sk-or-v1-…`) *(stockée uniquement localement)*
+4. Choisir un modèle gratuit parmi ceux disponibles
+5. Sauvegarder les conseils pour les consulter sans relancer l'IA
 
-> Les modèles gratuits ne consomment aucun crédit. La liste est récupérée dynamiquement depuis l'API OpenRouter.
+> Les modèles gratuits ne consomment aucun crédit. La liste est récupérée dynamiquement depuis l'API OpenRouter et mise en cache 1h.
 
 ---
 
@@ -235,30 +248,35 @@ Jardinator intègre [OpenRouter](https://openrouter.ai) pour générer des conse
 
 Toutes les personnalisations sont stockées dans le **localStorage** de votre navigateur :
 
-| Clé localStorage | Contenu |
-|-----------------|---------|
+| Clé | Contenu |
+|-----|---------|
 | `jardinator_images_v2` | Images personnalisées (URL ou data-URL) |
 | `jardinator_ai_advice` | Conseils IA sauvegardés par plante |
 | `jardinator_openrouter_key` | Clé API OpenRouter |
 | `jardinator_model` | Modèle IA sélectionné |
-| `jardinator_models_cache` | Cache de la liste des modèles (1h) |
+| `jardinator_models_cache` | Cache modèles OpenRouter (1h) |
+| `jardinator_garden_beds` | Planches de culture (grilles + plantes) |
+| `jardinator_crop_history` | Historique cultures par cellule/année |
+| `jardinator_weather` | Cache météo (30 min) |
+| `jardinator_location` | Dernière ville météo |
 
-Pour **sauvegarder** ou **transférer** vos données → bouton **💾 Exporter** dans la barre de navigation.
+Pour sauvegarder ou transférer vos données → bouton **💾 Exporter** dans la barre de navigation.
 
 ---
 
 ## 🔧 Stack technique
 
 | Technologie | Rôle | Version |
-|-------------|------|---------|
-| [React](https://react.dev) | Interface utilisateur | 19 |
-| [Vite](https://vitejs.dev) | Build tool & dev server | 8 |
-| [Zustand](https://zustand-demo.pmnd.rs) | État global | 5 |
-| [OpenRouter API](https://openrouter.ai/docs) | Conseils IA streaming | — |
-| [Wikimedia Commons API](https://commons.wikimedia.org) | Recherche d'images libres | — |
-| JSON statiques | Base de données plantes | — |
+|-------------|------|:-------:|
+| [![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black&style=flat-square)](https://react.dev) | Interface utilisateur | 19 |
+| [![Vite](https://img.shields.io/badge/-Vite-646CFF?logo=vite&logoColor=white&style=flat-square)](https://vitejs.dev) | Build tool & dev server | 8 |
+| [![Zustand](https://img.shields.io/badge/-Zustand-FF6B35?style=flat-square)](https://zustand-demo.pmnd.rs) | État global | 5 |
+| [![OpenRouter](https://img.shields.io/badge/-OpenRouter-7C3AED?logo=openai&logoColor=white&style=flat-square)](https://openrouter.ai/docs) | Conseils IA streaming | — |
+| [![Open-Meteo](https://img.shields.io/badge/-Open--Meteo-0EA5E9?style=flat-square)](https://open-meteo.com) | Météo temps réel (sans clé) | — |
+| [![Wikimedia](https://img.shields.io/badge/-Wikimedia-000000?logo=wikipedia&logoColor=white&style=flat-square)](https://commons.wikimedia.org) | Images libres de droits | — |
+| JSON statiques | Base de données plantes (208 variétés) | — |
 
-**Aucun backend requis** — l'application est 100% front-end et peut être hébergée sur n'importe quel CDN statique (GitHub Pages, Netlify, Vercel…).
+**Aucun backend requis** — SPA 100% front-end, hébergeable sur n'importe quel CDN statique.
 
 ---
 
@@ -269,9 +287,7 @@ Les contributions sont les bienvenues !
 ```bash
 # 1. Forker le dépôt, puis :
 git clone https://github.com/VOTRE_PSEUDO/jardinator.git
-cd jardinator/jardinator-web
-npm install
-npm run dev
+cd jardinator/jardinator-web && npm install && npm run dev
 
 # 2. Créer une branche
 git checkout -b feature/ma-fonctionnalite
@@ -283,14 +299,13 @@ git push origin feature/ma-fonctionnalite
 # 4. Ouvrir une Pull Request
 ```
 
-### 💡 Idées d'améliorations
+### 💡 Idées d'améliorations futures
 
-- 🗺️ Plan du potager interactif (placement des cultures)
-- 📊 Historique des cultures et rotations
-- 🌍 Filtrage par zone climatique (USDA / Europe)
-- 📱 Progressive Web App (installation mobile)
-- 📄 Export PDF du calendrier annuel personnalisé
-- 🌧️ Intégration API météo temps réel
+- 📱 **Progressive Web App** — installation sur mobile/tablette
+- 🗺️ **Plan potager** — export image/PDF de la grille
+- 📊 **Statistiques** — rendements et suivi par saison
+- 🔄 **Rotations automatiques** — suggestions sur N années
+- 🌍 **Zones USDA** — filtrage en plus des zones EU
 
 ---
 
@@ -307,5 +322,7 @@ Les données botaniques et les images Wikimedia sont sous leurs licences respect
 🌱 **Bon jardinage !** 🌱
 
 *Jardinator — cultivez avec méthode, récoltez avec joie*
+
+Made with ❤️ by [nouhailler](https://github.com/nouhailler)
 
 </div>

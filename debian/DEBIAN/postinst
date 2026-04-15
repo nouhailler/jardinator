@@ -11,7 +11,13 @@ if command -v gtk-update-icon-cache &>/dev/null; then
     gtk-update-icon-cache /usr/share/pixmaps || true
 fi
 
-echo "✅  Jardinator installé avec succès !"
-echo "   Lancez l'application via le menu Applications ou avec la commande : jardinator"
+echo ""
+echo "✅  Jardinator v2.1.0 installé avec succès !"
+echo ""
+echo "   Lancer : jardinator"
+echo "   Ou depuis le menu : Applications → Éducation → Jardinator"
+echo ""
+echo "   L'application s'ouvre dans votre navigateur sur http://localhost:8765"
+echo ""
 
 exit 0

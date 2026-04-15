@@ -1,1 +1,0 @@
-# Jardinator source package

@@ -1,16 +1,22 @@
 Package: jardinator
-Version: 2.0.0
+Version: 2.1.0
 Section: misc
 Priority: optional
-Architecture: amd64
-Depends: python3 (>= 3.10), python3-pyqt6, python3-requests
+Architecture: all
+Installed-Size: 1024
+Depends: python3 (>= 3.10), xdg-utils
+Recommends: chromium | chromium-browser | firefox | firefox-esr
 Maintainer: nouhailler <nouhailler@github.com>
 Homepage: https://github.com/nouhailler/jardinator
-Description: Calendrier du jardinier — légumes d'Europe
- Jardinator est une application de bureau pour planifier semis,
- plantations et récoltes. Elle recense plus de 208 variétés de
- légumes, aromatiques, légumineuses, céréales et condimentaires avec :
+Description: Calendrier du jardinier — légumes d'Europe (v2.1.0)
+ Jardinator est une application web de planification du potager.
+ Elle recense 208 variétés de légumes, aromatiques, légumineuses,
+ céréales et condimentaires avec :
+  - Plan du potager interactif avec drag & drop
+  - Historique des cultures et alertes de rotation
+  - Filtrage par zone climatique européenne (6 régions)
+  - Météo en temps réel via Open-Meteo (sans clé API)
+  - Conseils IA via OpenRouter (modèles gratuits)
+  - Export PDF du calendrier annuel
   - Calendrier de culture mois par mois
   - Fiches détaillées (températures, associations, distances…)
-  - Météo du jour avec recommandations selon température
-  - Téléchargement d'images depuis Wikimedia Commons

@@ -1,29 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <!-- Background circle -->
-  <circle cx="64" cy="64" r="60" fill="#2E7D32"/>
-  <circle cx="64" cy="64" r="56" fill="#388E3C"/>
+  <!-- Background circle — deep garden green -->
+  <circle cx="64" cy="64" r="62" fill="#1B5E20"/>
+  <circle cx="64" cy="64" r="58" fill="#2E7D32"/>
 
-  <!-- Stem -->
-  <line x1="64" y1="98" x2="64" y2="58" stroke="#A5D6A7" stroke-width="5" stroke-linecap="round"/>
+  <!-- Network connection lines (companion planting associations) -->
+  <line x1="64" y1="28" x2="30" y2="72" stroke="#A5D6A7" stroke-width="1.8" stroke-opacity="0.6"/>
+  <line x1="64" y1="28" x2="98" y2="72" stroke="#A5D6A7" stroke-width="1.8" stroke-opacity="0.6"/>
+  <line x1="30" y1="72" x2="64" y2="96" stroke="#A5D6A7" stroke-width="1.8" stroke-opacity="0.6"/>
+  <line x1="98" y1="72" x2="64" y2="96" stroke="#A5D6A7" stroke-width="1.8" stroke-opacity="0.6"/>
+  <line x1="30" y1="72" x2="98" y2="72" stroke="#A5D6A7" stroke-width="1.8" stroke-opacity="0.5"/>
 
-  <!-- Left leaf -->
-  <path d="M64 78 Q36 62 38 38 Q58 48 64 78Z" fill="#66BB6A"/>
-  <path d="M64 78 Q36 62 38 38" stroke="#43A047" stroke-width="1.5" fill="none"/>
+  <!-- Center plant — main sprout -->
+  <line x1="64" y1="64" x2="64" y2="44" stroke="#C8E6C9" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M64 52 Q52 42 54 30 Q64 38 64 52Z" fill="#66BB6A"/>
+  <path d="M64 48 Q76 38 74 26 Q64 34 64 48Z" fill="#81C784"/>
+  <!-- Sprout tip -->
+  <path d="M64 44 Q64 34 65 28 Q70 32 68 42Z" fill="#A5D6A7"/>
 
-  <!-- Right leaf -->
-  <path d="M64 70 Q92 54 90 30 Q70 40 64 70Z" fill="#81C784"/>
-  <path d="M64 70 Q92 54 90 30" stroke="#43A047" stroke-width="1.5" fill="none"/>
+  <!-- Top node (tomato/fruit plant) — red dot -->
+  <circle cx="64" cy="24" r="7" fill="#388E3C" stroke="#A5D6A7" stroke-width="1.5"/>
+  <circle cx="64" cy="24" r="4" fill="#EF5350"/>
+  <line x1="64" y1="21" x2="64" y2="18" stroke="#66BB6A" stroke-width="1.5" stroke-linecap="round"/>
 
-  <!-- Top sprout -->
-  <path d="M64 58 Q64 36 64 28 Q76 34 72 50 Q68 44 64 58Z" fill="#A5D6A7"/>
+  <!-- Bottom-left node (root vegetable) — orange dot -->
+  <circle cx="26" cy="72" r="7" fill="#388E3C" stroke="#A5D6A7" stroke-width="1.5"/>
+  <circle cx="26" cy="72" r="4" fill="#FF8F00"/>
 
-  <!-- Soil line -->
-  <ellipse cx="64" cy="100" rx="28" ry="6" fill="#1B5E20"/>
-  <ellipse cx="64" cy="99" rx="26" ry="4" fill="#33691E"/>
+  <!-- Bottom-right node (leafy green) — light green dot -->
+  <circle cx="102" cy="72" r="7" fill="#388E3C" stroke="#A5D6A7" stroke-width="1.5"/>
+  <circle cx="102" cy="72" r="4" fill="#AED581"/>
 
-  <!-- Small decorative dots (seeds) -->
-  <circle cx="42" cy="104" r="3" fill="#8D6E63"/>
-  <circle cx="52" cy="106" r="2.5" fill="#8D6E63"/>
-  <circle cx="76" cy="106" r="2.5" fill="#8D6E63"/>
-  <circle cx="86" cy="103" r="3" fill="#8D6E63"/>
+  <!-- Bottom node (herb) — purple dot -->
+  <circle cx="64" cy="97" r="7" fill="#388E3C" stroke="#A5D6A7" stroke-width="1.5"/>
+  <circle cx="64" cy="97" r="4" fill="#CE93D8"/>
+
+  <!-- Grid lines (garden plot) -->
+  <rect x="46" y="105" width="36" height="14" rx="3" fill="#1B5E20" opacity="0.8"/>
+  <line x1="55" y1="105" x2="55" y2="119" stroke="#388E3C" stroke-width="1"/>
+  <line x1="64" y1="105" x2="64" y2="119" stroke="#388E3C" stroke-width="1"/>
+  <line x1="73" y1="105" x2="73" y2="119" stroke="#388E3C" stroke-width="1"/>
+  <line x1="46" y1="111" x2="82" y2="111" stroke="#388E3C" stroke-width="1"/>
+
+  <!-- Small plant icons in grid cells -->
+  <circle cx="50" cy="108" r="2" fill="#66BB6A"/>
+  <circle cx="59" cy="108" r="2" fill="#EF5350"/>
+  <circle cx="68" cy="108" r="2" fill="#FF8F00"/>
+  <circle cx="77" cy="108" r="2" fill="#AED581"/>
+  <circle cx="50" cy="115" r="2" fill="#CE93D8"/>
+  <circle cx="59" cy="115" r="2" fill="#66BB6A"/>
+  <circle cx="68" cy="115" r="2" fill="#EF5350"/>
+  <circle cx="77" cy="115" r="2" fill="#FF8F00"/>
 </svg>
