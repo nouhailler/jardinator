@@ -1,5 +1,5 @@
 Package: jardinator
-Version: 2.1.0
+Version: 2.2.0
 Section: misc
 Priority: optional
 Architecture: all
@@ -8,7 +8,7 @@ Depends: python3 (>= 3.10), xdg-utils
 Recommends: chromium | chromium-browser | firefox | firefox-esr
 Maintainer: nouhailler <nouhailler@github.com>
 Homepage: https://github.com/nouhailler/jardinator
-Description: Calendrier du jardinier — légumes d'Europe (v2.1.0)
+Description: Calendrier du jardinier — légumes d'Europe (v2.2.0)
  Jardinator est une application web de planification du potager.
  Elle recense 208 variétés de légumes, aromatiques, légumineuses,
  céréales et condimentaires avec :
