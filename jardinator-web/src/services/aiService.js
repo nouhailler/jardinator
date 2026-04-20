@@ -87,16 +87,17 @@ export function saveModel(model) {
 
 /**
  * Ask the AI a free-form question. Returns an async generator yielding text chunks.
+ * Limite : 4096 tokens ≈ 5 pages de texte.
  */
 export async function* askAIStreamChat(question) {
   const key = getApiKey();
   if (!key) throw new Error('NO_KEY');
   const model = getSavedModel();
   if (!model) throw new Error('NO_MODEL');
-  yield* _stream(key, model, question);
+  yield* _stream(key, model, question, 4096);
 }
 
-async function* _stream(key, model, prompt) {
+async function* _stream(key, model, prompt, maxTokens = 2048) {
   const res = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -109,7 +110,7 @@ async function* _stream(key, model, prompt) {
       model,
       messages: [{ role: 'user', content: prompt }],
       stream: true,
-      max_tokens: 1024,
+      max_tokens: maxTokens,
     }),
   });
 
