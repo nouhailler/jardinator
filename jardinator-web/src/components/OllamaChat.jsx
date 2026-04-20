@@ -9,6 +9,7 @@ import {
 import {
   askAIStreamChat, getApiKey, getSavedModel,
 } from '../services/aiService';
+import jardinageQA from '../data/jardinage_questions.json';
 
 function formatDate(iso) {
   const d = new Date(iso);
@@ -21,14 +22,23 @@ function formatDate(iso) {
 export default function OllamaChat() {
   const { chatHistory, setChatHistory } = useStore();
 
-  const [provider, setProvider]   = useState('ollama'); // 'ollama' | 'openrouter'
-  const [question, setQuestion]   = useState('');
-  const [streaming, setStreaming] = useState('');
-  const [status, setStatus]       = useState('idle'); // idle | loading | done | error
-  const [errorMsg, setErrorMsg]   = useState('');
-  const [selected, setSelected]   = useState(null);
-  const abortRef                  = useRef(false);
-  const responseRef               = useRef(null);
+  const [provider, setProvider]         = useState('ollama'); // 'ollama' | 'openrouter'
+  const [question, setQuestion]         = useState('');
+  const [streaming, setStreaming]       = useState('');
+  const [status, setStatus]             = useState('idle'); // idle | loading | done | error
+  const [errorMsg, setErrorMsg]         = useState('');
+  const [selected, setSelected]         = useState(null);
+  const [showSuggestions, setShowSugg]  = useState(false);
+  const [activeCategory, setActiveCat]  = useState(jardinageQA.categories[0].id);
+  const abortRef                        = useRef(false);
+  const responseRef                     = useRef(null);
+
+  const filteredQuestions = jardinageQA.questions.filter(q => q.category_id === activeCategory);
+
+  function pickQuestion(q) {
+    setQuestion(q);
+    setShowSugg(false);
+  }
 
   // Config état courant (relu à chaque render pour rester réactif)
   const ollamaModel = getOllamaModel();
@@ -202,7 +212,14 @@ export default function OllamaChat() {
                 : <span className="chat-model-badge">{activeModel || '—'}</span>
               }
             </div>
-            <div className="chat-input-right">
+            <div className="chat-input-right" style={{display:'flex', gap:'8px'}}>
+              <button
+                className={`btn-suggestions ${showSuggestions ? 'active' : ''}`}
+                onClick={() => setShowSugg(s => !s)}
+                title="Questions suggérées par catégorie"
+              >
+                💡 Suggestions
+              </button>
               {status === 'loading'
                 ? <button className="btn-stop" onClick={handleStop}>⏹ Arrêter</button>
                 : <button className="btn-ask" onClick={handleAsk} disabled={!canSend}>
@@ -211,6 +228,37 @@ export default function OllamaChat() {
               }
             </div>
           </div>
+
+          {/* Panneau de suggestions */}
+          {showSuggestions && (
+            <div className="suggestions-panel">
+              {/* Catégories */}
+              <div className="suggestions-categories">
+                {jardinageQA.categories.map(cat => (
+                  <button
+                    key={cat.id}
+                    className={`suggestions-cat-btn ${activeCategory === cat.id ? 'active' : ''}`}
+                    onClick={() => setActiveCat(cat.id)}
+                  >
+                    {cat.name}
+                  </button>
+                ))}
+              </div>
+              {/* Questions */}
+              <ul className="suggestions-list">
+                {filteredQuestions.map(q => (
+                  <li key={q.id}>
+                    <button
+                      className="suggestions-question-btn"
+                      onClick={() => pickQuestion(q.question)}
+                    >
+                      {q.question}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Zone de réponse */}

@@ -1661,6 +1661,94 @@ select, input { font: inherit; }
 .btn-ask:hover:not(:disabled) { background: var(--green-dark); }
 .btn-ask:disabled { opacity: 0.45; cursor: not-allowed; }
 
+.btn-suggestions {
+  background: var(--green-bg);
+  border: 1px solid var(--green-light);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--green-dark);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn-suggestions:hover  { background: var(--green-pale); }
+.btn-suggestions.active { background: var(--green-primary); color: #fff; border-color: var(--green-primary); }
+
+/* Panneau suggestions */
+.suggestions-panel {
+  border: 1px solid var(--green-light);
+  border-radius: 10px;
+  background: var(--green-bg2);
+  overflow: hidden;
+  max-height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestions-categories {
+  display: flex;
+  gap: 6px;
+  padding: 10px 12px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border);
+  background: var(--green-bg);
+  flex-shrink: 0;
+  scrollbar-width: thin;
+}
+
+.suggestions-cat-btn {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--text-light);
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.suggestions-cat-btn:hover  { background: var(--green-pale); color: var(--green-dark); }
+.suggestions-cat-btn.active {
+  background: var(--green-primary);
+  border-color: var(--green-primary);
+  color: #fff;
+}
+
+.suggestions-list {
+  list-style: none;
+  margin: 0;
+  padding: 6px 8px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.suggestions-question-btn {
+  width: 100%;
+  text-align: left;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 7px 12px;
+  font-size: 0.87rem;
+  cursor: pointer;
+  color: var(--text);
+  transition: all 0.12s;
+  line-height: 1.4;
+}
+.suggestions-question-btn:hover {
+  background: var(--green-bg);
+  border-color: var(--green-light);
+  color: var(--green-dark);
+  padding-left: 16px;
+}
+
 .btn-stop {
   background: #ef4444;
   color: #fff;
