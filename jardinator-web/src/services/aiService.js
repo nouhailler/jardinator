@@ -86,15 +86,17 @@ export function saveModel(model) {
 }
 
 /**
- * Ask the AI a gardening question. Returns an async generator yielding text chunks.
+ * Ask the AI a free-form question. Returns an async generator yielding text chunks.
  */
-export async function* askAIStream(plantName) {
+export async function* askAIStreamChat(question) {
   const key = getApiKey();
   if (!key) throw new Error('NO_KEY');
-
   const model = getSavedModel();
-  const prompt = `Fais un résumé pratique et structuré sur la meilleure manière de cultiver : ${plantName}\n\nRéponds en français pour un jardinier amateur. Organise ta réponse avec ces sections : préparation du sol, semis/plantation, entretien, arrosage, maladies fréquentes, et récolte.`;
+  if (!model) throw new Error('NO_MODEL');
+  yield* _stream(key, model, question);
+}
 
+async function* _stream(key, model, prompt) {
   const res = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -139,4 +141,16 @@ export async function* askAIStream(plantName) {
       } catch {}
     }
   }
+}
+
+/**
+ * Ask the AI a gardening question. Returns an async generator yielding text chunks.
+ */
+export async function* askAIStream(plantName) {
+  const key = getApiKey();
+  if (!key) throw new Error('NO_KEY');
+
+  const model = getSavedModel();
+  const prompt = `Fais un résumé pratique et structuré sur la meilleure manière de cultiver : ${plantName}\n\nRéponds en français pour un jardinier amateur. Organise ta réponse avec ces sections : préparation du sol, semis/plantation, entretien, arrosage, maladies fréquentes, et récolte.`;
+  yield* _stream(key, model, prompt);
 }
