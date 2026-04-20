@@ -10,6 +10,7 @@ import {
   askAIStreamChat, getApiKey, getSavedModel,
 } from '../services/aiService';
 import jardinageQA from '../data/jardinage_questions.json';
+import HelpTip from './HelpTip';
 
 function formatDate(iso) {
   const d = new Date(iso);
@@ -178,7 +179,7 @@ export default function OllamaChat() {
         <div className="chat-input-area">
 
           {/* Toggle fournisseur */}
-          <div className="chat-provider-toggle">
+          <div className="chat-provider-toggle" style={{display:'flex', alignItems:'center', gap:'8px'}}>
             <button
               className={`chat-provider-btn ${provider === 'ollama' ? 'active' : ''}`}
               onClick={() => setProvider('ollama')}
@@ -191,6 +192,7 @@ export default function OllamaChat() {
             >
               ☁️ OpenRouter
             </button>
+            <HelpTip text="Ollama = IA locale sur votre machine. OpenRouter = IA cloud gratuite." />
           </div>
 
           {/* Textarea */}
@@ -220,6 +222,7 @@ export default function OllamaChat() {
               >
                 💡 Suggestions
               </button>
+              <HelpTip text="120 questions de jardinage prêtes à envoyer, classées par catégorie." />
               {status === 'loading'
                 ? <button className="btn-stop" onClick={handleStop}>⏹ Arrêter</button>
                 : <button className="btn-ask" onClick={handleAsk} disabled={!canSend}>

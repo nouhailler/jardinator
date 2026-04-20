@@ -8,6 +8,7 @@ import {
   getSavedModel, saveModel, fetchFreeModels, clearModelsCache,
 } from '../services/aiService';
 import useStore from '../store/useStore';
+import HelpTip from './HelpTip';
 
 export default function SettingsPanel() {
   const { setChatHistory } = useStore();
@@ -106,7 +107,10 @@ export default function SettingsPanel() {
         </h3>
 
         <div className="settings-row">
-          <label className="settings-label">URL du serveur</label>
+          <label className="settings-label" style={{display:'flex', alignItems:'center', gap:'6px'}}>
+            URL du serveur
+            <HelpTip text="Adresse de votre serveur Ollama local. Par défaut : http://localhost:11434" />
+          </label>
           <div className="settings-input-group">
             <input
               className="settings-input"
@@ -175,7 +179,10 @@ export default function SettingsPanel() {
         </h3>
 
         <div className="settings-row">
-          <label className="settings-label">Clé API</label>
+          <label className="settings-label" style={{display:'flex', alignItems:'center', gap:'6px'}}>
+            Clé API
+            <HelpTip text="Obtenez une clé gratuite sur openrouter.ai. Elle est stockée uniquement dans votre navigateur." />
+          </label>
           <div className="settings-input-group">
             <input
               className="settings-input"

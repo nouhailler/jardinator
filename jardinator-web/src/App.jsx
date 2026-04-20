@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useStore from './store/useStore';
 import Header from './components/Header';
 import CardGrid from './components/CardGrid';
@@ -8,9 +8,11 @@ import MeteoWidget from './components/MeteoWidget';
 import GardenPlanner from './components/GardenPlanner';
 import OllamaChat from './components/OllamaChat';
 import SettingsPanel from './components/SettingsPanel';
+import HelpPanel from './components/HelpPanel';
 
 export default function App() {
   const { init, activeTab, meteoOpen } = useStore();
+  const [helpOpen, setHelpOpen] = useState(false);
 
   useEffect(() => { init(); }, []);
 
@@ -34,6 +36,8 @@ export default function App() {
         </div>
       )}
       <DetailModal />
+      <button className="btn-help-float" onClick={() => setHelpOpen(true)} title="Aide">?</button>
+      <HelpPanel isOpen={helpOpen} onClose={() => setHelpOpen(false)} activeTab={activeTab} />
     </div>
   );
 }
