@@ -9,6 +9,7 @@
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white&style=flat-square)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white&style=flat-square)](https://vitejs.dev)
 [![Zustand](https://img.shields.io/badge/Zustand-5-FF6B35?style=flat-square)](https://zustand-demo.pmnd.rs)
+[![Ollama](https://img.shields.io/badge/IA-Ollama-3B82F6?logo=ollama&logoColor=white&style=flat-square)](https://ollama.com)
 [![OpenRouter](https://img.shields.io/badge/IA-OpenRouter-7C3AED?logo=openai&logoColor=white&style=flat-square)](https://openrouter.ai)
 [![Open-Meteo](https://img.shields.io/badge/Météo-Open--Meteo-0EA5E9?logo=cloudflare&logoColor=white&style=flat-square)](https://open-meteo.com)
 [![Licence MIT](https://img.shields.io/badge/Licence-MIT-22C55E?style=flat-square)](LICENSE)
@@ -51,6 +52,34 @@ Chaque plante dispose d'une fiche avec **12 sections** : températures, entretie
 
 ### 🤖 Conseils IA intégrés
 Conseils de culture personnalisés via **OpenRouter** (modèles gratuits). Streaming en temps réel, sauvegarde locale, consultation hors-ligne.
+
+</td>
+</tr>
+<tr>
+<td>
+
+### 💬 Chat IA libre — Ollama & OpenRouter
+Posez n'importe quelle question de jardinage. Choix entre **Ollama** (IA locale, 100 % privé) et **OpenRouter** (cloud gratuit). Réponses en streaming avec rendu **Markdown** complet. Historique automatique daté.
+
+</td>
+<td>
+
+### 💡 120 questions suggérées
+Bibliothèque de **120 questions prêtes-à-envoyer** classées en 20 catégories (graines, semis, maladies, compost, outils…). Un clic charge la question dans le chat.
+
+</td>
+</tr>
+<tr>
+<td>
+
+### ⚙️ Paramètres centralisés
+Configuration **Ollama** (URL + détection automatique des modèles) et **OpenRouter** (clé API + sélection du modèle gratuit) modifiables à tout moment.
+
+</td>
+<td>
+
+### ❓ Aide contextuelle
+Bouton **?** flottant sur toutes les pages. Panneau latéral dont le contenu s'adapte à l'onglet actif. Tooltips inline sur les zones complexes.
 
 </td>
 </tr>
@@ -148,10 +177,10 @@ Compatible avec **Debian 11+**, **Ubuntu 22.04+** et leurs dérivés.
 
 ```bash
 # 1. Télécharger la dernière release
-wget https://github.com/nouhailler/jardinator/releases/latest/download/jardinator_2.1.0_all.deb
+wget https://github.com/nouhailler/jardinator/releases/latest/download/jardinator_2.2.0_all.deb
 
 # 2. Installer
-sudo dpkg -i jardinator_2.1.0_all.deb
+sudo dpkg -i jardinator_2.2.0_all.deb
 sudo apt-get install -f   # résoudre les dépendances si besoin
 
 # 3. Lancer
@@ -182,17 +211,22 @@ jardinator/
 │   │   │   ├── CalendarView.jsx # Vue calendrier mensuelle
 │   │   │   ├── MeteoWidget.jsx  # Météo temps réel + curseurs
 │   │   │   ├── GardenPlanner.jsx# Plan potager drag & drop
+│   │   │   ├── OllamaChat.jsx   # Chat IA libre (Ollama + OpenRouter)
+│   │   │   ├── SettingsPanel.jsx# Configuration Ollama & OpenRouter
+│   │   │   ├── HelpPanel.jsx    # Aide contextuelle par onglet
+│   │   │   ├── HelpTip.jsx      # Tooltip ? inline
 │   │   │   ├── PdfExport.jsx    # Export PDF A4 paysage
 │   │   │   └── ExportImport.jsx # Export/import JSON personnalisations
 │   │   ├── services/
 │   │   │   ├── vegetableService.js  # Fusion JSONs + filtres + zones climatiques
 │   │   │   ├── imageService.js      # CRUD images + Wikimedia API
 │   │   │   ├── aiService.js         # OpenRouter streaming + cache modèles
+│   │   │   ├── ollamaService.js     # Ollama streaming + historique chat
 │   │   │   ├── weatherService.js    # Open-Meteo API + géolocalisation
 │   │   │   └── gardenService.js     # Planches de culture + historique
 │   │   ├── store/
 │   │   │   └── useStore.js      # État global Zustand
-│   │   └── data/                # 11 fichiers JSON statiques (208 plantes)
+│   │   └── data/                # 12 fichiers JSON (208 plantes + 120 questions IA)
 │   └── package.json
 │
 ├── main.py                      # 🖥️ Application Python/PyQt6 (version desktop legacy)
@@ -218,6 +252,8 @@ jardinator/
 | ❄️ **Hiver** | Décembre · Janvier · Février |
 | 📆 **Calendrier** | Vue mensuelle de toutes les activités |
 | 🪴 **Potager** | Plan interactif + historique des cultures |
+| 💬 **Chat IA** | Questions libres — Ollama local ou OpenRouter cloud |
+| ⚙️ **Paramètres** | Configuration Ollama et OpenRouter |
 
 ### Code couleur du calendrier
 
@@ -232,15 +268,28 @@ jardinator/
 
 ## 🤖 Conseils IA
 
-Jardinator intègre [OpenRouter](https://openrouter.ai) pour des conseils de culture personnalisés.
+### Fiches plantes
 
-1. Ouvrir la fiche d'une plante
-2. Cliquer sur **✨ IA**
-3. Entrer une clé OpenRouter gratuite (`sk-or-v1-…`) *(stockée uniquement localement)*
-4. Choisir un modèle gratuit parmi ceux disponibles
-5. Sauvegarder les conseils pour les consulter sans relancer l'IA
+Sur chaque fiche plante, le bouton **✨ IA** génère un résumé de culture (sol, semis, arrosage, maladies, récolte) via OpenRouter. Les conseils sont sauvegardés localement et consultables hors-ligne.
 
-> Les modèles gratuits ne consomment aucun crédit. La liste est récupérée dynamiquement depuis l'API OpenRouter et mise en cache 1h.
+### 💬 Chat IA libre (onglet dédié)
+
+Posez n'importe quelle question en langage naturel. Choix entre **Ollama** (local) et **OpenRouter** (cloud).
+
+**Avec Ollama (IA locale, 100 % privé) :**
+```bash
+curl -fsSL https://ollama.com/install.sh | sh   # installer Ollama
+ollama pull mistral                              # ~4 Go, excellent en français
+ollama pull llama3.2                             # ~2 Go, plus léger
+```
+Puis → ⚙️ **Paramètres** → URL `http://localhost:11434` → **Tester & charger**.
+
+**Avec OpenRouter (cloud gratuit) :**
+1. Créer un compte sur [openrouter.ai](https://openrouter.ai)
+2. Générer une clé API gratuite (`sk-or-v1-…`)
+3. → ⚙️ **Paramètres** → coller la clé → **Charger modèles gratuits**
+
+> Les clés API sont stockées **uniquement dans votre navigateur**. Elles ne transitent jamais par nos serveurs.
 
 ---
 
@@ -253,8 +302,11 @@ Toutes les personnalisations sont stockées dans le **localStorage** de votre na
 | `jardinator_images_v2` | Images personnalisées (URL ou data-URL) |
 | `jardinator_ai_advice` | Conseils IA sauvegardés par plante |
 | `jardinator_openrouter_key` | Clé API OpenRouter |
-| `jardinator_model` | Modèle IA sélectionné |
-| `jardinator_models_cache` | Cache modèles OpenRouter (1h) |
+| `jardinator_ai_model` | Modèle OpenRouter sélectionné |
+| `jardinator_free_models_cache` | Cache modèles gratuits OpenRouter (1h) |
+| `jardinator_ollama_url` | URL du serveur Ollama |
+| `jardinator_ollama_model` | Modèle Ollama sélectionné |
+| `jardinator_chat_history` | Historique du chat IA (questions + réponses datées) |
 | `jardinator_garden_beds` | Planches de culture (grilles + plantes) |
 | `jardinator_crop_history` | Historique cultures par cellule/année |
 | `jardinator_weather` | Cache météo (30 min) |
@@ -271,7 +323,9 @@ Pour sauvegarder ou transférer vos données → bouton **💾 Exporter** dans l
 | [![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black&style=flat-square)](https://react.dev) | Interface utilisateur | 19 |
 | [![Vite](https://img.shields.io/badge/-Vite-646CFF?logo=vite&logoColor=white&style=flat-square)](https://vitejs.dev) | Build tool & dev server | 8 |
 | [![Zustand](https://img.shields.io/badge/-Zustand-FF6B35?style=flat-square)](https://zustand-demo.pmnd.rs) | État global | 5 |
-| [![OpenRouter](https://img.shields.io/badge/-OpenRouter-7C3AED?logo=openai&logoColor=white&style=flat-square)](https://openrouter.ai/docs) | Conseils IA streaming | — |
+| [![Ollama](https://img.shields.io/badge/-Ollama-3B82F6?style=flat-square)](https://ollama.com) | IA locale (streaming) | — |
+| [![OpenRouter](https://img.shields.io/badge/-OpenRouter-7C3AED?logo=openai&logoColor=white&style=flat-square)](https://openrouter.ai/docs) | IA cloud gratuite (streaming) | — |
+| [![react-markdown](https://img.shields.io/badge/-react--markdown-gray?style=flat-square)](https://github.com/remarkjs/react-markdown) | Rendu Markdown des réponses IA | 10 |
 | [![Open-Meteo](https://img.shields.io/badge/-Open--Meteo-0EA5E9?style=flat-square)](https://open-meteo.com) | Météo temps réel (sans clé) | — |
 | [![Wikimedia](https://img.shields.io/badge/-Wikimedia-000000?logo=wikipedia&logoColor=white&style=flat-square)](https://commons.wikimedia.org) | Images libres de droits | — |
 | JSON statiques | Base de données plantes (208 variétés) | — |
