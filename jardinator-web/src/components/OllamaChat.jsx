@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import useStore from '../store/useStore';
 import {
   askOllamaStream, getOllamaUrl, getOllamaModel,
@@ -13,24 +14,6 @@ function formatDate(iso) {
   return d.toLocaleString('fr-FR', {
     day: '2-digit', month: '2-digit', year: 'numeric',
     hour: '2-digit', minute: '2-digit',
-  });
-}
-
-function renderMarkdown(text) {
-  if (!text) return null;
-  return text.split('\n').map((line, i) => {
-    if (line.startsWith('### ')) return <h3 key={i} className="md-h3">{line.slice(4)}</h3>;
-    if (line.startsWith('## '))  return <h2 key={i} className="md-h2">{line.slice(3)}</h2>;
-    if (line.startsWith('# '))   return <h1 key={i} className="md-h1">{line.slice(2)}</h1>;
-    if (line.startsWith('- ') || line.startsWith('* '))
-      return <li key={i} className="md-li">{line.slice(2)}</li>;
-    if (!line.trim()) return <br key={i} />;
-    const parts = line.split(/(\*\*.*?\*\*)/g).map((p, j) =>
-      p.startsWith('**') && p.endsWith('**')
-        ? <strong key={j}>{p.slice(2, -2)}</strong>
-        : p
-    );
-    return <p key={i} className="md-p">{parts}</p>;
   });
 }
 
@@ -247,8 +230,8 @@ export default function OllamaChat() {
               <div className="chat-entry-question">
                 <strong>Question :</strong> {displayEntry.question}
               </div>
-              <div className="chat-entry-answer">
-                {renderMarkdown(displayEntry.answer)}
+              <div className="chat-entry-answer md-body">
+                <ReactMarkdown>{displayEntry.answer || ''}</ReactMarkdown>
                 {status === 'loading' && <span className="chat-cursor">▋</span>}
               </div>
             </div>
