@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import useStore from '../store/useStore';
 import {
   askOllamaStream, getOllamaUrl, getOllamaModel,
@@ -231,7 +232,7 @@ export default function OllamaChat() {
                 <strong>Question :</strong> {displayEntry.question}
               </div>
               <div className="chat-entry-answer md-body">
-                <ReactMarkdown>{displayEntry.answer || ''}</ReactMarkdown>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{displayEntry.answer || ''}</ReactMarkdown>
                 {status === 'loading' && <span className="chat-cursor">▋</span>}
               </div>
             </div>
