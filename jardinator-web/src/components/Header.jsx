@@ -13,6 +13,8 @@ const TABS = [
   { key: 'hiver',    label: '❄️ Hiver' },
   { key: 'calendar', label: '📆 Calendrier' },
   { key: 'potager',  label: '🪴 Potager' },
+  { key: 'chat',     label: '💬 Chat IA' },
+  { key: 'settings', label: '⚙️ Paramètres' },
 ];
 
 export default function Header() {

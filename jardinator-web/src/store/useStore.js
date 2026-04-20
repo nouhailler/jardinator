@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { filterPlants, getAllPlants } from '../services/vegetableService';
 import { getAllCached, saveImage, deleteImage, migrateOldCache } from '../services/imageService';
 import { getAllSavedAdvice, saveAdvice, deleteSavedAdvice } from '../services/aiService';
+import { getChatHistory } from '../services/ollamaService';
 import {
   loadGardenBeds, saveGardenBeds, createBed,
   loadCropHistory, saveCropHistory, addCropRecord, removeCropRecord,
@@ -165,6 +166,10 @@ const useStore = create((set, get) => ({
     set({ cropHistory: newHistory });
   },
 
+  // ─── Chat history (Ollama) ─────────────────────────────────────────────────
+  chatHistory: [],
+  setChatHistory: (chatHistory) => set({ chatHistory }),
+
   // ─── Init ──────────────────────────────────────────────────────────────────
   init: () => {
     migrateOldCache();
@@ -177,6 +182,7 @@ const useStore = create((set, get) => ({
       gardenBeds,
       activeGardenBedId: gardenBeds[0]?.id || null,
       cropHistory: loadCropHistory(),
+      chatHistory: getChatHistory(),
     });
   },
 }));

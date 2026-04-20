@@ -6,6 +6,8 @@ import CalendarView from './components/CalendarView';
 import DetailModal from './components/DetailModal';
 import MeteoWidget from './components/MeteoWidget';
 import GardenPlanner from './components/GardenPlanner';
+import OllamaChat from './components/OllamaChat';
+import SettingsPanel from './components/SettingsPanel';
 
 export default function App() {
   const { init, activeTab, meteoOpen } = useStore();
@@ -13,8 +15,10 @@ export default function App() {
   useEffect(() => { init(); }, []);
 
   const renderMain = () => {
-    if (activeTab === 'calendar') return <CalendarView />;
-    if (activeTab === 'potager')  return <GardenPlanner />;
+    if (activeTab === 'calendar')  return <CalendarView />;
+    if (activeTab === 'potager')   return <GardenPlanner />;
+    if (activeTab === 'chat')      return <OllamaChat />;
+    if (activeTab === 'settings')  return <SettingsPanel />;
     return <CardGrid />;
   };
 
