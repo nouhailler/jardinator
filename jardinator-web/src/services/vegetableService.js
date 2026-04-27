@@ -9,6 +9,7 @@ import solCompostData from '../data/sol_compost.json';
 import sousVarietesData from '../data/sous_varietes.json';
 import infosData from '../data/infos_complementaires.json';
 import plantImagesData from '../data/plant_images.json';
+import { loadCustomPlants } from './customPlantsService';
 
 const MONTH_NAMES = {
   'janvier': 1, 'février': 2, 'mars': 3, 'avril': 4,
@@ -40,13 +41,18 @@ function parseFrenchMonthArray(arr) {
 
 let _plants = null;
 
+/** Call this after adding/removing/editing a custom plant to force re-build. */
+export function invalidatePlantsCache() {
+  _plants = null;
+}
+
 export function getAllPlants() {
   if (_plants) return _plants;
 
   const allRaw = [...legumesData, ...plantesExtraData];
   let id = 1;
 
-  _plants = allRaw.map(raw => {
+  const builtIn = allRaw.map(raw => {
     const name = raw.nom;
     const semis = semisData[name] || {};
     const assoc = associationsData[name] || {};
@@ -106,7 +112,11 @@ export function getAllPlants() {
       // Default image from pre-fetched Wikipedia data (can be overridden per-user)
       defaultImageUrl: plantImagesData[name] || null,
     };
-  }).sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+  });
+
+  // Merge in user-created custom plants (from localStorage)
+  const custom = loadCustomPlants();
+  _plants = [...builtIn, ...custom].sort((a, b) => a.name.localeCompare(b.name, 'fr'));
 
   return _plants;
 }

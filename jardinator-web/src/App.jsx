@@ -9,9 +9,10 @@ import GardenPlanner from './components/GardenPlanner';
 import OllamaChat from './components/OllamaChat';
 import SettingsPanel from './components/SettingsPanel';
 import HelpPanel from './components/HelpPanel';
+import NewPlantModal from './components/NewPlantModal';
 
 export default function App() {
-  const { init, activeTab, meteoOpen } = useStore();
+  const { init, activeTab, meteoOpen, newPlantOpen } = useStore();
   const [helpOpen, setHelpOpen] = useState(false);
 
   useEffect(() => { init(); }, []);
@@ -36,6 +37,7 @@ export default function App() {
         </div>
       )}
       <DetailModal />
+      {newPlantOpen && <NewPlantModal />}
       <button className="btn-help-float" onClick={() => setHelpOpen(true)} title="Aide">?</button>
       <HelpPanel isOpen={helpOpen} onClose={() => setHelpOpen(false)} activeTab={activeTab} />
     </div>

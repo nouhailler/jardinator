@@ -21,7 +21,8 @@ export default function VegetableCard({ plant, onClick }) {
   const hasImage = typeof imageUrl === 'string' && !!imageUrl;
 
   return (
-    <div className="vcard" onClick={() => onClick(plant)} title={plant.name}>
+    <div className="vcard" onClick={() => onClick(plant)} title={plant.name} style={{ position: 'relative' }}>
+      {plant.isCustom && <span className="card-custom-badge">✦ Ma fiche</span>}
       <div
         className="vcard-img"
         style={{ background: `linear-gradient(135deg, ${color}22, ${color}44)` }}

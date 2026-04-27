@@ -23,6 +23,7 @@ export default function Header() {
     groupe, setGroupe, family, setFamily,
     climateZone, setClimateZone,
     plants, toggleMeteo, meteoOpen,
+    openNewPlant,
   } = useStore();
   const groupes = getGroupes();
   const families = getFamilies();
@@ -78,6 +79,13 @@ export default function Header() {
             title="Météo en temps réel et recommandations"
           >
             🌡️ Météo
+          </button>
+          <button
+            className="btn-new-plant"
+            onClick={() => openNewPlant()}
+            title="Créer une nouvelle fiche plante"
+          >
+            ➕ Nouvelle fiche
           </button>
           <PdfExport />
           <ExportImport />

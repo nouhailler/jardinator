@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { filterPlants, getAllPlants } from '../services/vegetableService';
+import { filterPlants, getAllPlants, invalidatePlantsCache } from '../services/vegetableService';
 import { getAllCached, saveImage, deleteImage, migrateOldCache } from '../services/imageService';
 import { getAllSavedAdvice, saveAdvice, deleteSavedAdvice } from '../services/aiService';
 import { getChatHistory } from '../services/ollamaService';
@@ -7,6 +7,9 @@ import {
   loadGardenBeds, saveGardenBeds, createBed,
   loadCropHistory, saveCropHistory, addCropRecord, removeCropRecord,
 } from '../services/gardenService';
+import {
+  loadCustomPlants, saveCustomPlant, deleteCustomPlant,
+} from '../services/customPlantsService';
 
 const useStore = create((set, get) => ({
   // ─── Navigation ────────────────────────────────────────────────────────────
@@ -170,6 +173,36 @@ const useStore = create((set, get) => ({
   chatHistory: [],
   setChatHistory: (chatHistory) => set({ chatHistory }),
 
+  // ─── Custom plants ─────────────────────────────────────────────────────────
+  customPlants: [],
+
+  addCustomPlant: (plant) => {
+    const list = saveCustomPlant(plant);
+    invalidatePlantsCache();
+    set({ customPlants: list });
+    get()._recompute();
+  },
+
+  updateCustomPlant: (plant) => {
+    const list = saveCustomPlant(plant);
+    invalidatePlantsCache();
+    set({ customPlants: list });
+    get()._recompute();
+  },
+
+  removeCustomPlant: (id) => {
+    const list = deleteCustomPlant(id);
+    invalidatePlantsCache();
+    set({ customPlants: list });
+    get()._recompute();
+  },
+
+  // ─── New plant modal ───────────────────────────────────────────────────────
+  newPlantOpen: false,
+  newPlantEdit: null,         // plant object if editing an existing custom plant
+  openNewPlant: (plant = null) => set({ newPlantOpen: true, newPlantEdit: plant }),
+  closeNewPlant: () => set({ newPlantOpen: false, newPlantEdit: null }),
+
   // ─── Init ──────────────────────────────────────────────────────────────────
   init: () => {
     migrateOldCache();
@@ -183,6 +216,7 @@ const useStore = create((set, get) => ({
       activeGardenBedId: gardenBeds[0]?.id || null,
       cropHistory: loadCropHistory(),
       chatHistory: getChatHistory(),
+      customPlants: loadCustomPlants(),
     });
   },
 }));

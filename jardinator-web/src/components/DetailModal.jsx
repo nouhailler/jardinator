@@ -77,6 +77,7 @@ function AssocList({ items, type }) {
 export default function DetailModal() {
   const plant = useStore(s => s.selectedPlant);
   const closeDetail = useStore(s => s.closeDetail);
+  const openNewPlant = useStore(s => s.openNewPlant);
   const getImageUrl = useStore(s => s.getImageUrl);
   const imageOverrides = useStore(s => s.imageOverrides);
   const setImage = useStore(s => s.setImage);
@@ -124,6 +125,13 @@ export default function DetailModal() {
       <div className="modal-overlay" onClick={closeDetail}>
         <div className="modal-content" onClick={e => e.stopPropagation()}>
           <button className="modal-close" onClick={closeDetail}>✕</button>
+          {plant.isCustom && (
+            <button
+              className="modal-edit-custom"
+              onClick={() => { closeDetail(); openNewPlant(plant); }}
+              title="Modifier cette fiche personnalisée"
+            >✏️ Modifier</button>
+          )}
 
           {/* Header */}
           <div className="detail-header">
