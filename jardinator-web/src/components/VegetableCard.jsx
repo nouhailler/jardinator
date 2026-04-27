@@ -14,7 +14,8 @@ export default function VegetableCard({ plant, onClick }) {
   const color = getGroupeColor(plant.groupe);
   const harvestStr = formatMonths(plant.harvest);
   const initial = plant.name.charAt(0).toUpperCase();
-  const getImageUrl = useStore(s => s.getImageUrl);
+  const getImageUrl  = useStore(s => s.getImageUrl);
+  const hasAdvice    = useStore(s => !!s.savedAdvice[plant.id]);
   // Re-render when overrides change
   useStore(s => s.imageOverrides[plant.id]);
   const imageUrl = getImageUrl(plant);
@@ -43,6 +44,9 @@ export default function VegetableCard({ plant, onClick }) {
         )}
         {harvestStr && (
           <div className="vcard-harvest">🌾 {harvestStr}</div>
+        )}
+        {hasAdvice && (
+          <span className="vcard-ai-badge" title="Conseil IA disponible">🤖</span>
         )}
       </div>
     </div>
