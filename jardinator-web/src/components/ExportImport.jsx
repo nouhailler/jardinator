@@ -2,24 +2,28 @@ import { useRef } from 'react';
 import useStore from '../store/useStore';
 import { getAllCached, saveImage } from '../services/imageService';
 import { getAllSavedAdvice, saveAdvice } from '../services/aiService';
+import { getAllSavedHistory, saveHistory } from '../services/historyService';
 
 export default function ExportImport() {
   const fileRef = useRef(null);
-  const { imageOverrides, savedAdvice, init } = useStore();
+  const { imageOverrides, savedAdvice, savedHistory, init } = useStore();
 
   const handleExport = () => {
     const images = getAllCached();
     const advice = getAllSavedAdvice();
+    const history = getAllSavedHistory();
 
     const imgCount = Object.values(images).filter(v => v !== null).length;
     const advCount = Object.keys(advice).length;
+    const histCount = Object.keys(history).length;
 
     const bundle = {
       _jardinator: true,
-      _version: 2,
+      _version: 3,
       _date: new Date().toISOString(),
       images,
       advice,
+      history,
     };
 
     const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
@@ -46,6 +50,9 @@ export default function ExportImport() {
         // Support both v2 bundle format and legacy (images-only) format
         const images = bundle._jardinator ? bundle.images : bundle;
         const advice = bundle._jardinator ? (bundle.advice || {}) : {};
+        const history = bundle._jardinator ? (bundle.history || {}) : {};
+
+        let histCount = 0;
 
         for (const [plantId, url] of Object.entries(images || {})) {
           saveImage(plantId, url);
@@ -54,12 +61,16 @@ export default function ExportImport() {
         for (const [plantId, text] of Object.entries(advice || {})) {
           if (text) { saveAdvice(plantId, text); advCount++; }
         }
+        for (const [plantName, text] of Object.entries(history || {})) {
+          if (text) { saveHistory(plantName, text); histCount++; }
+        }
 
         init();
 
         const parts = [];
         if (imgCount > 0) parts.push(`${imgCount} image(s)`);
         if (advCount > 0) parts.push(`${advCount} conseil(s) IA`);
+        if (histCount > 0) parts.push(`${histCount} historique(s)`);
         alert(`✅ Importé : ${parts.join(' et ')}.`);
       } catch {
         alert('❌ Fichier invalide. Utilisez un fichier exporté depuis Jardinator.');
@@ -71,14 +82,15 @@ export default function ExportImport() {
 
   const imgCount = Object.values(imageOverrides).filter(v => v !== null).length;
   const advCount = Object.keys(savedAdvice).length;
-  const total = imgCount + advCount;
+  const histCount = Object.keys(savedHistory).length;
+  const total = imgCount + advCount + histCount;
 
   return (
     <div className="export-import">
       <button
         className="export-btn"
         onClick={handleExport}
-        title={`Exporter : ${imgCount} image(s) + ${advCount} conseil(s) IA`}
+        title={`Exporter : ${imgCount} image(s) + ${advCount} conseil(s) IA + ${histCount} historique(s)`}
       >
         💾 Exporter ({total})
       </button>

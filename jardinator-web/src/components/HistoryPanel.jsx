@@ -1,29 +1,112 @@
 import { useState, useEffect, useRef } from 'react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { askOllamaStream, getOllamaUrl, getOllamaModel } from '../services/ollamaService';
 import { askAIStreamChat, getApiKey, getSavedModel } from '../services/aiService';
+import { saveHistory, deleteHistory } from '../services/historyService';
+import useStore from '../store/useStore';
+
+// ── Markdown renderer stable (ligne par ligne, pas de parsing partiel) ────────
+
+function inlineMarkdown(text) {
+  const parts = [];
+  let remaining = text;
+  let key = 0;
+  while (remaining) {
+    const bold  = remaining.match(/\*\*(.+?)\*\*/);
+    const ital  = remaining.match(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/);
+    const code  = remaining.match(/`([^`]+)`/);
+    const candidates = [bold, ital, code].filter(Boolean);
+    if (!candidates.length) { parts.push(remaining); break; }
+    const first = candidates.reduce((a, b) => (a.index <= b.index ? a : b));
+    if (first.index > 0) parts.push(remaining.slice(0, first.index));
+    if (first === bold)  parts.push(<strong key={key++}>{first[1]}</strong>);
+    else if (first === ital) parts.push(<em key={key++}>{first[1]}</em>);
+    else parts.push(<code key={key++} className="hist-code">{first[1]}</code>);
+    remaining = remaining.slice(first.index + first[0].length);
+  }
+  return parts;
+}
+
+function renderMarkdown(text) {
+  const lines = text.split('\n');
+  const out = [];
+  let listItems = [];
+
+  const flushList = () => {
+    if (listItems.length) {
+      out.push(<ul key={`ul-${out.length}`} className="hist-ul">{listItems}</ul>);
+      listItems = [];
+    }
+  };
+
+  lines.forEach((line, i) => {
+    if (/^#{3}\s+(.+)/.test(line)) {
+      flushList();
+      out.push(<h4 key={i} className="hist-h4">{inlineMarkdown(line.replace(/^#{3}\s+/, ''))}</h4>);
+    } else if (/^#{2}\s+(.+)/.test(line)) {
+      flushList();
+      out.push(<h3 key={i} className="hist-h3">{inlineMarkdown(line.replace(/^#{2}\s+/, ''))}</h3>);
+    } else if (/^#{1}\s+(.+)/.test(line)) {
+      flushList();
+      out.push(<h2 key={i} className="hist-h2">{inlineMarkdown(line.replace(/^#{1}\s+/, ''))}</h2>);
+    } else if (/^---+$/.test(line.trim())) {
+      flushList();
+      out.push(<hr key={i} className="hist-hr" />);
+    } else if (/^\s*[*\-]\s+(.+)/.test(line)) {
+      listItems.push(
+        <li key={i} className="hist-li">{inlineMarkdown(line.replace(/^\s*[*\-]\s+/, ''))}</li>
+      );
+    } else if (/^\s*\d+\.\s+(.+)/.test(line)) {
+      // Numbered list — treat as unordered for simplicity
+      listItems.push(
+        <li key={i} className="hist-li hist-li-num">{inlineMarkdown(line.replace(/^\s*\d+\.\s+/, ''))}</li>
+      );
+    } else if (/^\|/.test(line.trim())) {
+      // Skip table separator rows (---|---) but render data rows
+      if (/^[\s|:\-]+$/.test(line.replace(/\|/g, ''))) return;
+      flushList();
+      const cells = line.split('|').map(c => c.trim()).filter(Boolean);
+      out.push(
+        <div key={i} className="hist-table-row">
+          {cells.map((c, ci) => <span key={ci} className="hist-table-cell">{inlineMarkdown(c)}</span>)}
+        </div>
+      );
+    } else if (!line.trim()) {
+      flushList();
+      out.push(<div key={i} className="hist-spacer" />);
+    } else {
+      flushList();
+      out.push(<p key={i} className="hist-p">{inlineMarkdown(line)}</p>);
+    }
+  });
+
+  flushList();
+  return out;
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 function historyPrompt(plant) {
   const latin = plant.nameLatin ? ` (${plant.nameLatin})` : '';
-  return `Tu es un historien botaniste. Rédige une fiche historique complète sur la plante "${plant.name}"${latin} en français, structurée ainsi :
+  return `Tu es un historien botaniste. Rédige une fiche historique sur la plante "${plant.name}"${latin} en français.
+
+Utilise ce plan en 5 sections avec des titres markdown (##) :
 
 ## 🌍 Origine géographique
-D'où vient cette plante ? Quel est son berceau d'origine ? Région, pays ou continent.
+Berceau d'origine : région, pays ou continent. Sois précis.
 
 ## 📜 Premières cultures connues
-À quelle époque et dans quelle civilisation a-t-elle été cultivée pour la première fois ? Cite des dates ou siècles précis si connus.
+Époque et civilisation des premières cultures. Cite des dates ou siècles précis si connus.
 
 ## 🚢 Introduction en Europe
-Quand et comment a-t-elle été introduite en Europe ? Par qui ? Si la plante est européenne de souche, précise son histoire sur le continent. Si elle ne pousse pas en Europe, indique son introduction dans les régions où elle est aujourd'hui cultivée.
+Quand et comment elle est arrivée en Europe, par qui. Si la plante est européenne de souche, explique son histoire sur le continent. Si elle ne pousse pas en Europe, indique son introduction dans les régions où elle est cultivée.
 
 ## 🔬 Étymologie du nom
-D'où vient le nom commun et le nom latin ?
+Origine du nom commun et du nom latin.
 
-## 📚 Anecdotes & faits historiques
-Deux ou trois faits marquants, surprenants ou peu connus sur cette plante à travers l'histoire.
+## 📚 Anecdotes historiques
+Deux ou trois faits marquants ou peu connus sur cette plante à travers l'histoire.
 
-Réponds de façon précise, sourcée et accessible. Utilise des dates et des noms propres quand c'est possible.`;
+Rédige en paragraphes clairs, avec des dates précises. Évite les tableaux complexes.`;
 }
 
 async function* autoStream(prompt) {
@@ -35,11 +118,17 @@ async function* autoStream(prompt) {
   }
 }
 
-export default function HistoryPanel({ plant, onClose }) {
-  const [status, setStatus]   = useState('idle'); // idle | loading | done | error
-  const [text, setText]       = useState('');
-  const [errorMsg, setErrMsg] = useState('');
+// ── Composant principal ───────────────────────────────────────────────────────
+
+export default function HistoryPanel({ plant, onClose, initialText = null }) {
+  const { storeHistory, removeHistory } = useStore();
+
+  const [status, setStatus]     = useState(initialText ? 'done' : 'idle');
+  const [text, setText]         = useState(initialText || '');
+  const [errorMsg, setErrMsg]   = useState('');
   const [provider, setProvider] = useState('');
+  const [saved, setSaved]       = useState(!!initialText);
+
   const abortRef  = useRef(false);
   const scrollRef = useRef(null);
 
@@ -47,28 +136,28 @@ export default function HistoryPanel({ plant, onClose }) {
   const hasOR     = !!(getApiKey() && getSavedModel());
   const hasAI     = hasOllama || hasOR;
 
-  // Close on Escape
+  // Fermer avec Escape
   useEffect(() => {
     const h = (e) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', h);
     return () => document.removeEventListener('keydown', h);
   }, [onClose]);
 
-  // Auto-scroll while streaming
+  // Auto-scroll pendant le streaming
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [text]);
 
-  // Auto-launch on open
+  // Lancer automatiquement si pas de texte initial
   useEffect(() => {
-    if (hasAI) handleAsk();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!initialText && hasAI) handleAsk();
   }, []);
 
   async function handleAsk() {
     setStatus('loading');
     setText('');
     setErrMsg('');
+    setSaved(false);
     abortRef.current = false;
     setProvider(getOllamaModel() ? 'Ollama' : 'OpenRouter');
 
@@ -89,6 +178,17 @@ export default function HistoryPanel({ plant, onClose }) {
     }
   }
 
+  function handleSave() {
+    storeHistory(plant.name, text);
+    setSaved(true);
+  }
+
+  function handleDelete() {
+    removeHistory(plant.name);
+    setSaved(false);
+    onClose();
+  }
+
   return (
     <div className="hist-overlay" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="hist-panel">
@@ -106,19 +206,11 @@ export default function HistoryPanel({ plant, onClose }) {
             </div>
           </div>
           <div className="hist-header-actions">
-            {status === 'done' && (
-              <button className="hist-btn-regen" onClick={handleAsk} title="Régénérer">
-                🔄
-              </button>
-            )}
             {status === 'loading' && (
-              <button
-                className="hist-btn-stop"
-                onClick={() => { abortRef.current = true; setStatus('done'); }}
-                title="Arrêter"
-              >
-                ⏹
-              </button>
+              <button className="hist-btn-stop" onClick={() => { abortRef.current = true; setStatus('done'); }} title="Arrêter">⏹</button>
+            )}
+            {status === 'done' && (
+              <button className="hist-btn-regen" onClick={handleAsk} title="Régénérer">🔄</button>
             )}
             <button className="hist-close" onClick={onClose} title="Fermer">✕</button>
           </div>
@@ -131,7 +223,7 @@ export default function HistoryPanel({ plant, onClose }) {
             <div className="hist-no-ai">
               <div className="hist-no-ai-icon">🤖</div>
               <p>Aucune IA configurée.</p>
-              <p>Configurez <strong>Ollama</strong> ou <strong>OpenRouter</strong> dans <strong>⚙️ Paramètres</strong> pour utiliser cette fonctionnalité.</p>
+              <p>Configurez <strong>Ollama</strong> ou <strong>OpenRouter</strong> dans <strong>⚙️ Paramètres</strong>.</p>
             </div>
           )}
 
@@ -150,19 +242,33 @@ export default function HistoryPanel({ plant, onClose }) {
           )}
 
           {text && (
-            <div className="hist-content md-body">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
+            <div className="hist-content">
+              {renderMarkdown(text)}
               {status === 'loading' && <span className="hist-cursor">▋</span>}
             </div>
           )}
         </div>
 
         {/* Footer */}
-        {(status === 'done' || status === 'loading') && provider && (
+        {(status === 'done' || (status === 'loading' && text)) && (
           <div className="hist-footer">
             <span className="hist-provider-badge">
               {provider === 'Ollama' ? '🖥️' : '☁️'} {provider}
             </span>
+            <div className="hist-footer-actions">
+              {saved ? (
+                <>
+                  <span className="hist-saved-badge">✅ Sauvegardé</span>
+                  <button className="hist-btn-delete" onClick={handleDelete} title="Supprimer l'historique sauvegardé">🗑</button>
+                </>
+              ) : (
+                status === 'done' && (
+                  <button className="hist-btn-save" onClick={handleSave}>
+                    💾 Sauvegarder
+                  </button>
+                )
+              )}
+            </div>
           </div>
         )}
 

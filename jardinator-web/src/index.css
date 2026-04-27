@@ -3025,14 +3025,68 @@ select, input { font: inherit; }
 }
 @keyframes cursor-blink { 50% { opacity: 0; } }
 
-/* Override md-body headings with warm palette for history */
-.hist-content.md-body h2 {
+/* ── Markdown rendered elements ── */
+.hist-h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
   color: #92400e;
-  border-bottom-color: #fde68a;
+  border-bottom: 1.5px solid #fde68a;
+  padding-bottom: 4px;
+  margin: 18px 0 8px;
 }
-.hist-content.md-body h3 { color: #78350f; }
-.hist-content.md-body li::marker { color: #d97706; }
-.hist-content.md-body strong { color: #78350f; }
+.hist-h3 {
+  font-size: 0.97rem;
+  font-weight: 700;
+  color: #78350f;
+  margin: 14px 0 6px;
+}
+.hist-h4 {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #92400e;
+  margin: 10px 0 4px;
+}
+.hist-p {
+  margin: 0 0 8px;
+  line-height: 1.65;
+}
+.hist-ul {
+  margin: 4px 0 10px 20px;
+  padding: 0;
+  list-style: disc;
+}
+.hist-li {
+  margin-bottom: 4px;
+  line-height: 1.55;
+}
+.hist-li::marker { color: #d97706; }
+.hist-li-num { list-style-type: decimal; }
+.hist-hr {
+  border: none;
+  border-top: 1px solid #fde68a;
+  margin: 14px 0;
+}
+.hist-table-row {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #fde68a;
+  padding: 4px 0;
+}
+.hist-table-cell {
+  flex: 1;
+  padding: 3px 8px;
+  font-size: 0.85rem;
+  color: #78350f;
+}
+.hist-spacer { height: 8px; }
+.hist-code {
+  font-family: monospace;
+  font-size: 0.85em;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 4px;
+  padding: 1px 5px;
+}
 
 /* ── Footer ── */
 .hist-footer {
@@ -3044,6 +3098,12 @@ select, input { font: inherit; }
   align-items: center;
   gap: 8px;
 }
+.hist-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
 .hist-provider-badge {
   font-size: 0.75rem;
   color: #92400e;
@@ -3052,6 +3112,40 @@ select, input { font: inherit; }
   padding: 3px 10px;
   border-radius: 12px;
   font-weight: 600;
+}
+.hist-saved-badge {
+  font-size: 0.78rem;
+  color: #15803d;
+  font-weight: 600;
+}
+.hist-btn-save {
+  padding: 5px 14px;
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 1.5px solid #f59e0b;
+  color: #78350f;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.hist-btn-save:hover {
+  background: linear-gradient(135deg, #fde68a, #fbbf24);
+  transform: translateY(-1px);
+}
+.hist-btn-delete {
+  padding: 4px 10px;
+  background: transparent;
+  border: 1.5px solid #fca5a5;
+  color: #dc2626;
+  border-radius: 14px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.hist-btn-delete:hover {
+  background: #fef2f2;
+  border-color: #dc2626;
 }
 
 /* ── Bouton Historique dans la fiche ── */

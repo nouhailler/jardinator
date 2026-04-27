@@ -11,6 +11,7 @@ import {
   loadCustomPlants, saveCustomPlant, deleteCustomPlant,
 } from '../services/customPlantsService';
 import { loadFavorites, toggleFavoriteEntry } from '../services/favoritesService';
+import { getAllSavedHistory, saveHistory, deleteHistory } from '../services/historyService';
 
 const useStore = create((set, get) => ({
   // ─── Navigation ────────────────────────────────────────────────────────────
@@ -198,6 +199,17 @@ const useStore = create((set, get) => ({
     get()._recompute();
   },
 
+  // ─── Saved AI history ─────────────────────────────────────────────────────
+  savedHistory: {},
+  storeHistory: (plantName, text) => {
+    saveHistory(plantName, text);
+    set(s => ({ savedHistory: { ...s.savedHistory, [plantName]: text } }));
+  },
+  removeHistory: (plantName) => {
+    deleteHistory(plantName);
+    set(s => { const h = { ...s.savedHistory }; delete h[plantName]; return { savedHistory: h }; });
+  },
+
   // ─── Favorites ────────────────────────────────────────────────────────────
   favorites: new Set(),   // Set<plantName>
 
@@ -230,6 +242,7 @@ const useStore = create((set, get) => ({
       chatHistory: getChatHistory(),
       customPlants: loadCustomPlants(),
       favorites: loadFavorites(),
+      savedHistory: getAllSavedHistory(),
     });
   },
 }));

@@ -92,6 +92,8 @@ export default function DetailModal() {
   const [historyOpen, setHistoryOpen] = useState(false);
   const savedAdvice = useStore(s => s.savedAdvice);
   const hasAdvice = plant ? !!savedAdvice[plant.id] : false;
+  const savedHistory = useStore(s => s.savedHistory);
+  const savedHistoryText = plant ? (savedHistory[plant.name] || null) : null;
 
   // Resolve image: user override > default > null
   // imageOverrides[id] = null means user deleted it; absent = use default
@@ -344,7 +346,11 @@ export default function DetailModal() {
       )}
 
       {historyOpen && (
-        <HistoryPanel plant={plant} onClose={() => setHistoryOpen(false)} />
+        <HistoryPanel
+          plant={plant}
+          onClose={() => setHistoryOpen(false)}
+          initialText={savedHistoryText}
+        />
       )}
       {geminiOpen && (
         <GeminiPanel
