@@ -2795,3 +2795,84 @@ select, input { font: inherit; }
 }
 /* make sure the card doesn't clip the tooltip */
 .vcard { overflow: visible; }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   FAVORITES
+══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Étoile dans la fiche détail ── */
+.modal-fav-btn {
+  position: absolute;
+  top: 14px;
+  right: 92px;           /* juste à gauche de la croix */
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.6);
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.modal-fav-btn:hover        { background: rgba(255,255,255,0.28); color: #fbbf24; }
+.modal-fav-btn.is-fav       { color: #fbbf24; background: rgba(251,191,36,0.18); border-color: #fbbf24; }
+.modal-fav-btn.is-fav:hover { background: rgba(251,191,36,0.28); }
+
+/* animation "pulse" au clic pour valider */
+@keyframes fav-pop {
+  0%   { transform: scale(1);   }
+  40%  { transform: scale(1.35);}
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1);   }
+}
+.modal-fav-btn.is-fav { animation: fav-pop 0.35s ease; }
+
+/* ── Étoile jaune sur la miniature ── */
+.card-fav-star {
+  position: absolute;
+  top: 7px;
+  right: 8px;
+  font-size: 1.1rem;
+  color: #fbbf24;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.35);
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* ── Onglet Favoris ── */
+.tab-btn-favorites { gap: 5px; }
+
+.tab-fav-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px; height: 18px;
+  padding: 0 5px;
+  background: #fbbf24;
+  color: #78350f;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 9px;
+  line-height: 1;
+}
+.tab-btn.active .tab-fav-count {
+  background: #fff;
+  color: var(--green-dark);
+}
+
+/* ── Page vide (aucun favori) ── */
+.fav-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 80px 24px;
+  color: var(--text-light);
+  text-align: center;
+}
+.fav-empty-icon { font-size: 3.5rem; opacity: 0.35; }
+.fav-empty h3   { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin: 0; }
+.fav-empty p    { font-size: 0.88rem; margin: 0; max-width: 320px; line-height: 1.5; }

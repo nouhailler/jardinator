@@ -4,17 +4,18 @@ import { getFamilies, getGroupes, EU_REGIONS } from '../services/vegetableServic
 import ExportImport from './ExportImport';
 import PdfExport from './PdfExport';
 
-const TABS = [
-  { key: 'all',      label: '🌿 Tous' },
-  { key: 'now',      label: '📅 Ce mois' },
-  { key: 'printemps',label: '🌸 Printemps' },
-  { key: 'ete',      label: '☀️ Été' },
-  { key: 'automne',  label: '🍂 Automne' },
-  { key: 'hiver',    label: '❄️ Hiver' },
-  { key: 'calendar', label: '📆 Calendrier' },
-  { key: 'potager',  label: '🪴 Potager' },
-  { key: 'chat',     label: '💬 Chat IA' },
-  { key: 'settings', label: '⚙️ Paramètres' },
+const PLANT_TABS = [
+  { key: 'all',       label: '🌿 Tous' },
+  { key: 'now',       label: '📅 Ce mois' },
+  { key: 'printemps', label: '🌸 Printemps' },
+  { key: 'ete',       label: '☀️ Été' },
+  { key: 'automne',   label: '🍂 Automne' },
+  { key: 'hiver',     label: '❄️ Hiver' },
+  { key: 'favorites', label: '⭐ Favoris', dynamic: true },
+  { key: 'calendar',  label: '📆 Calendrier' },
+  { key: 'potager',   label: '🪴 Potager' },
+  { key: 'chat',      label: '💬 Chat IA' },
+  { key: 'settings',  label: '⚙️ Paramètres' },
 ];
 
 export default function Header() {
@@ -23,7 +24,7 @@ export default function Header() {
     groupe, setGroupe, family, setFamily,
     climateZone, setClimateZone,
     plants, toggleMeteo, meteoOpen,
-    openNewPlant,
+    openNewPlant, favorites,
   } = useStore();
   const groupes = getGroupes();
   const families = getFamilies();
@@ -93,13 +94,16 @@ export default function Header() {
       </div>
 
       <nav className="tabs">
-        {TABS.map(t => (
+        {PLANT_TABS.map(t => (
           <button
             key={t.key}
-            className={`tab-btn ${activeTab === t.key ? 'active' : ''}`}
+            className={`tab-btn ${activeTab === t.key ? 'active' : ''} ${t.key === 'favorites' ? 'tab-btn-favorites' : ''}`}
             onClick={() => setTab(t.key)}
           >
             {t.label}
+            {t.key === 'favorites' && favorites.size > 0 && (
+              <span className="tab-fav-count">{favorites.size}</span>
+            )}
           </button>
         ))}
         <div className="tab-count">

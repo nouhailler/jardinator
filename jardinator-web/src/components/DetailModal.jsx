@@ -75,10 +75,12 @@ function AssocList({ items, type }) {
 }
 
 export default function DetailModal() {
-  const plant = useStore(s => s.selectedPlant);
-  const closeDetail = useStore(s => s.closeDetail);
-  const openNewPlant = useStore(s => s.openNewPlant);
-  const getImageUrl = useStore(s => s.getImageUrl);
+  const plant          = useStore(s => s.selectedPlant);
+  const closeDetail    = useStore(s => s.closeDetail);
+  const openNewPlant   = useStore(s => s.openNewPlant);
+  const toggleFavorite = useStore(s => s.toggleFavorite);
+  const isFav          = useStore(s => plant ? s.favorites.has(plant.name) : false);
+  const getImageUrl    = useStore(s => s.getImageUrl);
   const imageOverrides = useStore(s => s.imageOverrides);
   const setImage = useStore(s => s.setImage);
   const removeImage = useStore(s => s.removeImage);
@@ -125,6 +127,13 @@ export default function DetailModal() {
       <div className="modal-overlay" onClick={closeDetail}>
         <div className="modal-content" onClick={e => e.stopPropagation()}>
           <button className="modal-close" onClick={closeDetail}>✕</button>
+          <button
+            className={`modal-fav-btn ${isFav ? 'is-fav' : ''}`}
+            onClick={() => toggleFavorite(plant.name)}
+            title={isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+          >
+            {isFav ? '★' : '☆'}
+          </button>
           {plant.isCustom && (
             <button
               className="modal-edit-custom"

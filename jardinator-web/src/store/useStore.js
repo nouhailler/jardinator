@@ -10,6 +10,7 @@ import {
 import {
   loadCustomPlants, saveCustomPlant, deleteCustomPlant,
 } from '../services/customPlantsService';
+import { loadFavorites, toggleFavoriteEntry } from '../services/favoritesService';
 
 const useStore = create((set, get) => ({
   // ─── Navigation ────────────────────────────────────────────────────────────
@@ -26,8 +27,8 @@ const useStore = create((set, get) => ({
   // ─── Filtered plants ───────────────────────────────────────────────────────
   plants: [],
   _recompute: () => {
-    const { activeTab, search, groupe, family, climateZone } = get();
-    set({ plants: filterPlants({ search, groupe, family, tab: activeTab, climateZone }) });
+    const { activeTab, search, groupe, family, climateZone, favorites } = get();
+    set({ plants: filterPlants({ search, groupe, family, tab: activeTab, climateZone, favorites }) });
   },
 
   // ─── Detail modal ──────────────────────────────────────────────────────────
@@ -197,6 +198,17 @@ const useStore = create((set, get) => ({
     get()._recompute();
   },
 
+  // ─── Favorites ────────────────────────────────────────────────────────────
+  favorites: new Set(),   // Set<plantName>
+
+  toggleFavorite: (name) => {
+    const next = toggleFavoriteEntry(get().favorites, name);
+    set({ favorites: next });
+    get()._recompute();
+  },
+
+  isFavorite: (name) => get().favorites.has(name),
+
   // ─── New plant modal ───────────────────────────────────────────────────────
   newPlantOpen: false,
   newPlantEdit: null,         // plant object if editing an existing custom plant
@@ -217,6 +229,7 @@ const useStore = create((set, get) => ({
       cropHistory: loadCropHistory(),
       chatHistory: getChatHistory(),
       customPlants: loadCustomPlants(),
+      favorites: loadFavorites(),
     });
   },
 }));

@@ -135,8 +135,17 @@ export function getPlantById(id) {
   return getAllPlants().find(p => p.id === id) || null;
 }
 
-export function filterPlants({ plants = null, search = '', groupe = '', family = '', tab = 'all', climateZone = '' }) {
+export function filterPlants({ plants = null, search = '', groupe = '', family = '', tab = 'all', climateZone = '', favorites = null }) {
   let list = plants || getAllPlants();
+
+  // Favorites tab — show only favorited plants, then apply other filters
+  if (tab === 'favorites') {
+    if (favorites && favorites.size > 0) {
+      list = list.filter(p => favorites.has(p.name));
+    } else {
+      return []; // no favorites yet
+    }
+  }
 
   // Tab filter
   const now = new Date().getMonth() + 1;

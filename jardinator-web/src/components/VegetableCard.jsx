@@ -16,6 +16,7 @@ export default function VegetableCard({ plant, onClick }) {
   const initial = plant.name.charAt(0).toUpperCase();
   const getImageUrl  = useStore(s => s.getImageUrl);
   const adviceText   = useStore(s => s.savedAdvice[plant.id] || null);
+  const isFav        = useStore(s => s.favorites.has(plant.name));
   // Re-render when overrides change
   useStore(s => s.imageOverrides[plant.id]);
   const imageUrl = getImageUrl(plant);
@@ -24,6 +25,7 @@ export default function VegetableCard({ plant, onClick }) {
   return (
     <div className="vcard" onClick={() => onClick(plant)} title={plant.name} style={{ position: 'relative' }}>
       {plant.isCustom && <span className="card-custom-badge">✦ Ma fiche</span>}
+      {isFav && <span className="card-fav-star" title="Favori">★</span>}
       <div
         className="vcard-img"
         style={{ background: `linear-gradient(135deg, ${color}22, ${color}44)` }}
