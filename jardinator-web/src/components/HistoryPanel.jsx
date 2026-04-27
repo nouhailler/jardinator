@@ -245,6 +245,20 @@ export default function HistoryPanel({ plant, onClose, initialText = null }) {
             <div className="hist-content">
               {renderMarkdown(text)}
               {status === 'loading' && <span className="hist-cursor">▋</span>}
+              {status === 'done' && (
+                <div className="hist-inline-save">
+                  {saved ? (
+                    <>
+                      <span className="hist-saved-badge">✅ Sauvegardé</span>
+                      <button className="hist-btn-delete" onClick={handleDelete} title="Supprimer l'historique sauvegardé">🗑</button>
+                    </>
+                  ) : (
+                    <button className="hist-btn-save hist-btn-save-inline" onClick={handleSave}>
+                      💾 Sauvegarder l'historique
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -255,20 +269,12 @@ export default function HistoryPanel({ plant, onClose, initialText = null }) {
             <span className="hist-provider-badge">
               {provider === 'Ollama' ? '🖥️' : '☁️'} {provider}
             </span>
-            <div className="hist-footer-actions">
-              {saved ? (
-                <>
-                  <span className="hist-saved-badge">✅ Sauvegardé</span>
-                  <button className="hist-btn-delete" onClick={handleDelete} title="Supprimer l'historique sauvegardé">🗑</button>
-                </>
-              ) : (
-                status === 'done' && (
-                  <button className="hist-btn-save" onClick={handleSave}>
-                    💾 Sauvegarder
-                  </button>
-                )
-              )}
-            </div>
+            {saved && (
+              <div className="hist-footer-actions">
+                <span className="hist-saved-badge">✅ Sauvegardé</span>
+                <button className="hist-btn-delete" onClick={handleDelete} title="Supprimer l'historique sauvegardé">🗑</button>
+              </div>
+            )}
           </div>
         )}
 

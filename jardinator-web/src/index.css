@@ -3118,6 +3118,15 @@ select, input { font: inherit; }
   color: #15803d;
   font-weight: 600;
 }
+.hist-inline-save {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1.5px dashed #fde68a;
+  justify-content: center;
+}
 .hist-btn-save {
   padding: 5px 14px;
   background: linear-gradient(135deg, #fef3c7, #fde68a);
@@ -3132,6 +3141,10 @@ select, input { font: inherit; }
 .hist-btn-save:hover {
   background: linear-gradient(135deg, #fde68a, #fbbf24);
   transform: translateY(-1px);
+}
+.hist-btn-save-inline {
+  font-size: 0.88rem;
+  padding: 7px 20px;
 }
 .hist-btn-delete {
   padding: 4px 10px;
