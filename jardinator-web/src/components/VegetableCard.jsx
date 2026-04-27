@@ -15,7 +15,7 @@ export default function VegetableCard({ plant, onClick }) {
   const harvestStr = formatMonths(plant.harvest);
   const initial = plant.name.charAt(0).toUpperCase();
   const getImageUrl  = useStore(s => s.getImageUrl);
-  const hasAdvice    = useStore(s => !!s.savedAdvice[plant.id]);
+  const adviceText   = useStore(s => s.savedAdvice[plant.id] || null);
   // Re-render when overrides change
   useStore(s => s.imageOverrides[plant.id]);
   const imageUrl = getImageUrl(plant);
@@ -45,8 +45,20 @@ export default function VegetableCard({ plant, onClick }) {
         {harvestStr && (
           <div className="vcard-harvest">🌾 {harvestStr}</div>
         )}
-        {hasAdvice && (
-          <span className="vcard-ai-badge" title="Conseil IA disponible">🤖</span>
+        {adviceText && (
+          <span className="vcard-ai-badge">
+            🤖 Conseil IA
+            <span className="vcard-ai-tooltip">
+              {adviceText
+                .replace(/#{1,6}\s*/g, '')   // strip headings
+                .replace(/\*{1,2}([^*]+)\*{1,2}/g, '$1')  // strip bold/italic
+                .replace(/`[^`]*`/g, '')     // strip code
+                .replace(/\n+/g, ' ')        // collapse newlines
+                .trim()
+                .slice(0, 180)
+                + (adviceText.length > 180 ? '…' : '')}
+            </span>
+          </span>
         )}
       </div>
     </div>

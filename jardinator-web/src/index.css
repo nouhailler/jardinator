@@ -2754,3 +2754,44 @@ select, input { font: inherit; }
 .vcard-ai-badge::after {
   content: ' Conseil IA';
 }
+
+/* ── AI advice preview tooltip on card badge ── */
+.vcard-ai-badge {
+  position: relative;
+}
+.vcard-ai-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  background: #1e293b;
+  color: #e2e8f0;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  padding: 10px 13px;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.28);
+  pointer-events: none;
+  white-space: normal;
+  text-align: left;
+  z-index: 100;
+  font-style: italic;
+  font-weight: 400;
+}
+/* arrow */
+.vcard-ai-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1e293b;
+}
+.vcard-ai-badge:hover .vcard-ai-tooltip {
+  display: block;
+}
+/* make sure the card doesn't clip the tooltip */
+.vcard { overflow: visible; }
