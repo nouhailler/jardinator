@@ -4,6 +4,7 @@ import { GROUPE_COLORS, MONTH_LABELS, ACTIVITY_COLORS } from '../services/vegeta
 import ImagePicker from './ImagePicker';
 import GeminiPanel from './GeminiPanel';
 import AdvicePanel from './AdvicePanel';
+import HistoryPanel from './HistoryPanel';
 
 const ALL_MONTHS = [1,2,3,4,5,6,7,8,9,10,11,12];
 
@@ -86,8 +87,9 @@ export default function DetailModal() {
   const removeImage = useStore(s => s.removeImage);
   const restoreDefault = useStore(s => s.restoreDefault);
   const [pickerOpen, setPickerOpen] = useState(false);
-  const [geminiOpen, setGeminiOpen] = useState(false);
-  const [adviceOpen, setAdviceOpen] = useState(false);
+  const [geminiOpen, setGeminiOpen]   = useState(false);
+  const [adviceOpen, setAdviceOpen]   = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const savedAdvice = useStore(s => s.savedAdvice);
   const hasAdvice = plant ? !!savedAdvice[plant.id] : false;
 
@@ -186,6 +188,13 @@ export default function DetailModal() {
                     title={isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'}
                   >
                     {isFav ? '★' : '☆'}
+                  </button>
+                  <button
+                    className="btn-history"
+                    onClick={() => setHistoryOpen(true)}
+                    title="Histoire et origine de cette plante"
+                  >
+                    📜 Historique
                   </button>
                   {hasAdvice && (
                     <button
@@ -334,6 +343,9 @@ export default function DetailModal() {
         />
       )}
 
+      {historyOpen && (
+        <HistoryPanel plant={plant} onClose={() => setHistoryOpen(false)} />
+      )}
       {geminiOpen && (
         <GeminiPanel
           plant={plant}

@@ -2877,3 +2877,205 @@ select, input { font: inherit; }
 .fav-empty-icon { font-size: 3.5rem; opacity: 0.35; }
 .fav-empty h3   { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin: 0; }
 .fav-empty p    { font-size: 0.88rem; margin: 0; max-width: 320px; line-height: 1.5; }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   HISTORY PANEL
+══════════════════════════════════════════════════════════════════════════════ */
+
+.hist-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1500;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  backdrop-filter: blur(2px);
+}
+
+.hist-panel {
+  width: 100%;
+  max-width: 520px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 40px rgba(0,0,0,0.2);
+  animation: hist-slide-in 0.22s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+@keyframes hist-slide-in {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* ── Header ── */
+.hist-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 16px;
+  background: linear-gradient(135deg, #78350f, #92400e);
+  color: #fff;
+  flex-shrink: 0;
+  gap: 12px;
+}
+.hist-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.hist-icon { font-size: 1.8rem; flex-shrink: 0; }
+.hist-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}
+.hist-subtitle {
+  font-size: 0.95rem;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hist-subtitle em {
+  opacity: 0.75;
+  font-size: 0.85rem;
+}
+.hist-header-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.hist-close, .hist-btn-regen, .hist-btn-stop {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.hist-close:hover, .hist-btn-regen:hover { background: rgba(255,255,255,0.32); }
+.hist-btn-stop { background: rgba(220,38,38,0.5); }
+.hist-btn-stop:hover { background: rgba(220,38,38,0.75); }
+
+/* ── Body ── */
+.hist-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 24px 16px;
+}
+
+.hist-loading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 32px 0;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+.hist-spinner {
+  width: 24px; height: 24px;
+  border: 3px solid #fde68a;
+  border-top-color: #d97706;
+  border-radius: 50%;
+  animation: np-spin 0.75s linear infinite;
+  flex-shrink: 0;
+}
+
+.hist-no-ai {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--text-light);
+}
+.hist-no-ai-icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
+.hist-no-ai p { margin: 6px 0; font-size: 0.9rem; line-height: 1.5; }
+
+.hist-error {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 10px;
+  padding: 16px;
+  color: #dc2626;
+  font-size: 0.88rem;
+}
+.hist-retry-btn {
+  margin-top: 10px;
+  padding: 6px 16px;
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.hist-retry-btn:hover { background: #b91c1c; }
+
+.hist-content { font-size: 0.9rem; line-height: 1.65; }
+.hist-cursor {
+  display: inline-block;
+  animation: cursor-blink 0.7s step-end infinite;
+  color: #d97706;
+  font-weight: 700;
+}
+@keyframes cursor-blink { 50% { opacity: 0; } }
+
+/* Override md-body headings with warm palette for history */
+.hist-content.md-body h2 {
+  color: #92400e;
+  border-bottom-color: #fde68a;
+}
+.hist-content.md-body h3 { color: #78350f; }
+.hist-content.md-body li::marker { color: #d97706; }
+.hist-content.md-body strong { color: #78350f; }
+
+/* ── Footer ── */
+.hist-footer {
+  padding: 10px 24px;
+  border-top: 1px solid #fde68a;
+  background: #fffbeb;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hist-provider-badge {
+  font-size: 0.75rem;
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* ── Bouton Historique dans la fiche ── */
+.btn-history {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 13px;
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 1.5px solid #f59e0b;
+  color: #78350f;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.btn-history:hover {
+  background: linear-gradient(135deg, #fde68a, #fbbf24);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(245,158,11,0.35);
+}
+
+@media (max-width: 600px) {
+  .hist-panel { max-width: 100%; }
+}
