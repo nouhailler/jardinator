@@ -25,7 +25,6 @@ export default function VegetableCard({ plant, onClick }) {
   return (
     <div className="vcard" onClick={() => onClick(plant)} title={plant.name} style={{ position: 'relative' }}>
       {plant.isCustom && <span className="card-custom-badge">✦ Ma fiche</span>}
-      {isFav && <span className="card-fav-star" title="Favori">★</span>}
       <div
         className="vcard-img"
         style={{ background: `linear-gradient(135deg, ${color}22, ${color}44)` }}
@@ -35,6 +34,7 @@ export default function VegetableCard({ plant, onClick }) {
         ) : (
           <span className="vcard-initial" style={{ color }}>{initial}</span>
         )}
+        {isFav && <span className="card-fav-star" title="Favori">★</span>}
       </div>
       <div className="vcard-body">
         <div className="vcard-name">{plant.name}</div>
