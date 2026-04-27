@@ -127,13 +127,6 @@ export default function DetailModal() {
       <div className="modal-overlay" onClick={closeDetail}>
         <div className="modal-content" onClick={e => e.stopPropagation()}>
           <button className="modal-close" onClick={closeDetail}>✕</button>
-          <button
-            className={`modal-fav-btn ${isFav ? 'is-fav' : ''}`}
-            onClick={() => toggleFavorite(plant.name)}
-            title={isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-          >
-            {isFav ? '★' : '☆'}
-          </button>
           {plant.isCustom && (
             <button
               className="modal-edit-custom"
@@ -187,6 +180,13 @@ export default function DetailModal() {
               <div className="detail-name-row">
                 <h2 className="detail-name">{plant.name}</h2>
                 <div className="detail-ai-buttons">
+                  <button
+                    className={`btn-fav-detail ${isFav ? 'is-fav' : ''}`}
+                    onClick={() => toggleFavorite(plant.name)}
+                    title={isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+                  >
+                    {isFav ? '★' : '☆'}
+                  </button>
                   {hasAdvice && (
                     <button
                       className="btn-advice"

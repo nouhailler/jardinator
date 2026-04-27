@@ -2801,33 +2801,34 @@ select, input { font: inherit; }
 ══════════════════════════════════════════════════════════════════════════════ */
 
 /* ── Étoile dans la fiche détail ── */
-.modal-fav-btn {
-  position: absolute;
-  top: 14px;
-  right: 92px;           /* juste à gauche de la croix */
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: rgba(255,255,255,0.6);
+/* ── Étoile favori dans la barre de boutons de la fiche ── */
+.btn-fav-detail {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 34px; height: 34px;
   border-radius: 50%;
-  font-size: 1.25rem;
+  border: 1.5px solid #d1d5db;
+  background: #fff;
+  color: #9ca3af;
+  font-size: 1.3rem;
   line-height: 1;
   cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.18s;
+  flex-shrink: 0;
 }
-.modal-fav-btn:hover        { background: rgba(255,255,255,0.28); color: #fbbf24; }
-.modal-fav-btn.is-fav       { color: #fbbf24; background: rgba(251,191,36,0.18); border-color: #fbbf24; }
-.modal-fav-btn.is-fav:hover { background: rgba(251,191,36,0.28); }
+.btn-fav-detail:hover        { border-color: #fbbf24; color: #fbbf24; background: #fefce8; }
+.btn-fav-detail.is-fav       { color: #fbbf24; border-color: #fbbf24; background: #fefce8; }
+.btn-fav-detail.is-fav:hover { background: #fef9c3; }
 
 /* animation "pulse" au clic pour valider */
 @keyframes fav-pop {
   0%   { transform: scale(1);   }
-  40%  { transform: scale(1.35);}
+  40%  { transform: scale(1.4); }
   70%  { transform: scale(0.9); }
   100% { transform: scale(1);   }
 }
-.modal-fav-btn.is-fav { animation: fav-pop 0.35s ease; }
+.btn-fav-detail.is-fav { animation: fav-pop 0.3s ease; }
 
 /* ── Étoile jaune sur la miniature ── */
 .card-fav-star {
