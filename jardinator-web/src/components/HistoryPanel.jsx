@@ -129,7 +129,7 @@ export default function HistoryPanel({ plant, onClose, initialText = null }) {
   const [provider, setProvider] = useState('');
   const [saved, setSaved]       = useState(!!initialText);
 
-  const abortRef  = useRef(false);
+  const genRef    = useRef(0);   // génération courante — invalide les chunks d'anciens streams
   const scrollRef = useRef(null);
 
   const hasOllama = !!getOllamaModel();
@@ -149,25 +149,29 @@ export default function HistoryPanel({ plant, onClose, initialText = null }) {
   }, [text]);
 
   // Lancer automatiquement si pas de texte initial
+  // Le return () => {} incrémente genRef pour invalider le stream
+  // si React StrictMode relance l'effet une deuxième fois (double-invoke en dev)
   useEffect(() => {
     if (!initialText && hasAI) handleAsk();
+    return () => { genRef.current++; };
   }, []);
 
   async function handleAsk() {
+    const gen = ++genRef.current;  // ID unique pour ce stream
     setStatus('loading');
     setText('');
     setErrMsg('');
     setSaved(false);
-    abortRef.current = false;
     setProvider(getOllamaModel() ? 'Ollama' : 'OpenRouter');
 
     try {
       for await (const chunk of autoStream(historyPrompt(plant))) {
-        if (abortRef.current) break;
+        if (genRef.current !== gen) return;  // stream obsolète → on abandonne
         setText(prev => prev + chunk);
       }
-      setStatus('done');
+      if (genRef.current === gen) setStatus('done');
     } catch (err) {
+      if (genRef.current !== gen) return;
       const msgs = {
         NO_KEY:   'Clé API OpenRouter manquante. Configurez-la dans ⚙️ Paramètres.',
         BAD_KEY:  'Clé API invalide. Vérifiez-la dans ⚙️ Paramètres.',
@@ -207,7 +211,7 @@ export default function HistoryPanel({ plant, onClose, initialText = null }) {
           </div>
           <div className="hist-header-actions">
             {status === 'loading' && (
-              <button className="hist-btn-stop" onClick={() => { abortRef.current = true; setStatus('done'); }} title="Arrêter">⏹</button>
+              <button className="hist-btn-stop" onClick={() => { genRef.current++; setStatus('done'); }} title="Arrêter">⏹</button>
             )}
             {status === 'done' && (
               <button className="hist-btn-regen" onClick={handleAsk} title="Régénérer">🔄</button>
