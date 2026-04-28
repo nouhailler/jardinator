@@ -3186,3 +3186,25 @@ select, input { font: inherit; }
 @media (max-width: 600px) {
   .hist-panel { max-width: 100%; }
 }
+
+/* ── Bouton PDF dans la fiche ── */
+.btn-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 13px;
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  border: 1.5px solid #94a3b8;
+  color: #334155;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.btn-pdf:hover {
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(100,116,139,0.3);
+}

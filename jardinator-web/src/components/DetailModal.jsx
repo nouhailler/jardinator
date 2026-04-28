@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useStore from '../store/useStore';
 import { GROUPE_COLORS, MONTH_LABELS, ACTIVITY_COLORS } from '../services/vegetableService';
+import { printPlantPdf } from '../services/plantPdfService';
 import ImagePicker from './ImagePicker';
 import GeminiPanel from './GeminiPanel';
 import AdvicePanel from './AdvicePanel';
@@ -213,6 +214,13 @@ export default function DetailModal() {
                     title="Obtenir des conseils de culture par IA"
                   >
                     ✨ IA
+                  </button>
+                  <button
+                    className="btn-pdf"
+                    onClick={() => printPlantPdf(plant, imageUrl)}
+                    title="Exporter cette fiche en PDF"
+                  >
+                    📄 PDF
                   </button>
                 </div>
               </div>

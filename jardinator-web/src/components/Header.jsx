@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import useStore from '../store/useStore';
 import { getFamilies, getGroupes, EU_REGIONS } from '../services/vegetableService';
 import ExportImport from './ExportImport';
-import PdfExport from './PdfExport';
 
 const PLANT_TABS = [
   { key: 'all',       label: '🌿 Tous' },
@@ -88,7 +87,6 @@ export default function Header() {
           >
             ➕ Nouvelle fiche
           </button>
-          <PdfExport />
           <ExportImport />
         </div>
       </div>
