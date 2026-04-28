@@ -18,6 +18,60 @@ function esc(str) {
     .replace(/"/g, '&quot;');
 }
 
+// Convertit du markdown en HTML simple pour le PDF
+function markdownToHtml(text) {
+  if (!text) return '';
+  const lines = text.split('\n');
+  const out = [];
+  let inUl = false;
+  let inOl = false;
+
+  const closeList = () => {
+    if (inUl) { out.push('</ul>'); inUl = false; }
+    if (inOl) { out.push('</ol>'); inOl = false; }
+  };
+
+  const inlineHtml = (s) => s
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code style="background:#f3f4f6;padding:1px 4px;border-radius:3px;font-size:0.9em;">$1</code>');
+
+  for (const line of lines) {
+    if (/^###\s+(.+)/.test(line)) {
+      closeList();
+      out.push(`<h4 class="md-h4">${inlineHtml(line.replace(/^###\s+/, ''))}</h4>`);
+    } else if (/^##\s+(.+)/.test(line)) {
+      closeList();
+      out.push(`<h3 class="md-h3">${inlineHtml(line.replace(/^##\s+/, ''))}</h3>`);
+    } else if (/^#\s+(.+)/.test(line)) {
+      closeList();
+      out.push(`<h2 class="md-h2">${inlineHtml(line.replace(/^#\s+/, ''))}</h2>`);
+    } else if (/^---+$/.test(line.trim())) {
+      closeList();
+      out.push('<hr class="md-hr">');
+    } else if (/^\s*[-*]\s+(.+)/.test(line)) {
+      if (!inUl) { if (inOl) { out.push('</ol>'); inOl = false; } out.push('<ul class="md-ul">'); inUl = true; }
+      out.push(`<li>${inlineHtml(line.replace(/^\s*[-*]\s+/, ''))}</li>`);
+    } else if (/^\s*\d+\.\s+(.+)/.test(line)) {
+      if (!inOl) { if (inUl) { out.push('</ul>'); inUl = false; } out.push('<ol class="md-ul">'); inOl = true; }
+      out.push(`<li>${inlineHtml(line.replace(/^\s*\d+\.\s+/, ''))}</li>`);
+    } else if (/^\|/.test(line.trim()) && !/^[\s|:\-]+$/.test(line.replace(/\|/g, ''))) {
+      closeList();
+      const cells = line.split('|').map(c => c.trim()).filter(Boolean);
+      out.push(`<div class="md-table-row">${cells.map(c => `<span class="md-table-cell">${inlineHtml(c)}</span>`).join('')}</div>`);
+    } else if (!line.trim()) {
+      closeList();
+      out.push('<div class="md-spacer"></div>');
+    } else {
+      closeList();
+      out.push(`<p class="md-p">${inlineHtml(line)}</p>`);
+    }
+  }
+  closeList();
+  return out.join('\n');
+}
+
 function calendarHTML(plant) {
   const monthHeaders = ALL_MONTHS.map(m =>
     `<th class="cal-th">${MONTH_LABELS[m]}</th>`
@@ -70,7 +124,7 @@ function sectionHTML(title, content) {
     </div>`;
 }
 
-export function printPlantPdf(plant, imageUrl) {
+export function printPlantPdf(plant, imageUrl, adviceText = null, historyText = null) {
   const groupeColor = GROUPE_COLORS[plant.groupe] || '#78909C';
   const now = new Date();
 
@@ -192,6 +246,16 @@ export function printPlantPdf(plant, imageUrl) {
   }
   const assocSection = assocContent ? sectionHTML('🤝 Associations de plantes', assocContent) : '';
 
+  // ── Conseil IA ────────────────────────────────────────────────────────────────
+  const adviceSection = adviceText
+    ? sectionHTML('✨ Conseil IA', `<div class="ai-block ai-advice">${markdownToHtml(adviceText)}</div>`)
+    : '';
+
+  // ── Historique IA ─────────────────────────────────────────────────────────────
+  const historySection = historyText
+    ? sectionHTML('📜 Historique & origine', `<div class="ai-block ai-history">${markdownToHtml(historyText)}</div>`)
+    : '';
+
   // ── Full HTML ────────────────────────────────────────────────────────────────
   const html = `<!DOCTYPE html>
 <html lang="fr">
@@ -248,6 +312,29 @@ export function printPlantPdf(plant, imageUrl) {
     .assoc-col { flex: 1; }
     .assoc-col-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
 
+    /* ── Blocs IA ── */
+    .ai-block { border-radius: 8px; padding: 14px 16px; font-size: 12px; line-height: 1.7; }
+    .ai-advice { background: #f0fdf4; border: 1px solid #86efac; }
+    .ai-history { background: #fffbeb; border: 1px solid #fde68a; }
+
+    /* ── Markdown dans les blocs IA ── */
+    .md-h2 { font-size: 13px; font-weight: 700; margin: 14px 0 6px; padding-bottom: 3px; border-bottom: 1.5px solid rgba(0,0,0,0.08); }
+    .ai-advice .md-h2 { color: #166534; border-bottom-color: #86efac; }
+    .ai-history .md-h2 { color: #92400e; border-bottom-color: #fde68a; }
+    .md-h3 { font-size: 12px; font-weight: 700; margin: 10px 0 4px; }
+    .ai-advice .md-h3 { color: #15803d; }
+    .ai-history .md-h3 { color: #78350f; }
+    .md-h4 { font-size: 11px; font-weight: 600; margin: 8px 0 3px; }
+    .md-p { margin: 0 0 6px; }
+    .md-ul { margin: 4px 0 8px 20px; padding: 0; }
+    .md-ul li { margin-bottom: 3px; }
+    .ai-advice .md-ul li::marker { color: #16a34a; }
+    .ai-history .md-ul li::marker { color: #d97706; }
+    .md-hr { border: none; border-top: 1px solid rgba(0,0,0,0.08); margin: 10px 0; }
+    .md-spacer { height: 6px; }
+    .md-table-row { display: flex; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .md-table-cell { flex: 1; padding: 3px 6px; font-size: 11px; }
+
     /* ── Footer ── */
     .footer { margin-top: 28px; text-align: right; font-size: 10px; color: #aaa; border-top: 1px solid #eee; padding-top: 8px; }
 
@@ -280,6 +367,8 @@ export function printPlantPdf(plant, imageUrl) {
   ${solSection}
   ${distSection}
   ${assocSection}
+  ${adviceSection}
+  ${historySection}
 
   <div class="footer">
     Généré le ${now.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })} · Jardinator 🌱

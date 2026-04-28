@@ -217,7 +217,12 @@ export default function DetailModal() {
                   </button>
                   <button
                     className="btn-pdf"
-                    onClick={() => printPlantPdf(plant, imageUrl)}
+                    onClick={() => printPlantPdf(
+                      plant,
+                      imageUrl,
+                      savedAdvice[plant.id] || null,
+                      savedHistoryText
+                    )}
                     title="Exporter cette fiche en PDF"
                   >
                     📄 PDF
