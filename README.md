@@ -15,7 +15,7 @@
 [![Licence MIT](https://img.shields.io/badge/Licence-MIT-22C55E?style=flat-square)](LICENSE)
 [![Releases](https://img.shields.io/github/v/release/nouhailler/jardinator?style=flat-square&color=2E7D32&label=Release)](https://github.com/nouhailler/jardinator/releases)
 
-**208 variétés** de légumes, aromatiques, légumineuses, céréales et condimentaires  
+**220+ variétés** de légumes, aromatiques, légumineuses, céréales et condimentaires — **+ fiches personnalisées**  
 Accessible depuis n'importe quel navigateur — aucune installation requise
 
 [🚀 Démarrer](#-démarrage-rapide) · [✨ Fonctionnalités](#-fonctionnalités) · [📦 Télécharger le .deb](https://github.com/nouhailler/jardinator/releases/latest) · [🤝 Contribuer](#-contribuer)
@@ -51,7 +51,35 @@ Chaque plante dispose d'une fiche avec **12 sections** : températures, entretie
 <td>
 
 ### 🤖 Conseils IA intégrés
-Conseils de culture personnalisés via **OpenRouter** (modèles gratuits). Streaming en temps réel, sauvegarde locale, consultation hors-ligne.
+Conseils de culture personnalisés via **Ollama** ou **OpenRouter**. Streaming en temps réel, sauvegarde locale, consultation hors-ligne. Badge 🤖 sur les miniatures avec aperçu au survol.
+
+</td>
+</tr>
+<tr>
+<td>
+
+### 📜 Historique & origine
+Sur chaque fiche, le bouton **📜 Historique** génère une fiche historique structurée (origine géographique, premières cultures, introduction en Europe, étymologie, anecdotes). Sauvegardé localement, inclus dans l'export.
+
+</td>
+<td>
+
+### ➕ Fiches personnalisées
+Créez vos propres fiches plantes via un **assistant 5 étapes** : saisie du nom, enrichissement automatique par IA (nom latin, image Wikipedia), génération des données complètes, édition libre et sauvegarde.
+
+</td>
+</tr>
+<tr>
+<td>
+
+### ⭐ Favoris
+Marquez vos plantes favorites avec ⭐. Étoile visible sur les miniatures et les fiches. Onglet **⭐ Favoris** dédié avec compteur. Persisté dans le navigateur.
+
+</td>
+<td>
+
+### 📄 Export PDF par fiche
+Bouton **📄 PDF** sur chaque fiche — génère un document A4 structuré avec image, toutes les données botaniques, le calendrier coloré, les associations, le **conseil IA** et l'**historique** s'ils ont été sauvegardés.
 
 </td>
 </tr>
@@ -66,20 +94,6 @@ Posez n'importe quelle question de jardinage. Choix entre **Ollama** (IA locale,
 
 ### 💡 120 questions suggérées
 Bibliothèque de **120 questions prêtes-à-envoyer** classées en 20 catégories (graines, semis, maladies, compost, outils…). Un clic charge la question dans le chat.
-
-</td>
-</tr>
-<tr>
-<td>
-
-### ⚙️ Paramètres centralisés
-Configuration **Ollama** (URL + détection automatique des modèles) et **OpenRouter** (clé API + sélection du modèle gratuit) modifiables à tout moment.
-
-</td>
-<td>
-
-### ❓ Aide contextuelle
-Bouton **?** flottant sur toutes les pages. Panneau latéral dont le contenu s'adapte à l'onglet actif. Tooltips inline sur les zones complexes.
 
 </td>
 </tr>
@@ -106,22 +120,22 @@ Connecté à **Open-Meteo** (sans clé API). Température actuelle + prévisions
 </td>
 <td>
 
-### 🌍 Filtrage par zone climatique
-**6 régions européennes** : Nordique, Continental, Semi-continental, Atlantique, Sud-Ouest, Méditerranéen. Compatible avec tous les autres filtres.
+### 🖼️ Images personnalisables
+Recherche intégrée **Wikimedia Commons**, URL personnalisée ou image par défaut. Tout est sauvegardé dans votre navigateur.
 
 </td>
 </tr>
 <tr>
 <td>
 
-### 🖼️ Images personnalisables
-Recherche intégrée **Wikimedia Commons**, URL personnalisée ou image par défaut. Tout est sauvegardé dans votre navigateur.
+### 💾 Export / Import complet
+Bundle JSON v3 : images, conseils IA, **historiques IA** — tout est exportable et réimportable en un clic.
 
 </td>
 <td>
 
-### 📄 Export PDF du calendrier
-Calendrier annuel complet en tableau **A4 paysage**. Export de la vue filtrée ou de toutes les plantes.
+### ❓ Aide contextuelle
+Bouton **?** flottant sur toutes les pages. Panneau latéral dont le contenu s'adapte à l'onglet actif. Tooltips inline sur les zones complexes.
 
 </td>
 </tr>
@@ -141,8 +155,9 @@ Calendrier annuel complet en tableau **A4 paysage**. Export de la vue filtrée o
 | 🫘 **Légumineuses** | Haricot (6 var.), Petit pois, Pois mange-tout, Fève, Soja | 12+ |
 | 🌾 **Céréales** | Blé tendre, Blé dur, Sarrasin, Épeautre, Petit épeautre | 5 |
 | 🌸 **Autres** | Asperge (3 var.), Fraise (2 var.), Artichaut, Topinambour | 20+ |
+| ✏️ **Fiches personnalisées** | Créées par l'utilisateur via l'assistant IA | ∞ |
 
-> **208 entrées** au total — calendrier, températures, associations, distances, sous-variétés, infos complémentaires.
+> **220+ entrées** — calendrier, températures, associations, distances, sous-variétés, infos complémentaires. Extensible à l'infini avec les fiches personnalisées.
 
 ---
 
@@ -177,10 +192,10 @@ Compatible avec **Debian 11+**, **Ubuntu 22.04+** et leurs dérivés.
 
 ```bash
 # 1. Télécharger la dernière release
-wget https://github.com/nouhailler/jardinator/releases/latest/download/jardinator_2.2.0_all.deb
+wget https://github.com/nouhailler/jardinator/releases/latest/download/jardinator_2.4.1_amd64.deb
 
 # 2. Installer
-sudo dpkg -i jardinator_2.2.0_all.deb
+sudo dpkg -i jardinator_2.4.1_amd64.deb
 sudo apt-get install -f   # résoudre les dépendances si besoin
 
 # 3. Lancer
@@ -202,35 +217,40 @@ jardinator/
 ├── jardinator-web/              # 🌐 Application React (version principale)
 │   ├── src/
 │   │   ├── components/          # Composants UI
-│   │   │   ├── Header.jsx       # Onglets, recherche, filtres, météo, export
-│   │   │   ├── CardGrid.jsx     # Grille des cartes plantes
-│   │   │   ├── DetailModal.jsx  # Fiche plante (12 sections)
-│   │   │   ├── GeminiPanel.jsx  # Conseils IA OpenRouter (streaming)
-│   │   │   ├── AdvicePanel.jsx  # Conseils sauvegardés
-│   │   │   ├── ImagePicker.jsx  # Wikimedia Commons + URL custom
-│   │   │   ├── CalendarView.jsx # Vue calendrier mensuelle
-│   │   │   ├── MeteoWidget.jsx  # Météo temps réel + curseurs
-│   │   │   ├── GardenPlanner.jsx# Plan potager drag & drop
-│   │   │   ├── OllamaChat.jsx   # Chat IA libre (Ollama + OpenRouter)
-│   │   │   ├── SettingsPanel.jsx# Configuration Ollama & OpenRouter
-│   │   │   ├── HelpPanel.jsx    # Aide contextuelle par onglet
-│   │   │   ├── HelpTip.jsx      # Tooltip ? inline
-│   │   │   ├── PdfExport.jsx    # Export PDF A4 paysage
-│   │   │   └── ExportImport.jsx # Export/import JSON personnalisations
+│   │   │   ├── Header.jsx           # Onglets, recherche, filtres, météo, export
+│   │   │   ├── CardGrid.jsx         # Grille des cartes plantes + badge IA + étoile favori
+│   │   │   ├── VegetableCard.jsx    # Carte individuelle
+│   │   │   ├── DetailModal.jsx      # Fiche plante (12 sections + PDF + IA + Historique)
+│   │   │   ├── GeminiPanel.jsx      # Conseils IA OpenRouter (streaming)
+│   │   │   ├── AdvicePanel.jsx      # Conseils sauvegardés
+│   │   │   ├── HistoryPanel.jsx     # Historique IA de la plante (streaming + sauvegarde)
+│   │   │   ├── NewPlantModal.jsx    # Assistant 5 étapes création fiche personnalisée
+│   │   │   ├── ImagePicker.jsx      # Wikimedia Commons + URL custom
+│   │   │   ├── CalendarView.jsx     # Vue calendrier mensuelle
+│   │   │   ├── MeteoWidget.jsx      # Météo temps réel + curseurs
+│   │   │   ├── GardenPlanner.jsx    # Plan potager drag & drop
+│   │   │   ├── OllamaChat.jsx       # Chat IA libre (Ollama + OpenRouter)
+│   │   │   ├── SettingsPanel.jsx    # Configuration Ollama & OpenRouter
+│   │   │   ├── HelpPanel.jsx        # Aide contextuelle par onglet
+│   │   │   └── ExportImport.jsx     # Export/import JSON bundle v3
 │   │   ├── services/
-│   │   │   ├── vegetableService.js  # Fusion JSONs + filtres + zones climatiques
-│   │   │   ├── imageService.js      # CRUD images + Wikimedia API
-│   │   │   ├── aiService.js         # OpenRouter streaming + cache modèles
-│   │   │   ├── ollamaService.js     # Ollama streaming + historique chat
-│   │   │   ├── weatherService.js    # Open-Meteo API + géolocalisation
-│   │   │   └── gardenService.js     # Planches de culture + historique
+│   │   │   ├── vegetableService.js   # Fusion JSONs + filtres + zones climatiques
+│   │   │   ├── imageService.js       # CRUD images + Wikimedia API
+│   │   │   ├── aiService.js          # OpenRouter streaming + cache modèles
+│   │   │   ├── ollamaService.js      # Ollama streaming + historique chat
+│   │   │   ├── weatherService.js     # Open-Meteo API + géolocalisation
+│   │   │   ├── gardenService.js      # Planches de culture + historique rotations
+│   │   │   ├── customPlantsService.js# CRUD fiches personnalisées (localStorage)
+│   │   │   ├── favoritesService.js   # Gestion favoris (localStorage)
+│   │   │   ├── historyService.js     # Historiques IA par plante (localStorage)
+│   │   │   ├── newPlantService.js    # IA lookup Latin/Wikipedia + génération fiche
+│   │   │   └── plantPdfService.js    # Génération PDF fiche individuelle
 │   │   ├── store/
-│   │   │   └── useStore.js      # État global Zustand
-│   │   └── data/                # 12 fichiers JSON (208 plantes + 120 questions IA)
+│   │   │   └── useStore.js       # État global Zustand
+│   │   └── data/                 # 12 fichiers JSON (220+ plantes + 120 questions IA)
 │   └── package.json
 │
 ├── main.py                      # 🖥️ Application Python/PyQt6 (version desktop legacy)
-├── src/                         # Sources Python (ui, service, database)
 ├── debian/                      # 📦 Packaging Debian (app web)
 ├── requirements.txt             # Dépendances Python
 └── *.json                       # Données partagées
@@ -244,12 +264,13 @@ jardinator/
 
 | Onglet | Description |
 |--------|-------------|
-| 🌿 **Tous** | L'intégralité du catalogue (208 plantes) |
+| 🌿 **Tous** | L'intégralité du catalogue (220+ plantes) |
 | 📅 **Mois en cours** | Ce qu'il faut semer ou planter ce mois-ci |
 | 🌸 **Printemps** | Mars · Avril · Mai |
 | ☀️ **Été** | Juin · Juillet · Août |
 | 🍂 **Automne** | Septembre · Octobre · Novembre |
 | ❄️ **Hiver** | Décembre · Janvier · Février |
+| ⭐ **Favoris** | Vos plantes marquées comme favorites |
 | 📆 **Calendrier** | Vue mensuelle de toutes les activités |
 | 🪴 **Potager** | Plan interactif + historique des cultures |
 | 💬 **Chat IA** | Questions libres — Ollama local ou OpenRouter cloud |
@@ -266,15 +287,19 @@ jardinator/
 
 ---
 
-## 🤖 Conseils IA
+## 🤖 Fonctionnalités IA
 
-### Fiches plantes
+### Conseils de culture (✨ IA)
+Sur chaque fiche plante, génère un résumé pratique (sol, semis, arrosage, maladies, récolte). Sauvegardé localement, visible en badge sur les miniatures avec aperçu au survol.
 
-Sur chaque fiche plante, le bouton **✨ IA** génère un résumé de culture (sol, semis, arrosage, maladies, récolte) via OpenRouter. Les conseils sont sauvegardés localement et consultables hors-ligne.
+### Historique & origine (📜 Historique)
+Fiche historique structurée en 5 sections : origine géographique, premières cultures, introduction en Europe, étymologie du nom, anecdotes historiques. Sauvegardé et inclus dans le PDF et l'export.
 
-### 💬 Chat IA libre (onglet dédié)
+### Fiches personnalisées (➕ Nouvelle fiche)
+Assistant 5 étapes pour créer une fiche complète : l'IA recherche automatiquement le nom latin, récupère une image Wikipedia, puis génère toutes les données de culture. Tout est éditable avant sauvegarde.
 
-Posez n'importe quelle question en langage naturel. Choix entre **Ollama** (local) et **OpenRouter** (cloud).
+### Chat IA libre (💬)
+Questions libres en langage naturel. 120 questions suggérées en 20 catégories.
 
 **Avec Ollama (IA locale, 100 % privé) :**
 ```bash
@@ -301,6 +326,9 @@ Toutes les personnalisations sont stockées dans le **localStorage** de votre na
 |-----|---------|
 | `jardinator_images_v2` | Images personnalisées (URL ou data-URL) |
 | `jardinator_ai_advice` | Conseils IA sauvegardés par plante |
+| `jardinator_plant_history` | Historiques IA sauvegardés par plante |
+| `jardinator_custom_plants` | Fiches personnalisées créées par l'utilisateur |
+| `jardinator_favorites` | Plantes marquées comme favorites |
 | `jardinator_openrouter_key` | Clé API OpenRouter |
 | `jardinator_ai_model` | Modèle OpenRouter sélectionné |
 | `jardinator_free_models_cache` | Cache modèles gratuits OpenRouter (1h) |
@@ -312,7 +340,8 @@ Toutes les personnalisations sont stockées dans le **localStorage** de votre na
 | `jardinator_weather` | Cache météo (30 min) |
 | `jardinator_location` | Dernière ville météo |
 
-Pour sauvegarder ou transférer vos données → bouton **💾 Exporter** dans la barre de navigation.
+Pour sauvegarder ou transférer vos données → bouton **💾 Exporter** dans la barre de navigation.  
+Le bundle JSON v3 contient : images + conseils IA + historiques IA.
 
 ---
 
@@ -325,10 +354,9 @@ Pour sauvegarder ou transférer vos données → bouton **💾 Exporter** dans l
 | [![Zustand](https://img.shields.io/badge/-Zustand-FF6B35?style=flat-square)](https://zustand-demo.pmnd.rs) | État global | 5 |
 | [![Ollama](https://img.shields.io/badge/-Ollama-3B82F6?style=flat-square)](https://ollama.com) | IA locale (streaming) | — |
 | [![OpenRouter](https://img.shields.io/badge/-OpenRouter-7C3AED?logo=openai&logoColor=white&style=flat-square)](https://openrouter.ai/docs) | IA cloud gratuite (streaming) | — |
-| [![react-markdown](https://img.shields.io/badge/-react--markdown-gray?style=flat-square)](https://github.com/remarkjs/react-markdown) | Rendu Markdown des réponses IA | 10 |
 | [![Open-Meteo](https://img.shields.io/badge/-Open--Meteo-0EA5E9?style=flat-square)](https://open-meteo.com) | Météo temps réel (sans clé) | — |
 | [![Wikimedia](https://img.shields.io/badge/-Wikimedia-000000?logo=wikipedia&logoColor=white&style=flat-square)](https://commons.wikimedia.org) | Images libres de droits | — |
-| JSON statiques | Base de données plantes (208 variétés) | — |
+| JSON statiques | Base de données plantes (220+ variétés) | — |
 
 **Aucun backend requis** — SPA 100% front-end, hébergeable sur n'importe quel CDN statique.
 
