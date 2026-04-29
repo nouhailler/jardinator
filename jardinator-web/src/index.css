@@ -4791,3 +4791,46 @@ select, input { font: inherit; }
   .treat-td-method { display: none; }
   .treat-form-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Plant filter combobox in tab bar ── */
+
+.tab-plant-select {
+  padding: 0.55rem 2rem 0.55rem 0.85rem;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(255,255,255,0.55)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 10px 6px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.tab-plant-select option {
+  background: var(--green-primary);
+  color: white;
+}
+
+.tab-plant-select:hover {
+  color: white;
+  background-color: rgba(255,255,255,0.08);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='white'/%3E%3C/svg%3E");
+}
+
+.tab-plant-select:focus { outline: none; }
+
+.tab-plant-select.active {
+  color: white;
+  border-bottom-color: var(--green-pale);
+  background-color: rgba(255,255,255,0.1);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='white'/%3E%3C/svg%3E");
+}

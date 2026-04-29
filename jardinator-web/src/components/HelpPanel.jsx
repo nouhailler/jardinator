@@ -1,4 +1,4 @@
-const PLANT_TABS = ['all', 'now', 'printemps', 'ete', 'automne', 'hiver'];
+const PLANT_TABS = ['all', 'now', 'printemps', 'ete', 'automne', 'hiver', 'favorites'];
 
 const HELP_CONTENT = {
   plants: {

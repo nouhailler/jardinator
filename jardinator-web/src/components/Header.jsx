@@ -1,24 +1,29 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import useStore from '../store/useStore';
 import { getFamilies, getGroupes, EU_REGIONS } from '../services/vegetableService';
 import ExportImport from './ExportImport';
 
-const PLANT_TABS = [
+const PLANT_FILTER_OPTIONS = [
   { key: 'all',       label: '🌿 Tous' },
   { key: 'now',       label: '📅 Ce mois' },
   { key: 'printemps', label: '🌸 Printemps' },
   { key: 'ete',       label: '☀️ Été' },
   { key: 'automne',   label: '🍂 Automne' },
   { key: 'hiver',     label: '❄️ Hiver' },
-  { key: 'favorites', label: '⭐ Favoris', dynamic: true },
-  { key: 'calendar',  label: '📆 Calendrier' },
-  { key: 'potager',   label: '🪴 Potager' },
-  { key: 'chat',       label: '💬 Chat IA' },
-  { key: 'diagnostic',      label: '🔬 Diagnostic' },
-  { key: 'identification',  label: '🌿 Identification' },
-  { key: 'yields',          label: '🌾 Rendements' },
-  { key: 'inputs',          label: '♻️ Intrants' },
-  { key: 'settings',        label: '⚙️ Paramètres' },
+  { key: 'favorites', label: '⭐ Favoris' },
+];
+
+const PLANT_FILTER_KEYS = new Set(PLANT_FILTER_OPTIONS.map(o => o.key));
+
+const NAV_TABS = [
+  { key: 'calendar',       label: '📆 Calendrier' },
+  { key: 'potager',        label: '🪴 Potager' },
+  { key: 'chat',           label: '💬 Chat IA' },
+  { key: 'diagnostic',     label: '🔬 Diagnostic' },
+  { key: 'identification', label: '🌿 Identification' },
+  { key: 'yields',         label: '🌾 Rendements' },
+  { key: 'inputs',         label: '♻️ Intrants' },
+  { key: 'settings',       label: '⚙️ Paramètres' },
 ];
 
 export default function Header({ onIcsExport }) {
@@ -33,11 +38,25 @@ export default function Header({ onIcsExport }) {
   const families = getFamilies();
   const debounceRef = useRef(null);
 
+  // Remembers the last plant filter so the select keeps its value when a nav tab is active
+  const [plantFilter, setPlantFilter] = useState(
+    PLANT_FILTER_KEYS.has(activeTab) ? activeTab : 'all'
+  );
+
+  const isPlantView = PLANT_FILTER_KEYS.has(activeTab);
+
+  function handlePlantFilter(key) {
+    setPlantFilter(key);
+    setTab(key);
+  }
+
   const handleSearch = (e) => {
     const val = e.target.value;
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => setSearch(val), 280);
   };
+
+  const favLabel = favorites.size > 0 ? `⭐ Favoris (${favorites.size})` : '⭐ Favoris';
 
   return (
     <header className="header">
@@ -103,22 +122,37 @@ export default function Header({ onIcsExport }) {
       </div>
 
       <nav className="tabs">
-        {PLANT_TABS.map(t => (
+        {/* Plant filter — combobox */}
+        <select
+          className={`tab-plant-select ${isPlantView ? 'active' : ''}`}
+          value={plantFilter}
+          onChange={e => handlePlantFilter(e.target.value)}
+          title="Vue des plantes"
+        >
+          {PLANT_FILTER_OPTIONS.map(o => (
+            <option key={o.key} value={o.key}>
+              {o.key === 'favorites' ? favLabel : o.label}
+            </option>
+          ))}
+        </select>
+
+        {/* Navigation tabs */}
+        {NAV_TABS.map(t => (
           <button
             key={t.key}
-            className={`tab-btn ${activeTab === t.key ? 'active' : ''} ${t.key === 'favorites' ? 'tab-btn-favorites' : ''}`}
+            className={`tab-btn ${activeTab === t.key ? 'active' : ''}`}
             onClick={() => setTab(t.key)}
           >
             {t.label}
-            {t.key === 'favorites' && favorites.size > 0 && (
-              <span className="tab-fav-count">{favorites.size}</span>
-            )}
           </button>
         ))}
+
         <div className="tab-count">
-          {activeTab !== 'potager'
-            ? `${plants.length} plante${plants.length !== 1 ? 's' : ''}`
-            : '🪴 Plan du potager'
+          {activeTab === 'potager'
+            ? '🪴 Plan du potager'
+            : isPlantView
+              ? `${plants.length} plante${plants.length !== 1 ? 's' : ''}`
+              : null
           }
           {climateZone && (
             <span className="zone-badge" title={EU_REGIONS.find(r => r.id === climateZone)?.description}>
