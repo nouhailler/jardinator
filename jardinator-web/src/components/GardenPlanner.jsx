@@ -7,6 +7,9 @@ import {
   buildGardenAiPrompt, askOllamaGardenStream, askOpenRouterGardenStream,
   getAlternatives, getCellNeighborStatus,
 } from '../services/gardenAnalysisService';
+import {
+  saveGardenSnapshot, loadBedHistory, deleteGardenSnapshot, formatSnapshotDate,
+} from '../services/gardenHistoryService';
 import { getOllamaModel } from '../services/ollamaService';
 import { getApiKey, getSavedModel } from '../services/aiService';
 
@@ -307,29 +310,37 @@ function BedGrid({ bed, conflictCells, harmonyCells }) {
 // ─── Companion Panel ───────────────────────────────────────────────────────
 function CompanionPanel({ bed, allPlants, conflicts, harmonies, bioScore }) {
   const defaultTab = conflicts.length > 0 ? 0 : 1;
-  const [tab, setTab]       = useState(defaultTab);
-  const [open, setOpen]     = useState(true);
+  const [tab, setTab]           = useState(defaultTab);
   const [provider, setProvider] = useState('ollama');
-  const [aiText, setAiText]   = useState('');
+  const [aiText, setAiText]     = useState('');
   const [aiStatus, setAiStatus] = useState('idle');
-  const [aiError, setAiError]  = useState('');
-  const abortRef = useRef(false);
+  const [aiError, setAiError]   = useState('');
+  const [history, setHistory]   = useState(() => loadBedHistory(bed.id));
+  const [expandedId, setExpandedId] = useState(null);
+  const abortRef  = useRef(false);
   const scrollRef = useRef(null);
+
+  // Refresh history when bed changes
+  const bedId = bed.id;
+  useState(() => { setHistory(loadBedHistory(bedId)); }, [bedId]);
 
   const ollamaModel = getOllamaModel();
   const orKey       = getApiKey();
   const orModel     = getSavedModel();
   const activeModel = provider === 'ollama' ? ollamaModel : orModel;
 
-  const warning = provider === 'ollama' && !ollamaModel  ? '⚠️ Modèle Ollama non configuré'
-    : provider === 'openrouter' && !orKey  ? '⚠️ Clé OpenRouter manquante'
+  const warning = provider === 'ollama' && !ollamaModel   ? '⚠️ Modèle Ollama non configuré'
+    : provider === 'openrouter' && !orKey   ? '⚠️ Clé OpenRouter manquante'
     : provider === 'openrouter' && !orModel ? '⚠️ Modèle non sélectionné' : null;
 
   const { score, details } = bioScore;
-  const grade = scoreGrade(score);
-
+  const grade    = scoreGrade(score);
+  const occupied = Object.keys(bed.cells).length;
   const totalCells = bed.rows * bed.cols;
-  const occupied   = Object.keys(bed.cells).length;
+
+  const plantNames = [...new Set(
+    Object.values(bed.cells).map(c => allPlants.find(p => p.id === c.plantId)?.name).filter(Boolean)
+  )];
 
   async function handleAiGenerate() {
     if (warning || aiStatus === 'loading') return;
@@ -359,24 +370,46 @@ function CompanionPanel({ bed, allPlants, conflicts, harmonies, bioScore }) {
     }
   }
 
+  function handleSave() {
+    if (!aiText || !bed.id) return;
+    saveGardenSnapshot({
+      bedId:          bed.id,
+      bedName:        bed.name,
+      score,
+      conflictsCount: conflicts.length,
+      harmoniesCount: harmonies.length,
+      speciesCount:   details.speciesCount || plantNames.length,
+      plants:         plantNames,
+      aiText,
+      provider,
+      model:          activeModel || '',
+    });
+    setHistory(loadBedHistory(bed.id));
+    setTab(3); // jump to history tab
+  }
+
+  function handleDelete(id) {
+    deleteGardenSnapshot(id);
+    setHistory(loadBedHistory(bed.id));
+  }
+
   const TABS = [
     { label: `🌱 Compagnonnage${conflicts.length ? ` · ⚠️${conflicts.length}` : ''}`, key: 0 },
     { label: `🧬 Biodiversité · ${score}/100`,                                          key: 1 },
     { label: '🤖 Analyse IA',                                                           key: 2 },
+    { label: `📜 Historique${history.length ? ` (${history.length})` : ''}`,            key: 3 },
   ];
 
   return (
     <div className="gp-companion-wrapper">
-      <button className={`gp-companion-toggle ${open ? 'open' : ''}`} onClick={() => setOpen(o => !o)}>
+      <div className="gp-companion-toggle">
         <span className="gp-companion-toggle-title">🔬 Compagnonnage & Biodiversité</span>
         {conflicts.length > 0 && <span className="gp-companion-badge conflict">{conflicts.length} conflit{conflicts.length > 1 ? 's' : ''}</span>}
         {harmonies.length > 0 && <span className="gp-companion-badge harmony">{harmonies.length} harmonie{harmonies.length > 1 ? 's' : ''}</span>}
         <span className="gp-companion-badge bio" style={{ background: grade.color }}>{grade.emoji} {score}/100</span>
-        <span className="gp-companion-chevron">{open ? '▲' : '▼'}</span>
-      </button>
+      </div>
 
-      {open && (
-        <div className="gp-companion-body">
+      <div className="gp-companion-body">
           <div className="gp-companion-tabs">
             {TABS.map(t => (
               <button key={t.key} className={`gp-companion-tab ${tab === t.key ? 'active' : ''}`} onClick={() => setTab(t.key)}>
@@ -559,10 +592,65 @@ function CompanionPanel({ bed, allPlants, conflicts, harmonies, bioScore }) {
                   personnalisées pour améliorer votre biodiversité.
                 </p>
               )}
+
+              {aiStatus === 'done' && aiText && (
+                <button className="gp-history-save-btn" onClick={handleSave}>
+                  💾 Sauvegarder dans l'historique
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* ── Tab 3: Historique ── */}
+          {tab === 3 && (
+            <div className="gp-companion-content">
+              {history.length === 0 ? (
+                <div className="gp-companion-empty">
+                  <span>📜 Aucune analyse sauvegardée pour cette planche.</span>
+                  <span className="gp-companion-hint">Générez une analyse IA puis cliquez sur "Sauvegarder" pour commencer l'historique.</span>
+                </div>
+              ) : (
+                history.map(entry => {
+                  const g = scoreGrade(entry.score);
+                  const isOpen = expandedId === entry.id;
+                  return (
+                    <div key={entry.id} className={`gp-hist-entry ${isOpen ? 'open' : ''}`}>
+                      <button className="gp-hist-header" onClick={() => setExpandedId(isOpen ? null : entry.id)}>
+                        <div className="gp-hist-meta">
+                          <span className="gp-hist-date">📅 {formatSnapshotDate(entry.savedAt)}</span>
+                          <span className="gp-hist-score" style={{ color: g.color }}>{g.emoji} {entry.score}/100</span>
+                        </div>
+                        <div className="gp-hist-stats">
+                          <span>🌱 {entry.speciesCount} espèces</span>
+                          {entry.conflictsCount > 0 && <span className="gp-hist-conflict">⚠️ {entry.conflictsCount} conflits</span>}
+                          {entry.harmoniesCount > 0  && <span className="gp-hist-harmony">🌿 {entry.harmoniesCount} harmonies</span>}
+                        </div>
+                        {entry.plants?.length > 0 && (
+                          <div className="gp-hist-plants">{entry.plants.slice(0, 6).join(', ')}{entry.plants.length > 6 ? `… +${entry.plants.length - 6}` : ''}</div>
+                        )}
+                        <span className="gp-hist-chevron">{isOpen ? '▲' : '▼'}</span>
+                      </button>
+
+                      {isOpen && (
+                        <div className="gp-hist-body">
+                          <div className="gp-hist-provider">
+                            {entry.provider === 'ollama' ? '🖥️' : '☁️'} {entry.model || entry.provider}
+                          </div>
+                          <div className="gp-hist-text">
+                            {entry.aiText.split('\n').map((line, i) => <MdLine key={i} line={line} />)}
+                          </div>
+                          <button className="gp-hist-delete" onClick={() => handleDelete(entry.id)}>
+                            🗑 Supprimer cette entrée
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
+              )}
             </div>
           )}
         </div>
-      )}
     </div>
   );
 }
@@ -699,9 +787,6 @@ export default function GardenPlanner() {
                 {conflicts.length > 0 && (
                   <span className="gp-header-alert">⚠️ {conflicts.length} conflit{conflicts.length > 1 ? 's' : ''}</span>
                 )}
-                <span className="gp-header-score" style={{ color: grade.color }} title={`Score biodiversité : ${bioScore.score}/100`}>
-                  🧬 {grade.emoji} {bioScore.score}/100
-                </span>
                 <span className="gp-tip">💡 Cliquez · Glissez pour déplacer</span>
               </div>
             </div>
@@ -712,14 +797,6 @@ export default function GardenPlanner() {
               harmonyCells={harmonyCells}
             />
             <Legend />
-
-            <CompanionPanel
-              bed={activeBed}
-              allPlants={allPlants}
-              conflicts={conflicts}
-              harmonies={harmonies}
-              bioScore={bioScore}
-            />
           </>
         ) : !showNewForm ? (
           <div className="gp-empty-state">
@@ -731,6 +808,17 @@ export default function GardenPlanner() {
             </button>
           </div>
         ) : null}
+      </div>
+
+      {/* ── Right panel — Companion & Biodiversity ── */}
+      <div className="gp-right-panel">
+        <CompanionPanel
+          bed={activeBed || { rows: 0, cols: 0, cells: {}, cellSizeM: 0.5, name: '' }}
+          allPlants={allPlants}
+          conflicts={conflicts}
+          harmonies={harmonies}
+          bioScore={bioScore}
+        />
       </div>
     </div>
   );

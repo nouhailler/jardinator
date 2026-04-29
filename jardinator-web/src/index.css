@@ -1429,10 +1429,18 @@ select, input { font: inherit; }
   margin: -1.5rem; overflow: hidden;
 }
 .gp-sidebar {
-  width: 240px; min-width: 200px; background: white;
+  width: 220px; min-width: 180px; background: white;
   border-right: 1px solid var(--border);
   display: flex; flex-direction: column; overflow-y: auto;
-  padding: 0.75rem;
+  padding: 0.75rem; flex-shrink: 0;
+}
+/* Right companion panel */
+.gp-right-panel {
+  width: 340px; min-width: 300px; flex-shrink: 0;
+  border-left: 1px solid var(--border);
+  background: white;
+  display: flex; flex-direction: column;
+  overflow: hidden;
 }
 .gp-sidebar-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -1486,7 +1494,7 @@ select, input { font: inherit; }
 
 /* Main area */
 .gp-main {
-  flex: 1; overflow: auto; padding: 1rem 1.5rem;
+  flex: 1; overflow: auto; padding: 1rem 1.5rem 2rem;
   display: flex; flex-direction: column;
 }
 .gp-bed-header {
@@ -1705,40 +1713,40 @@ select, input { font: inherit; }
 .gp-neighbor-plant { font-weight: 600; }
 .gp-neighbor-alt { font-size: 0.73rem; color: var(--text-muted); font-style: italic; }
 
-/* ── Companion Panel ── */
+/* ── Companion Panel (right column) ── */
 .gp-companion-wrapper {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-top: 0.5rem;
+  display: flex; flex-direction: column;
+  height: 100%; overflow: hidden;
   background: white;
 }
 .gp-companion-toggle {
   width: 100%; display: flex; align-items: center; gap: 0.5rem;
-  padding: 0.8rem 1rem; background: var(--green-bg2);
-  border: none; cursor: pointer; text-align: left; transition: background 0.15s;
+  padding: 0.85rem 1rem; background: var(--green-bg2);
+  border: none; border-bottom: 1px solid var(--border);
+  cursor: default; text-align: left; flex-shrink: 0;
 }
-.gp-companion-toggle:hover { background: var(--green-bg); }
-.gp-companion-toggle.open { background: var(--green-bg); }
-.gp-companion-toggle-title { flex: 1; font-weight: 700; font-size: 0.9rem; color: var(--green-dark); }
+.gp-companion-toggle-title { flex: 1; font-weight: 700; font-size: 0.88rem; color: var(--green-dark); }
 .gp-companion-badge {
-  font-size: 0.72rem; font-weight: 700; padding: 2px 8px;
+  font-size: 0.7rem; font-weight: 700; padding: 2px 8px;
   border-radius: 12px; white-space: nowrap; color: white;
 }
 .gp-companion-badge.conflict { background: #c62828; }
 .gp-companion-badge.harmony  { background: #388E3C; }
 .gp-companion-badge.bio      { /* color set inline */ }
-.gp-companion-chevron { font-size: 0.7rem; opacity: 0.6; }
+.gp-companion-chevron { display: none; }
 
-.gp-companion-body { border-top: 1px solid var(--border); }
+.gp-companion-body {
+  flex: 1; display: flex; flex-direction: column;
+  overflow: hidden; min-height: 0;
+}
 
 .gp-companion-tabs {
   display: flex; border-bottom: 1px solid var(--border);
-  background: #fafafa;
+  background: #fafafa; flex-shrink: 0;
 }
 .gp-companion-tab {
-  flex: 1; padding: 0.6rem 0.5rem;
-  font-size: 0.8rem; font-weight: 600; color: var(--text-muted);
+  flex: 1; padding: 0.65rem 0.3rem;
+  font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
   border: none; border-bottom: 2px solid transparent;
   cursor: pointer; background: none; transition: all 0.15s;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -1747,6 +1755,7 @@ select, input { font: inherit; }
 .gp-companion-tab.active { color: var(--green-dark); border-bottom-color: var(--green-primary); background: white; }
 
 .gp-companion-content {
+  flex: 1; overflow-y: auto;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -1855,13 +1864,75 @@ select, input { font: inherit; }
   background: var(--green-bg2); border: 1px solid var(--green-pale);
   border-radius: 10px; padding: 0.85rem 1rem;
   font-size: 0.85rem; line-height: 1.6;
-  max-height: 400px; overflow-y: auto;
 }
 .gp-ai-heading { font-weight: 700; color: var(--green-dark); margin: 0.5rem 0 0.2rem; font-size: 0.88rem; }
 .gp-ai-bullet { padding-left: 1rem; color: var(--text); }
 .gp-ai-para { color: var(--text); }
 .gp-ai-spacer { height: 0.4rem; }
 .gp-ai-placeholder { font-size: 0.83rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+
+.gp-history-save-btn {
+  padding: 7px 16px; background: var(--green-primary); color: white;
+  border: none; border-radius: 16px; font-size: 0.83rem; font-weight: 600;
+  cursor: pointer; transition: background 0.15s; align-self: flex-start;
+}
+.gp-history-save-btn:hover { background: var(--green-dark); }
+
+/* ── History entries ── */
+.gp-hist-entry {
+  border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden; transition: border-color 0.15s;
+}
+.gp-hist-entry.open { border-color: var(--green-pale); }
+
+.gp-hist-header {
+  width: 100%; background: none; border: none; cursor: pointer;
+  padding: 0.7rem 0.85rem; text-align: left;
+  display: flex; flex-direction: column; gap: 3px;
+  transition: background 0.12s; position: relative;
+}
+.gp-hist-header:hover { background: var(--green-bg2); }
+
+.gp-hist-meta {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+}
+.gp-hist-date  { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+.gp-hist-score { font-size: 0.82rem; font-weight: 700; }
+
+.gp-hist-stats {
+  display: flex; gap: 0.6rem; font-size: 0.72rem; color: var(--text-muted);
+}
+.gp-hist-conflict { color: #c62828; font-weight: 600; }
+.gp-hist-harmony  { color: #388E3C; font-weight: 600; }
+
+.gp-hist-plants {
+  font-size: 0.7rem; color: var(--text-muted);
+  font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.gp-hist-chevron {
+  position: absolute; top: 0.75rem; right: 0.85rem;
+  font-size: 0.65rem; opacity: 0.5;
+}
+
+.gp-hist-body {
+  border-top: 1px solid var(--border);
+  padding: 0.75rem 0.85rem;
+  display: flex; flex-direction: column; gap: 0.6rem;
+  background: #fafff9;
+}
+.gp-hist-provider {
+  font-size: 0.72rem; color: var(--text-muted); font-style: italic;
+}
+.gp-hist-text {
+  font-size: 0.82rem; line-height: 1.55; color: var(--text);
+}
+.gp-hist-delete {
+  align-self: flex-end; padding: 4px 10px;
+  background: none; border: 1px solid #ffcdd2; border-radius: 8px;
+  color: #c62828; font-size: 0.75rem; cursor: pointer; transition: all 0.12s;
+}
+.gp-hist-delete:hover { background: #ffebee; }
 
 /* ========== OLLAMA CHAT ========== */
 .ollama-chat {
