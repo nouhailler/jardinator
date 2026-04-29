@@ -13,11 +13,14 @@ const PLANT_TABS = [
   { key: 'favorites', label: '⭐ Favoris', dynamic: true },
   { key: 'calendar',  label: '📆 Calendrier' },
   { key: 'potager',   label: '🪴 Potager' },
-  { key: 'chat',      label: '💬 Chat IA' },
-  { key: 'settings',  label: '⚙️ Paramètres' },
+  { key: 'chat',       label: '💬 Chat IA' },
+  { key: 'diagnostic',      label: '🔬 Diagnostic' },
+  { key: 'identification',  label: '🌿 Identification' },
+  { key: 'yields',          label: '🌾 Rendements' },
+  { key: 'settings',        label: '⚙️ Paramètres' },
 ];
 
-export default function Header() {
+export default function Header({ onIcsExport }) {
   const {
     activeTab, setTab, search, setSearch,
     groupe, setGroupe, family, setFamily,
@@ -86,6 +89,13 @@ export default function Header() {
             title="Créer une nouvelle fiche plante"
           >
             ➕ Nouvelle fiche
+          </button>
+          <button
+            className="btn-ics"
+            onClick={onIcsExport}
+            title="Exporter les dates clés vers Google Agenda / Apple Calendar (.ics)"
+          >
+            📅 Agenda
           </button>
           <ExportImport />
         </div>

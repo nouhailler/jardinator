@@ -12,6 +12,8 @@ import {
 } from '../services/customPlantsService';
 import { loadFavorites, toggleFavoriteEntry } from '../services/favoritesService';
 import { getAllSavedHistory, saveHistory, deleteHistory } from '../services/historyService';
+import { getDiagnosticHistory, saveDiagnosticEntry, updateDiagnosticEntry } from '../services/diagnosticService';
+import { getIdentificationHistory, saveIdentificationEntry, updateIdentificationEntry } from '../services/identificationService';
 
 const useStore = create((set, get) => ({
   // ─── Navigation ────────────────────────────────────────────────────────────
@@ -210,6 +212,30 @@ const useStore = create((set, get) => ({
     set(s => { const h = { ...s.savedHistory }; delete h[plantName]; return { savedHistory: h }; });
   },
 
+  // ─── Diagnostic history ───────────────────────────────────────────────────
+  diagnosticHistory: [],
+  setDiagnosticHistory: (diagnosticHistory) => set({ diagnosticHistory }),
+  storeDiagnostic: (entry) => {
+    const updated = saveDiagnosticEntry(entry);
+    set({ diagnosticHistory: updated });
+  },
+  updateDiagnostic: (id, changes) => {
+    const updated = updateDiagnosticEntry(id, changes);
+    set({ diagnosticHistory: updated });
+  },
+
+  // ─── Identification history ───────────────────────────────────────────────
+  identificationHistory: [],
+  setIdentificationHistory: (identificationHistory) => set({ identificationHistory }),
+  storeIdentification: (entry) => {
+    const updated = saveIdentificationEntry(entry);
+    set({ identificationHistory: updated });
+  },
+  updateIdentification: (id, changes) => {
+    const updated = updateIdentificationEntry(id, changes);
+    set({ identificationHistory: updated });
+  },
+
   // ─── Favorites ────────────────────────────────────────────────────────────
   favorites: new Set(),   // Set<plantName>
 
@@ -243,6 +269,8 @@ const useStore = create((set, get) => ({
       customPlants: loadCustomPlants(),
       favorites: loadFavorites(),
       savedHistory: getAllSavedHistory(),
+      diagnosticHistory: getDiagnosticHistory(),
+      identificationHistory: getIdentificationHistory(),
     });
   },
 }));

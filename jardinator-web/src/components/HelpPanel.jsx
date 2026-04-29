@@ -96,6 +96,81 @@ const HELP_CONTENT = {
       },
     ],
   },
+  diagnostic: {
+    title: 'Diagnostic phytosanitaire',
+    sections: [
+      {
+        icon: '📷',
+        title: 'Importer une photo',
+        text: 'Glissez-déposez une photo ou cliquez pour la sélectionner. Prenez une photo nette des feuilles ou zones malades, bien éclairée.',
+      },
+      {
+        icon: '🔬',
+        title: 'Analyser',
+        text: 'Indiquez optionnellement le nom de la plante, puis cliquez sur "Analyser la photo". L\'IA identifie maladies, carences, ravageurs et propose des remèdes biologiques.',
+      },
+      {
+        icon: '🤖',
+        title: 'Modèles vision',
+        text: 'Utilisez un modèle vision : LLaVA ou BakLLaVA pour Ollama, GPT-4o ou Claude pour OpenRouter. Les modèles texte seuls ne peuvent pas analyser des images.',
+      },
+      {
+        icon: '📋',
+        title: 'Historique',
+        text: 'Chaque diagnostic est sauvegardé avec sa photo (IndexedDB) et le résultat. Cliquez sur une entrée pour la consulter à nouveau ou relancer une analyse.',
+      },
+    ],
+  },
+  identification: {
+    title: 'Identification de plante',
+    sections: [
+      {
+        icon: '🌿',
+        title: 'Photo à identifier',
+        text: 'Importez une photo d\'une feuille, fleur, branche ou écorce. Une image nette sur fond neutre donne les meilleurs résultats.',
+      },
+      {
+        icon: '📍',
+        title: 'Indice contextuel',
+        text: 'Ajoutez un indice (lieu, région, altitude, saison) pour affiner l\'identification. Ex: "Forêt tempérée, France, feuille caduque".',
+      },
+      {
+        icon: '🔍',
+        title: 'Résultat',
+        text: 'L\'IA donne le nom commun, nom latin, famille botanique, habitat et usages connus. Si plusieurs espèces sont possibles, elles sont classées par probabilité.',
+      },
+      {
+        icon: '💾',
+        title: 'Sauvegarder le nom',
+        text: 'Une fois la plante identifiée, tapez son nom dans le champ et cliquez 💾 pour l\'associer à l\'entrée de l\'historique.',
+      },
+    ],
+  },
+  yields: {
+    title: 'Suivi des rendements',
+    sections: [
+      {
+        icon: '➕',
+        title: 'Ajouter une entrée',
+        text: 'Cliquez sur "➕ Ajouter une plante" pour créer une ligne. Renseignez la plante, la variété, la quantité plantée et la récolte obtenue.',
+      },
+      {
+        icon: '📅',
+        title: 'Navigation par année',
+        text: 'Sélectionnez l\'année pour voir ou saisir les rendements correspondants. Les années passées sans données restent accessibles via le menu déroulant.',
+      },
+      {
+        icon: '✨',
+        title: 'Suggestion IA',
+        text: 'Pour chaque entrée complète, le bouton "✨ Suggestion IA" génère une recommandation personnalisée pour améliorer la récolte l\'année suivante.',
+      },
+      {
+        icon: '✏️',
+        title: 'Édition inline',
+        text: 'Tous les champs sont éditables directement dans le tableau : cliquez et modifiez. Les changements sont sauvegardés automatiquement à chaque modification.',
+      },
+    ],
+  },
   settings: {
     title: 'Paramètres',
     sections: [
@@ -138,6 +213,9 @@ function getContent(activeTab) {
   if (activeTab === 'calendar') return HELP_CONTENT.calendar;
   if (activeTab === 'potager') return HELP_CONTENT.potager;
   if (activeTab === 'chat') return HELP_CONTENT.chat;
+  if (activeTab === 'diagnostic') return HELP_CONTENT.diagnostic;
+  if (activeTab === 'identification') return HELP_CONTENT.identification;
+  if (activeTab === 'yields') return HELP_CONTENT.yields;
   if (activeTab === 'settings') return HELP_CONTENT.settings;
   return HELP_CONTENT.general;
 }
