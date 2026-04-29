@@ -52,17 +52,42 @@ const HELP_CONTENT = {
       {
         icon: '➕',
         title: 'Créer une planche',
-        text: 'Cliquez sur \'+ Nouvelle planche\' pour créer une zone de culture. Définissez le nom, le nombre de rangées et colonnes.',
+        text: 'Cliquez sur "+ Nouvelle planche" pour créer une zone de culture. Définissez le nom, le nombre de rangées et colonnes. Chaque cellule représente une unité de plantation.',
       },
       {
         icon: '🌱',
         title: 'Placer une plante',
-        text: 'Cliquez sur une cellule de la grille pour y affecter une plante. Vous pouvez ajouter des notes par cellule.',
+        text: 'Cliquez sur une cellule vide pour y affecter une plante. Choisissez parmi le catalogue complet (220+ variétés) ou vos fiches personnalisées. Vous pouvez ajouter des notes par cellule.',
       },
       {
         icon: '📜',
-        title: 'Historique',
-        text: 'L\'historique des cultures par cellule vous aide à pratiquer la rotation des cultures d\'une année sur l\'autre.',
+        title: 'Historique des cultures',
+        text: 'L\'historique par cellule enregistre quelle plante occupait chaque emplacement chaque année. Des alertes de rotation signalent les successions défavorables.',
+      },
+      {
+        icon: '⚠️',
+        title: 'Alertes de compagnonnage',
+        text: 'Le panneau "Compagnonnage & Biodiversité" (colonne de droite) détecte en temps réel les associations défavorables entre plantes voisines (8 directions). Les cellules en conflit s\'affichent en rouge pulsant. Des alternatives favorables sont proposées pour chaque conflit.',
+      },
+      {
+        icon: '🌿',
+        title: 'Bonnes associations',
+        text: 'Les cellules avec des voisins favorables s\'affichent en vert. L\'onglet "Compagnonnage" liste tous les conflits (🔴) et toutes les harmonies (🟢) de la planche, avec les noms de plantes concernées.',
+      },
+      {
+        icon: '🧮',
+        title: 'Score de biodiversité',
+        text: 'L\'onglet "Biodiversité" calcule un score 0-100 basé sur : richesse en espèces (max 35 pts), diversité des familles botaniques (25 pts), diversité des groupes (20 pts), taux de remplissage (10 pts), bonus harmonies (10 pts), pénalité conflits (−30 pts max).',
+      },
+      {
+        icon: '🤖',
+        title: 'Analyse IA du potager',
+        text: 'L\'onglet "Analyse IA" génère une analyse structurée par IA : bilan global, corrections prioritaires pour chaque conflit, recommandations biodiversité. Fonctionne avec Ollama (local) ou OpenRouter (cloud). La réponse arrive en streaming.',
+      },
+      {
+        icon: '📊',
+        title: 'Historique IA potager',
+        text: 'Cliquez "💾 Sauvegarder cette analyse" pour archiver le résultat IA avec le score, la date et la liste des plantes. L\'onglet "Historique" permet de comparer l\'évolution de votre potager dans le temps. Max 50 entrées conservées.',
       },
     ],
   },
@@ -216,18 +241,53 @@ const HELP_CONTENT = {
       },
     ],
   },
+  meteo: {
+    title: 'Widget Météo & Agro-météo',
+    sections: [
+      {
+        icon: '🌡️',
+        title: 'Météo en temps réel',
+        text: 'Saisissez une ville dans la barre de recherche météo (en haut à droite). Les températures actuelles et les prévisions 7 jours sont récupérées via Open-Meteo (sans clé API). Le double curseur filtre automatiquement les plantes adaptées à la plage de températures.',
+      },
+      {
+        icon: '🤖',
+        title: 'Recommandations IA météo',
+        text: 'La section "Recommandations agro-météo" génère en streaming des conseils pratiques adaptés à la météo du jour : quand semer, arroser, protéger. Format [contexte météo] → [action à faire]. Résultat sauvegardé automatiquement.',
+      },
+      {
+        icon: '📈',
+        title: 'Journal climatique 30 jours',
+        text: 'La section "Journal climatique" affiche les 30 derniers jours de températures (min/max/moyenne) sous forme de frise chronologique. Les événements notables sont signalés : gel, canicule, seuils critiques pour vos plantes.',
+      },
+    ],
+  },
   general: {
     title: 'Aide générale',
     sections: [
       {
         icon: '🌱',
         title: 'Bienvenue dans Jardinator',
-        text: 'Jardinator est votre compagnon de jardinage : explorez les plantes, consultez le calendrier, planifiez votre potager et obtenez des conseils IA personnalisés.',
+        text: 'Jardinator est votre compagnon de jardinage : explorez 220+ variétés de plantes, consultez le calendrier, planifiez votre potager avec analyse IA et obtenez des conseils personnalisés.',
       },
       {
         icon: '🧭',
         title: 'Navigation',
-        text: 'Utilisez les onglets en haut pour naviguer entre les différentes sections : Plantes, Calendrier, Potager, Chat IA et Paramètres.',
+        text: 'Utilisez les onglets en haut pour naviguer : Plantes, Calendrier 📆, Potager 🪴, Chat IA 💬, Diagnostic 🔬, Identification 🌿, Rendements 🌾, Intrants ♻️, Paramètres ⚙️.',
+      },
+      {
+        icon: '🌡️',
+        title: 'Widget Météo',
+        text: 'Le bouton 🌡️ dans la barre du haut ouvre le widget météo : température actuelle, prévisions 7j, recommandations agro-météo IA et journal climatique 30 jours. Saisissez votre ville pour localiser les prévisions.',
+      },
+      {
+        icon: '❓',
+        title: 'Aide contextuelle',
+        text: 'Ce panneau d\'aide s\'adapte à l\'onglet actif. Cliquez le bouton ❓ depuis n\'importe quelle page pour obtenir l\'aide spécifique à ce contexte.',
+      },
+      {
+        icon: '💾',
+        title: 'Vos données',
+        text: 'Toutes vos données sont stockées localement dans votre navigateur (localStorage / IndexedDB). Utilisez le bouton Exporter dans la barre de navigation pour créer une sauvegarde complète (images + conseils IA + historiques).',
       },
     ],
   },

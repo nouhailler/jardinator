@@ -101,7 +101,21 @@ Bibliothèque de **120 questions prêtes-à-envoyer** classées en 20 catégorie
 <td>
 
 ### 🪴 Plan du potager interactif
-Créez des **planches de culture** avec dimensions personnalisées. Interface **drag & drop** pour placer vos plants. Avertissements d'associations défavorables en temps réel.
+Créez des **planches de culture** avec dimensions personnalisées. Interface **drag & drop** pour placer vos plants. Alertes d'associations défavorables en temps réel sur chaque cellule.
+
+</td>
+<td>
+
+### 🌿 Compagnonnage & Biodiversité
+**Analyse en temps réel** des associations entre plantes voisines (8 directions). Cellules en conflit surlignées en rouge pulsant. Score de biodiversité 0–100 (espèces, familles, groupes, taux de remplissage, harmonies vs conflits).
+
+</td>
+</tr>
+<tr>
+<td>
+
+### 🤖 Analyse IA du potager
+L'IA génère un **bilan complet** de la planche : état général, corrections prioritaires pour chaque conflit, recommandations biodiversité. Fonctionne avec Ollama ou OpenRouter. **Historique** des analyses pour suivre l'évolution dans le temps.
 
 </td>
 <td>
@@ -114,8 +128,36 @@ Enregistrement automatique par cellule et par année. **Alertes de rotation** : 
 <tr>
 <td>
 
-### 🌡️ Météo en temps réel
-Connecté à **Open-Meteo** (sans clé API). Température actuelle + prévisions 7 jours. Double curseur synchronisé automatiquement pour filtrer les plantes adaptées.
+### 🌡️ Météo & Agro-météo intelligente
+Connecté à **Open-Meteo** (sans clé API). Température actuelle + prévisions 7 jours. **Recommandations IA** adaptées à la météo du jour. **Journal climatique 30 jours** avec détection des événements notables (gel, canicule…).
+
+</td>
+<td>
+
+### 🔬 Diagnostic phytosanitaire IA
+Importez une photo de plante malade — l'IA identifie **maladies, carences et ravageurs**, propose des **remèdes biologiques**. Historique complet des diagnostics avec images. Compatible modèles vision (LLaVA, GPT-4o…).
+
+</td>
+</tr>
+<tr>
+<td>
+
+### 🌿 Identification de plante
+Photo d'une feuille, fleur ou écorce → l'IA retourne **nom commun, nom latin, famille botanique, habitat et usages**. Classement par probabilité si plusieurs espèces sont possibles.
+
+</td>
+<td>
+
+### 🌾 Suivi des rendements
+Journal de récoltes par plante et par année. **Suggestion IA** pour améliorer les rendements d'une saison à l'autre. Édition inline, navigation multi-années.
+
+</td>
+</tr>
+<tr>
+<td>
+
+### ♻️ Intrants & Compost
+**Calculateur de compost** : ratio vert/brun, estimation de la production selon votre surface. **Journal des traitements bio** : purins, décoctions, efficacité perçue (1–5 ⭐). Top traitements agrégés.
 
 </td>
 <td>
@@ -129,13 +171,13 @@ Recherche intégrée **Wikimedia Commons**, URL personnalisée ou image par déf
 <td>
 
 ### 💾 Export / Import complet
-Bundle JSON v3 : images, conseils IA, **historiques IA** — tout est exportable et réimportable en un clic.
+Bundle JSON v3 : images, conseils IA, **historiques IA** — tout est exportable et réimportable en un clic. Export agenda **.ics** compatible Google Agenda et Apple Calendar.
 
 </td>
 <td>
 
 ### ❓ Aide contextuelle
-Bouton **?** flottant sur toutes les pages. Panneau latéral dont le contenu s'adapte à l'onglet actif. Tooltips inline sur les zones complexes.
+Bouton **?** flottant sur toutes les pages. Panneau latéral dont le contenu s'adapte à l'onglet actif — aide spécifique pour chaque fonctionnalité.
 
 </td>
 </tr>
@@ -227,9 +269,13 @@ jardinator/
 │   │   │   ├── NewPlantModal.jsx    # Assistant 5 étapes création fiche personnalisée
 │   │   │   ├── ImagePicker.jsx      # Wikimedia Commons + URL custom
 │   │   │   ├── CalendarView.jsx     # Vue calendrier mensuelle
-│   │   │   ├── MeteoWidget.jsx      # Météo temps réel + curseurs
-│   │   │   ├── GardenPlanner.jsx    # Plan potager drag & drop
+│   │   │   ├── MeteoWidget.jsx      # Météo temps réel + recommandations IA + journal 30j
+│   │   │   ├── GardenPlanner.jsx    # Plan potager drag & drop + compagnonnage + biodiversité
 │   │   │   ├── OllamaChat.jsx       # Chat IA libre (Ollama + OpenRouter)
+│   │   │   ├── DiagnosticPanel.jsx  # Diagnostic phytosanitaire IA (photo)
+│   │   │   ├── IdentificationPanel.jsx # Identification plante par photo
+│   │   │   ├── YieldPanel.jsx       # Journal de rendements
+│   │   │   ├── InputsPanel.jsx      # Calculateur compost + traitements bio
 │   │   │   ├── SettingsPanel.jsx    # Configuration Ollama & OpenRouter
 │   │   │   ├── HelpPanel.jsx        # Aide contextuelle par onglet
 │   │   │   └── ExportImport.jsx     # Export/import JSON bundle v3
@@ -238,13 +284,20 @@ jardinator/
 │   │   │   ├── imageService.js       # CRUD images + Wikimedia API
 │   │   │   ├── aiService.js          # OpenRouter streaming + cache modèles
 │   │   │   ├── ollamaService.js      # Ollama streaming + historique chat
-│   │   │   ├── weatherService.js     # Open-Meteo API + géolocalisation
+│   │   │   ├── weatherService.js     # Open-Meteo API + recommandations IA météo
+│   │   │   ├── climateLogService.js  # Historique climatique 30j + événements notables
 │   │   │   ├── gardenService.js      # Planches de culture + historique rotations
+│   │   │   ├── gardenAnalysisService.js # Analyse compagnonnage + score biodiversité + IA potager
+│   │   │   ├── gardenHistoryService.js  # Historique analyses IA potager (localStorage)
 │   │   │   ├── customPlantsService.js# CRUD fiches personnalisées (localStorage)
 │   │   │   ├── favoritesService.js   # Gestion favoris (localStorage)
 │   │   │   ├── historyService.js     # Historiques IA par plante (localStorage)
 │   │   │   ├── newPlantService.js    # IA lookup Latin/Wikipedia + génération fiche
-│   │   │   └── plantPdfService.js    # Génération PDF fiche individuelle
+│   │   │   ├── plantPdfService.js    # Génération PDF fiche individuelle
+│   │   │   ├── diagnosticService.js  # Diagnostic phytosanitaire IA (prompt + streaming)
+│   │   │   ├── identificationService.js # Identification plante IA (prompt + streaming)
+│   │   │   ├── yieldService.js       # CRUD journal de rendements
+│   │   │   └── icsService.js         # Génération fichier .ics (agenda)
 │   │   ├── store/
 │   │   │   └── useStore.js       # État global Zustand
 │   │   └── data/                 # 12 fichiers JSON (220+ plantes + 120 questions IA)
@@ -272,8 +325,12 @@ jardinator/
 | ❄️ **Hiver** | Décembre · Janvier · Février |
 | ⭐ **Favoris** | Vos plantes marquées comme favorites |
 | 📆 **Calendrier** | Vue mensuelle de toutes les activités |
-| 🪴 **Potager** | Plan interactif + historique des cultures |
+| 🪴 **Potager** | Plan interactif + compagnonnage IA + score biodiversité |
 | 💬 **Chat IA** | Questions libres — Ollama local ou OpenRouter cloud |
+| 🔬 **Diagnostic** | Diagnostic phytosanitaire IA par photo |
+| 🌿 **Identification** | Identification de plante par photo |
+| 🌾 **Rendements** | Journal de récoltes par plante et par année |
+| ♻️ **Intrants** | Calculateur de compost + journal traitements bio |
 | ⚙️ **Paramètres** | Configuration Ollama et OpenRouter |
 
 ### Code couleur du calendrier
@@ -297,6 +354,21 @@ Fiche historique structurée en 5 sections : origine géographique, premières c
 
 ### Fiches personnalisées (➕ Nouvelle fiche)
 Assistant 5 étapes pour créer une fiche complète : l'IA recherche automatiquement le nom latin, récupère une image Wikipedia, puis génère toutes les données de culture. Tout est éditable avant sauvegarde.
+
+### Analyse potager (🪴 Compagnonnage & Biodiversité)
+Analyse en temps réel des associations entre voisins (8 directions). Score biodiversité 0–100. L'IA génère un bilan complet avec corrections prioritaires et recommandations. Les analyses sont archivées pour suivre l'évolution dans le temps.
+
+### Recommandations agro-météo (🌡️ Météo-Agile)
+À partir des données météo du jour, l'IA génère des recommandations d'action concrètes pour le jardin (semis, arrosage, protection). Journal climatique 30 jours avec événements notables.
+
+### Diagnostic phytosanitaire (🔬)
+Photo d'une plante malade → identification de la maladie, de la carence ou du ravageur, avec remèdes biologiques détaillés. Nécessite un modèle vision (LLaVA, GPT-4o, Claude…).
+
+### Identification de plante (🌿)
+Photo d'une feuille, fleur ou écorce → nom commun, nom latin, famille, habitat et usages. Probabilités si plusieurs candidats.
+
+### Suggestions rendements (🌾)
+Pour chaque récolte enregistrée, l'IA propose des améliorations ciblées (variété, densité, rotation) pour la saison suivante.
 
 ### Chat IA libre (💬)
 Questions libres en langage naturel. 120 questions suggérées en 20 catégories.
@@ -337,8 +409,16 @@ Toutes les personnalisations sont stockées dans le **localStorage** de votre na
 | `jardinator_chat_history` | Historique du chat IA (questions + réponses datées) |
 | `jardinator_garden_beds` | Planches de culture (grilles + plantes) |
 | `jardinator_crop_history` | Historique cultures par cellule/année |
+| `jardinator_garden_ai_history` | Historique analyses IA potager (max 50 entrées) |
 | `jardinator_weather` | Cache météo (30 min) |
 | `jardinator_location` | Dernière ville météo |
+| `jardinator_weather_ai_recs` | Recommandations agro-météo IA sauvegardées |
+| `jardinator_climate_history` | Cache historique climatique 30j (3h) |
+| `jardinator_diagnostic_history` | Historique diagnostics phytosanitaires |
+| `jardinator_identification_history` | Historique identifications de plantes |
+| `jardinator_compost` | Données calculateur compost |
+| `jardinator_treatments` | Journal des traitements bio |
+| `jardinator_yields` | Journal de rendements |
 
 Pour sauvegarder ou transférer vos données → bouton **💾 Exporter** dans la barre de navigation.  
 Le bundle JSON v3 contient : images + conseils IA + historiques IA.
@@ -384,10 +464,10 @@ git push origin feature/ma-fonctionnalite
 ### 💡 Idées d'améliorations futures
 
 - 📱 **Progressive Web App** — installation sur mobile/tablette
-- 🗺️ **Plan potager** — export image/PDF de la grille
-- 📊 **Statistiques** — rendements et suivi par saison
-- 🔄 **Rotations automatiques** — suggestions sur N années
-- 🌍 **Zones USDA** — filtrage en plus des zones EU
+- 🗺️ **Export potager** — export image/PDF de la grille du plan
+- 🔄 **Rotations automatiques** — suggestions de rotations sur N années
+- 🌍 **Zones USDA** — filtrage en plus des zones EU déjà implémentées
+- 📦 **Paquet .deb v2.5** — packaging incluant toutes les nouvelles fonctionnalités
 
 ---
 

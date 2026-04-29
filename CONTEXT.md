@@ -80,6 +80,8 @@ jardinator-web/src/
 │   ├── weatherService.js       # Open-Meteo API + buildWeatherAiPrompt + streaming IA météo
 │   ├── climateLogService.js    # Historique climatique 30j (past_days=30) + getNotableEvents()
 │   ├── gardenService.js        # CRUD planches de culture + historique rotations
+│   ├── gardenAnalysisService.js # adjKeys + analyzeBedAssociations + computeBiodiversityScore + buildGardenAiPrompt + askOllama/OpenRouterGardenStream
+│   ├── gardenHistoryService.js  # saveGardenSnapshot + loadBedHistory + deleteGardenSnapshot (jardinator_garden_ai_history)
 │   ├── customPlantsService.js  # CRUD fiches personnalisées (jardinator_custom_plants)
 │   ├── favoritesService.js     # Favoris Set<plantName> (jardinator_favorites)
 │   ├── historyService.js       # Historiques IA par plantName (jardinator_plant_history)
@@ -134,6 +136,10 @@ Les fiches personnalisées sont stockées séparément dans `jardinator_custom_p
 | Plan du potager interactif | `GardenPlanner` | Drag & drop, planches configurables |
 | Historique des cultures | `GardenPlanner` + `gardenService` | Par cellule et par année |
 | Alertes rotation | `CellPanel` dans GardenPlanner | Associations défavorables N-1 |
+| **Compagnonnage & alertes** | `CompanionPanel` dans GardenPlanner | Détection conflits/harmonies 8 directions en temps réel, cellules colorées |
+| **Score biodiversité** | `gardenAnalysisService.computeBiodiversityScore` | 0-100 : espèces, familles, groupes, fill rate, harmonies, conflits |
+| **Analyse IA potager** | `CompanionPanel` onglet "Analyse IA" | Prompt structuré → bilan + corrections + recommandations, streaming |
+| **Historique IA potager** | `CompanionPanel` onglet "Historique" + `gardenHistoryService` | Max 50 entrées, sauvegarde manuelle, suppression individuelle |
 | Chat IA libre | `OllamaChat` | Ollama local ou OpenRouter cloud |
 | 120 questions suggérées | `OllamaChat` | 20 catégories |
 
@@ -163,6 +169,7 @@ Les fiches personnalisées sont stockées séparément dans `jardinator_custom_p
 | `jardinator_compost` | Données calculateur compost |
 | `jardinator_treatments` | Journal des traitements bio |
 | `jardinator_yields` | Journal de rendements |
+| `jardinator_garden_ai_history` | Historique analyses IA potager (max 50 entrées, par planche) |
 | `jardinator_diagnostic_history` | Historique diagnostics phytosanitaires |
 | `jardinator_identification_history` | Historique identifications de plantes |
 
@@ -188,6 +195,9 @@ Les fiches personnalisées sont stockées séparément dans `jardinator_custom_p
 - **WeatherAiSection** : prompt construit par `buildWeatherAiPrompt()`, format de réponse `[contexte] → [action]`, affiché splitté sur `→`. Résultat persisté dans `jardinator_weather_ai_recs`.
 - **Header FilterDropdown** : composant contrôlé avec `localSearch` debounced (280ms) synchronisé au store. Ferme sur click extérieur et Escape. Badge `activeCount` = nombre de filtres actifs.
 - **Dual provider pattern** : toute fonctionnalité IA propose Ollama (local) + OpenRouter (cloud) via des générateurs async (`function*` + `for await`).
+- **CompanionPanel** : colonne droite fixe (340px, `flex-shrink: 0`) dans GardenPlanner, toujours visible. 4 onglets : Compagnonnage | Biodiversité | Analyse IA | Historique. Analyse recalculée via `useMemo` à chaque changement de `bed.cells`.
+- **gardenAnalysisService** : `adjKeys()` calcule les 8 voisins d'une cellule. La déduplication des paires utilise `[keyA, keyB].sort().join('|')`. `computeBiodiversityScore()` retourne `{score, details}`. `buildGardenAiPrompt()` produit un prompt structuré en 3 parties.
+- **gardenHistoryService** : clé `jardinator_garden_ai_history`, max 50 entrées. ID = `${bedId}-${Date.now()}`. `loadBedHistory(bedId)` filtre par planche.
 
 ---
 
@@ -250,7 +260,7 @@ dpkg-deb --build debian jardinator_X.Y.Z_amd64.deb
 | v2.2.0 | `v2.2.0` | Nouvelle fiche IA, badge conseil miniature, favoris |
 | v2.3.x | `v2.3.x` | HistoryPanel + sauvegarde + export bundle v3 |
 | v2.4.1 | `v2.4.1` | Export PDF par fiche (image + données + IA + historique) |
-| **dev** | `main` | Diagnostic IA, Identification, Rendements, Intrants, Météo-Agile, ICS export |
+| **dev** | `main` | Diagnostic IA, Identification, Rendements, Intrants, Météo-Agile, ICS export, Compagnonnage & Biodiversité, Historique IA potager, Aide contextuelle enrichie |
 
 Repo : https://github.com/nouhailler/jardinator
 
