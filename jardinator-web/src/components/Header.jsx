@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import useStore from '../store/useStore';
 import { getFamilies, getGroupes, EU_REGIONS } from '../services/vegetableService';
 import ExportImport from './ExportImport';
@@ -26,6 +26,119 @@ const NAV_TABS = [
   { key: 'settings',       label: '⚙️ Paramètres' },
 ];
 
+// ─── FilterDropdown ───────────────────────────────────────────────────────────
+
+function FilterDropdown({ search, setSearch, groupe, setGroupe, groupes, family, setFamily, families, climateZone, setClimateZone }) {
+  const [open, setOpen]           = useState(false);
+  const [localSearch, setLocal]   = useState(search);
+  const wrapRef    = useRef(null);
+  const inputRef   = useRef(null);
+  const debounceRef = useRef(null);
+
+  // Sync input if search is reset externally
+  useEffect(() => { setLocal(search); }, [search]);
+
+  // Close on click outside
+  useEffect(() => {
+    if (!open) return;
+    function handler(e) {
+      if (!wrapRef.current?.contains(e.target)) setOpen(false);
+    }
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
+  // Close on Escape
+  useEffect(() => {
+    if (!open) return;
+    function handler(e) { if (e.key === 'Escape') setOpen(false); }
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [open]);
+
+  // Focus the search input when panel opens
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 30);
+  }, [open]);
+
+  function handleSearchChange(e) {
+    const val = e.target.value;
+    setLocal(val);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => setSearch(val), 280);
+  }
+
+  function clearAll() {
+    setLocal('');
+    setSearch('');
+    setGroupe('');
+    setFamily('');
+    setClimateZone('');
+  }
+
+  const activeCount = [search, groupe, family, climateZone].filter(Boolean).length;
+
+  return (
+    <div ref={wrapRef} className="filter-dropdown">
+      <button
+        className={`filter-dropdown-trigger ${open ? 'open' : ''} ${activeCount > 0 ? 'has-filters' : ''}`}
+        onClick={() => setOpen(o => !o)}
+        title="Rechercher et filtrer les plantes"
+      >
+        🔍 Rechercher
+        {activeCount > 0 && <span className="filter-active-count">{activeCount}</span>}
+        <span className="filter-dropdown-chevron">{open ? '▲' : '▼'}</span>
+      </button>
+
+      {open && (
+        <div className="filter-dropdown-panel">
+          <input
+            ref={inputRef}
+            className="filter-panel-search"
+            type="search"
+            placeholder="Rechercher une plante…"
+            value={localSearch}
+            onChange={handleSearchChange}
+          />
+          <select
+            className="filter-panel-select"
+            value={groupe}
+            onChange={e => setGroupe(e.target.value)}
+          >
+            <option value="">Tous les groupes</option>
+            {groupes.map(g => <option key={g} value={g}>{g}</option>)}
+          </select>
+          <select
+            className="filter-panel-select"
+            value={family}
+            onChange={e => setFamily(e.target.value)}
+          >
+            <option value="">Toutes les familles</option>
+            {families.map(f => <option key={f} value={f}>{f}</option>)}
+          </select>
+          <select
+            className="filter-panel-select"
+            value={climateZone}
+            onChange={e => setClimateZone(e.target.value)}
+          >
+            <option value="">🌍 Toutes les zones</option>
+            {EU_REGIONS.map(r => (
+              <option key={r.id} value={r.id}>{r.label}</option>
+            ))}
+          </select>
+          {activeCount > 0 && (
+            <button className="filter-panel-clear" onClick={clearAll}>
+              ✕ Effacer les filtres ({activeCount})
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Header ───────────────────────────────────────────────────────────────────
+
 export default function Header({ onIcsExport }) {
   const {
     activeTab, setTab, search, setSearch,
@@ -36,9 +149,7 @@ export default function Header({ onIcsExport }) {
   } = useStore();
   const groupes = getGroupes();
   const families = getFamilies();
-  const debounceRef = useRef(null);
 
-  // Remembers the last plant filter so the select keeps its value when a nav tab is active
   const [plantFilter, setPlantFilter] = useState(
     PLANT_FILTER_KEYS.has(activeTab) ? activeTab : 'all'
   );
@@ -49,12 +160,6 @@ export default function Header({ onIcsExport }) {
     setPlantFilter(key);
     setTab(key);
   }
-
-  const handleSearch = (e) => {
-    const val = e.target.value;
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => setSearch(val), 280);
-  };
 
   const favLabel = favorites.size > 0 ? `⭐ Favoris (${favorites.size})` : '⭐ Favoris';
 
@@ -70,32 +175,12 @@ export default function Header({ onIcsExport }) {
         </div>
 
         <div className="header-controls">
-          <input
-            className="search-input"
-            type="search"
-            placeholder="🔍 Rechercher une plante..."
-            defaultValue={search}
-            onChange={handleSearch}
+          <FilterDropdown
+            search={search} setSearch={setSearch}
+            groupe={groupe} setGroupe={setGroupe} groupes={groupes}
+            family={family} setFamily={setFamily} families={families}
+            climateZone={climateZone} setClimateZone={setClimateZone}
           />
-          <select className="filter-select" value={groupe} onChange={e => setGroupe(e.target.value)}>
-            <option value="">Tous les groupes</option>
-            {groupes.map(g => <option key={g} value={g}>{g}</option>)}
-          </select>
-          <select className="filter-select" value={family} onChange={e => setFamily(e.target.value)}>
-            <option value="">Toutes les familles</option>
-            {families.map(f => <option key={f} value={f}>{f}</option>)}
-          </select>
-          <select
-            className="filter-select filter-select-zone"
-            value={climateZone}
-            onChange={e => setClimateZone(e.target.value)}
-            title="Filtrer par zone climatique"
-          >
-            <option value="">🌍 Toutes les zones</option>
-            {EU_REGIONS.map(r => (
-              <option key={r.id} value={r.id}>{r.label}</option>
-            ))}
-          </select>
           <button
             className={`btn-meteo ${meteoOpen ? 'active' : ''}`}
             onClick={toggleMeteo}
@@ -122,7 +207,6 @@ export default function Header({ onIcsExport }) {
       </div>
 
       <nav className="tabs">
-        {/* Plant filter — combobox */}
         <select
           className={`tab-plant-select ${isPlantView ? 'active' : ''}`}
           value={plantFilter}
@@ -136,7 +220,6 @@ export default function Header({ onIcsExport }) {
           ))}
         </select>
 
-        {/* Navigation tabs */}
         {NAV_TABS.map(t => (
           <button
             key={t.key}
