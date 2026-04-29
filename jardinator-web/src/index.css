@@ -1187,6 +1187,236 @@ select, input { font: inherit; }
 .meteo-loc-item:hover { background: var(--green-bg); }
 .meteo-auto-label { font-size: 0.72rem; color: var(--green-primary); font-style: italic; }
 
+/* ── MeteoWidget — Sections collapsibles (AI + Climat) ── */
+.meteo-section {
+  border-top: 1px solid var(--border);
+}
+.meteo-section-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--green-dark);
+  background: var(--green-bg2);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+.meteo-section-toggle:hover { background: var(--green-bg); }
+.meteo-section-toggle.open { background: var(--green-bg); }
+.meteo-section-toggle > span:first-child { flex: 1; }
+.meteo-section-badge {
+  background: var(--green-primary);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 10px;
+  line-height: 1.4;
+}
+.meteo-section-chevron { font-size: 0.65rem; opacity: 0.6; }
+
+/* ── AI Recommendations ── */
+.meteo-ai-section {
+  padding: 0.7rem 0.9rem;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.meteo-ai-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.meteo-ai-btn {
+  padding: 4px 12px;
+  background: var(--green-primary);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.meteo-ai-btn:hover:not(:disabled) { background: var(--green-dark); }
+.meteo-ai-btn:disabled { opacity: 0.45; cursor: default; }
+.meteo-ai-recs {
+  background: var(--green-bg2);
+  border: 1px solid var(--green-pale);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.meteo-ai-rec-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  flex-wrap: wrap;
+}
+.meteo-ai-rec-ctx {
+  color: var(--text-light);
+  font-style: italic;
+}
+.meteo-ai-rec-arrow {
+  color: var(--green-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.meteo-ai-rec-action {
+  color: var(--text);
+  font-weight: 600;
+}
+.meteo-ai-meta {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.3rem;
+}
+.meteo-ai-placeholder {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.5;
+  padding: 0.3rem 0;
+}
+
+/* ── Climate Journal ── */
+.meteo-climate-section {
+  padding: 0.7rem 0.9rem;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.meteo-climate-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.meteo-climate-info {
+  flex: 1;
+  font-size: 0.78rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+.meteo-climate-fetched {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* Temperature timeline chart */
+.meteo-temp-timeline {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  background: var(--green-bg2);
+  border: 1px solid var(--green-pale);
+  border-radius: 8px;
+  padding: 0.5rem 0.4rem 0.3rem;
+  overflow-x: auto;
+}
+.mtt-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 22px;
+  flex-shrink: 0;
+}
+.mtt-col--today .mtt-bar { outline: 2px solid var(--green-primary); outline-offset: 1px; }
+.mtt-max-label {
+  font-size: 0.58rem;
+  color: var(--text-light);
+  line-height: 1;
+  white-space: nowrap;
+}
+.mtt-bar {
+  width: 14px;
+  border-radius: 3px 3px 0 0;
+  min-height: 4px;
+  transition: opacity 0.1s;
+}
+.mtt-bar:hover { opacity: 0.8; }
+.mtt-frost-bar {
+  width: 14px;
+  background: #64b5f6;
+  border-radius: 0 0 3px 3px;
+  min-height: 2px;
+  opacity: 0.7;
+}
+.mtt-rain-dot {
+  font-size: 0.65rem;
+  line-height: 1;
+  cursor: default;
+}
+.mtt-date {
+  font-size: 0.58rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.mtt-legend {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  padding: 0 0.1rem;
+}
+
+/* Notable events list */
+.meteo-climate-events { display: flex; flex-direction: column; gap: 0; }
+.meteo-climate-events-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  margin-bottom: 0.3rem;
+}
+.mce-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  margin-bottom: 3px;
+  font-size: 0.78rem;
+  background: var(--green-bg2);
+  border-left: 3px solid var(--green-pale);
+}
+.mce-row--frost  { background: #E3F2FD; border-left-color: #64b5f6; }
+.mce-row--heat   { background: #FFF3E0; border-left-color: #ff9800; }
+.mce-row--rain   { background: #E8F4FD; border-left-color: #42a5f5; }
+.mce-row--threshold { background: var(--green-bg); border-left-color: var(--green-primary); }
+.mce-icon { font-size: 1rem; flex-shrink: 0; line-height: 1.3; }
+.mce-date {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+  margin-top: 1px;
+}
+.mce-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+}
+.mce-label { font-weight: 600; color: var(--text); line-height: 1.3; }
+.mce-detail { font-size: 0.72rem; color: var(--text-muted); font-style: italic; }
+
 /* ========== GARDEN PLANNER ========== */
 .gp-container {
   display: flex; gap: 0; height: calc(100vh - var(--header-height, 120px));
