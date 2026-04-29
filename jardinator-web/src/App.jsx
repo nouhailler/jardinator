@@ -13,6 +13,7 @@ import NewPlantModal from './components/NewPlantModal';
 import DiagnosticPanel from './components/DiagnosticPanel';
 import IdentificationPanel from './components/IdentificationPanel';
 import YieldPanel from './components/YieldPanel';
+import InputsPanel from './components/InputsPanel';
 import IcsExportModal from './components/IcsExportModal';
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
     if (activeTab === 'diagnostic')     return <DiagnosticPanel />;
     if (activeTab === 'identification') return <IdentificationPanel />;
     if (activeTab === 'yields')         return <YieldPanel />;
+    if (activeTab === 'inputs')         return <InputsPanel />;
     if (activeTab === 'settings')   return <SettingsPanel />;
     return <CardGrid />;
   };

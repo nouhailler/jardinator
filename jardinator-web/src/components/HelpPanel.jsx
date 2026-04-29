@@ -146,6 +146,31 @@ const HELP_CONTENT = {
       },
     ],
   },
+  inputs: {
+    title: 'Intrants & Compost',
+    sections: [
+      {
+        icon: '♻️',
+        title: 'Calculateur de compost',
+        text: 'Saisissez votre surface de potager et les quantités annuelles de déchets verts et bruns. L\'outil calcule la production de compost estimée, compare avec vos besoins et indique si le ratio vert/brun est équilibré.',
+      },
+      {
+        icon: '🟢',
+        title: 'Matières vertes vs brunes',
+        text: 'Matières vertes (azotées) : tontes, épluchures, résidus de récolte. Matières brunes (carbonées) : feuilles mortes, broyat, paille, carton. Le ratio idéal est entre 0,5 et 2 (en poids).',
+      },
+      {
+        icon: '🌿',
+        title: 'Journal des traitements bio',
+        text: 'Enregistrez chaque application de traitement naturel : date, traitement (purin d\'ortie, décoction de prêle…), plante ciblée, dilution, méthode et efficacité perçue (1-5 étoiles).',
+      },
+      {
+        icon: '🏆',
+        title: 'Base de connaissance empirique',
+        text: 'Le résumé "Top traitements" en haut du journal agrège l\'efficacité moyenne de chaque traitement. Vous construisez progressivement votre propre référentiel bio basé sur votre expérience terrain.',
+      },
+    ],
+  },
   yields: {
     title: 'Suivi des rendements',
     sections: [
@@ -216,6 +241,7 @@ function getContent(activeTab) {
   if (activeTab === 'diagnostic') return HELP_CONTENT.diagnostic;
   if (activeTab === 'identification') return HELP_CONTENT.identification;
   if (activeTab === 'yields') return HELP_CONTENT.yields;
+  if (activeTab === 'inputs') return HELP_CONTENT.inputs;
   if (activeTab === 'settings') return HELP_CONTENT.settings;
   return HELP_CONTENT.general;
 }

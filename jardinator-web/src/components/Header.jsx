@@ -17,6 +17,7 @@ const PLANT_TABS = [
   { key: 'diagnostic',      label: '🔬 Diagnostic' },
   { key: 'identification',  label: '🌿 Identification' },
   { key: 'yields',          label: '🌾 Rendements' },
+  { key: 'inputs',          label: '♻️ Intrants' },
   { key: 'settings',        label: '⚙️ Paramètres' },
 ];
 
