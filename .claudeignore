@@ -1,0 +1,25 @@
+# Node modules (197M !)
+jardinator-web/node_modules/
+node_modules/
+
+# Fichiers .deb (binaires inutiles pour le contexte)
+*.deb
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# DB
+*.db
+*.sqlite
+
+# Git
+.git/
+
+# Build
+dist/
+build/
+jardinator-web/dist/
+jardinator-web/build/
