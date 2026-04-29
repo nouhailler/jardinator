@@ -11,6 +11,10 @@
   --green-bg2: #F1F8E9;
   --text: #212121;
   --text-light: #555;
+  --text-muted: #757575;
+  --bg: #ffffff;
+  --card-bg: #ffffff;
+  --bg-card: #ffffff;
   --border: #ddd;
   --radius: 10px;
   --shadow: 0 2px 8px rgba(0,0,0,0.12);
