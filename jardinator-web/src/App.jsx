@@ -15,6 +15,7 @@ import IdentificationPanel from './components/IdentificationPanel';
 import YieldPanel from './components/YieldPanel';
 import InputsPanel from './components/InputsPanel';
 import IcsExportModal from './components/IcsExportModal';
+import InstallPWA from './components/InstallPWA';
 
 export default function App() {
   const { init, activeTab, meteoOpen, newPlantOpen } = useStore();
@@ -51,6 +52,7 @@ export default function App() {
       {icsOpen && <IcsExportModal onClose={() => setIcsOpen(false)} />}
       <button className="btn-help-float" onClick={() => setHelpOpen(true)} title="Aide">?</button>
       <HelpPanel isOpen={helpOpen} onClose={() => setHelpOpen(false)} activeTab={activeTab} />
+      <InstallPWA />
     </div>
   );
 }

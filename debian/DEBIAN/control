@@ -1,14 +1,14 @@
 Package: jardinator
-Version: 2.5.0
+Version: 2.5.1
 Section: misc
 Priority: optional
 Architecture: all
-Installed-Size: 4096
+Installed-Size: 1140
 Depends: python3 (>= 3.10), xdg-utils
 Recommends: chromium | chromium-browser | firefox | firefox-esr
 Maintainer: nouhailler <nouhailler@github.com>
 Homepage: https://github.com/nouhailler/jardinator
-Description: Calendrier du jardinier — planification potager avec IA (v2.5.0)
+Description: Calendrier du jardinier — planification potager avec IA + PWA (v2.5.1)
  Jardinator est une application web de planification du potager.
  Elle recense 220+ variétés de légumes, aromatiques, légumineuses,
  céréales et condimentaires avec :

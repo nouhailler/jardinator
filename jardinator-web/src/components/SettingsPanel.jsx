@@ -9,9 +9,11 @@ import {
 } from '../services/aiService';
 import useStore from '../store/useStore';
 import HelpTip from './HelpTip';
+import { useIsLocalMode } from '../hooks/useNetworkStatus';
 
 export default function SettingsPanel() {
   const { setChatHistory } = useStore();
+  const isLocal = useIsLocalMode();
 
   // ── Ollama ────────────────────────────────────────────────────────────────
   const [ollamaUrl, setOllamaUrl]         = useState(getOllamaUrl);
@@ -105,6 +107,15 @@ export default function SettingsPanel() {
           <span className="settings-badge settings-badge-ollama">Ollama</span>
           IA locale (modèle sur votre machine)
         </h3>
+        {!isLocal && (
+          <div className="settings-notice-local">
+            <span>🖥️</span>
+            <span>
+              Ollama fonctionne uniquement avec la <strong>version installée (.deb)</strong>.
+              En version web, utilisez OpenRouter ou Gemini ci-dessous.
+            </span>
+          </div>
+        )}
 
         <div className="settings-row">
           <label className="settings-label" style={{display:'flex', alignItems:'center', gap:'6px'}}>

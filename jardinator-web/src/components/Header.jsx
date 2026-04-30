@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import useStore from '../store/useStore';
 import { getFamilies, getGroupes, EU_REGIONS } from '../services/vegetableService';
 import ExportImport from './ExportImport';
+import { useNetworkStatus } from '../hooks/useNetworkStatus';
 
 const PLANT_FILTER_OPTIONS = [
   { key: 'all',       label: '🌿 Tous' },
@@ -140,6 +141,7 @@ function FilterDropdown({ search, setSearch, groupe, setGroupe, groupes, family,
 // ─── Header ───────────────────────────────────────────────────────────────────
 
 export default function Header({ onIcsExport }) {
+  const isOnline = useNetworkStatus();
   const {
     activeTab, setTab, search, setSearch,
     groupe, setGroupe, family, setFamily,
@@ -169,7 +171,10 @@ export default function Header({ onIcsExport }) {
         <div className="header-brand">
           <span className="header-logo">🌱</span>
           <div>
-            <div className="header-title">Jardinator</div>
+            <div className="header-title">
+              Jardinator
+              {!isOnline && <span className="offline-badge" title="Hors-ligne — navigation locale disponible">✈ hors-ligne</span>}
+            </div>
             <div className="header-sub">Calendrier du jardinier</div>
           </div>
         </div>
