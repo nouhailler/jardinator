@@ -395,7 +395,9 @@ export default function ConsumptionPanel({ plant, onClose }) {
               ❌ JSON incomplet ou invalide
               {rawText && rawText.length < 200
                 ? <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>Réponse trop courte ({rawText.length} car.) — essayez un autre modèle.</p>
-                : <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>JSON tronqué ({rawText.length} car.) — modèle à contexte trop court. Régénérez ou choisissez un autre modèle.</p>
+                : rawText.trimEnd().endsWith('}')
+                  ? <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>JSON malformé ({rawText.length} car.) — caractères parasites générés par le modèle. Régénérez ou changez de modèle.</p>
+                  : <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>JSON tronqué ({rawText.length} car.) — modèle à contexte trop court. Régénérez ou choisissez un autre modèle.</p>
               }
               <details style={{ marginTop: '0.5rem' }}>
                 <summary style={{ cursor: 'pointer', fontSize: '0.8rem' }}>Voir la réponse brute</summary>

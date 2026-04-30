@@ -68,5 +68,12 @@ export function parseConsumptionJson(raw) {
   if (fenced) { try { return JSON.parse(fenced[1]); } catch {} }
   const obj = raw.match(/\{[\s\S]+\}/);
   if (obj) { try { return JSON.parse(obj[0]); } catch {} }
+  // Repair stray ) characters the model inserts after closing braces/brackets
+  const repaired = raw.replace(/([}\]])\s*\)\s*([,}])/g, '$1$2');
+  if (repaired !== raw) {
+    try { return JSON.parse(repaired); } catch {}
+    const obj2 = repaired.match(/\{[\s\S]+\}/);
+    if (obj2) { try { return JSON.parse(obj2[0]); } catch {} }
+  }
   return null;
 }
