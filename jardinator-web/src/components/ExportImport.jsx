@@ -4,6 +4,7 @@ import { getAllCached, saveImage } from '../services/imageService';
 import { getAllSavedAdvice, saveAdvice } from '../services/aiService';
 import { getAllSavedHistory, saveHistory } from '../services/historyService';
 import { loadCustomPlants, saveCustomPlant } from '../services/customPlantsService';
+import { invalidatePlantsCache } from '../services/vegetableService';
 import { loadGardenBeds, saveGardenBeds, loadCropHistory, saveCropHistory } from '../services/gardenService';
 import { loadFavorites } from '../services/favoritesService';
 import { getDiagnosticHistory } from '../services/diagnosticService';
@@ -182,6 +183,7 @@ export default function ExportImport() {
           counts.push(`${bundle.treatments.length} traitement(s) bio`);
         }
 
+        invalidatePlantsCache();
         init();
 
         if (counts.length > 0) {
