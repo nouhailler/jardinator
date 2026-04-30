@@ -5841,7 +5841,49 @@ select, input { font: inherit; }
 /* Empty state */
 .conso-empty { font-size: 0.83rem; color: var(--text-muted); font-style: italic; }
 
+/* Info rows (préparation, conservation, cueillette) */
+.conso-inforows { display: flex; flex-direction: column; gap: 6px; }
+.conso-inforow {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 8px;
+  font-size: 0.83rem;
+  align-items: start;
+}
+.conso-inforow-label {
+  font-weight: 600;
+  color: var(--green-primary);
+  padding-top: 1px;
+  flex-shrink: 0;
+}
+.conso-inforow-value { color: var(--text); line-height: 1.5; }
+
+/* Texte alerte (interactions médicamenteuses) */
+.conso-text--alert {
+  background: #fce4ec;
+  border-left: 3px solid #e91e63;
+  padding: 6px 10px;
+  border-radius: 0 6px 6px 0;
+  color: #880e4f;
+}
+
+/* Populations sensibles */
+.conso-populations { display: flex; flex-direction: column; gap: 5px; }
+.conso-population-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.83rem;
+}
+.conso-population-icon { flex-shrink: 0; }
+
 @media (max-width: 540px) {
   .conso-threshold-grid { grid-template-columns: 1fr; }
   .conso-compound-row { grid-template-columns: 1fr; }
+  .conso-inforow { grid-template-columns: 1fr; }
+  .conso-inforow-label { color: var(--green-dark); margin-bottom: -2px; }
 }

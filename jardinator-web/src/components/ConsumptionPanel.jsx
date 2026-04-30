@@ -15,14 +15,10 @@ const FODMAP_LEVEL_STYLE = {
 
 function FodmapBadge({ level }) {
   const style = FODMAP_LEVEL_STYLE[level] || FODMAP_LEVEL_STYLE.nul;
-  return (
-    <span className="conso-fodmap-badge" style={{ background: style.bg, color: style.color }}>
-      {style.label}
-    </span>
-  );
+  return <span className="conso-fodmap-badge" style={{ background: style.bg, color: style.color }}>{style.label}</span>;
 }
 
-// ── Tag list ──────────────────────────────────────────────────────────────────
+// ── Primitives ────────────────────────────────────────────────────────────────
 
 function TagList({ items, variant = 'default' }) {
   if (!items || items.length === 0) return <span className="conso-empty">—</span>;
@@ -31,6 +27,30 @@ function TagList({ items, variant = 'default' }) {
       {items.map((item, i) => (
         <span key={i} className={`conso-tag conso-tag--${variant}`}>{item}</span>
       ))}
+    </div>
+  );
+}
+
+function ConsoText({ value }) {
+  if (!value || value === '?' || value === 'Non applicable') return null;
+  return <p className="conso-text">{value}</p>;
+}
+
+function ConsoInfoRow({ label, value }) {
+  if (!value || value === '?' || value === 'Non applicable') return null;
+  return (
+    <div className="conso-inforow">
+      <span className="conso-inforow-label">{label}</span>
+      <span className="conso-inforow-value">{value}</span>
+    </div>
+  );
+}
+
+function ConsoSection({ title, children, className = '' }) {
+  return (
+    <div className={`conso-section ${className}`}>
+      <h4 className="conso-section-title">{title}</h4>
+      {children}
     </div>
   );
 }
@@ -56,7 +76,8 @@ function CompoundsList({ compounds }) {
 function ToleranceGrid({ thresholds }) {
   if (!thresholds) return null;
   const { portion_safe, portion_moderee, portion_limite } = thresholds;
-  if (portion_safe === 'Non applicable') return <p className="conso-text">Pas de seuil FODMAPs pour cette plante.</p>;
+  if (!portion_safe || portion_safe === 'Non applicable')
+    return <p className="conso-text" style={{ marginTop: 6 }}>Pas de seuil FODMAPs significatif pour cette plante.</p>;
   return (
     <div className="conso-threshold-grid">
       <div className="conso-threshold-cell conso-threshold--safe">
@@ -75,19 +96,52 @@ function ToleranceGrid({ thresholds }) {
   );
 }
 
-// ── Structured view ───────────────────────────────────────────────────────────
+// ── Preparation (object or legacy string) ────────────────────────────────────
+
+function PreparationBlock({ prep }) {
+  if (!prep) return null;
+  if (typeof prep === 'string') return <p className="conso-text">{prep}</p>;
+  return (
+    <div className="conso-inforows">
+      <ConsoInfoRow label="🥕 Épluchage"         value={prep.epluchage} />
+      <ConsoInfoRow label="🥗 Cru vs cuit"        value={prep.cru_vs_cuit} />
+      <ConsoInfoRow label="🌱 Germination"        value={prep.germination} />
+      <ConsoInfoRow label="🔥 Impact cuisson"     value={prep.impact_cuisson} />
+      <ConsoInfoRow label="⚗️ Réduction antinutriments" value={prep.reduction_antinutriments} />
+      <ConsoInfoRow label="⏱ Temps minimal"       value={prep.temps_cuisson_minimal} />
+    </div>
+  );
+}
+
+// ── Conservation (object or legacy string) ───────────────────────────────────
+
+function ConservationBlock({ cons }) {
+  if (!cons) return null;
+  if (typeof cons === 'string') return <p className="conso-text">{cons}</p>;
+  return (
+    <div className="conso-inforows">
+      <ConsoInfoRow label="✅ État optimal"         value={cons.etat_optimal} />
+      <ConsoInfoRow label="📅 Durée"                value={cons.duree} />
+      <ConsoInfoRow label="🌡 Conditions"           value={cons.conditions} />
+      <ConsoInfoRow label="🚿 Nettoyage"            value={cons.nettoyage} />
+      <ConsoInfoRow label="👁 Signes visuels"       value={cons.etat_visuel} />
+    </div>
+  );
+}
+
+// ── Full structured view ──────────────────────────────────────────────────────
 
 function ConsumptionView({ data }) {
   const c = data?.consommation;
   if (!c) return <p className="conso-text conso-text--error">Données non disponibles.</p>;
 
-  const fodmaps = c.fodmaps || {};
+  const fodmaps    = c.fodmaps || {};
   const levelStyle = FODMAP_LEVEL_STYLE[fodmaps.niveau_global] || FODMAP_LEVEL_STYLE.nul;
 
   return (
     <div className="conso-view">
 
-      {/* FODMAPs — section principale mise en avant */}
+      {/* ── FODMAPs ── */}
       <div className="conso-fodmap-card" style={{ borderColor: levelStyle.color + '88', background: levelStyle.bg + '55' }}>
         <div className="conso-fodmap-header">
           <span className="conso-fodmap-title">🧫 FODMAPs</span>
@@ -111,80 +165,107 @@ function ConsumptionView({ data }) {
         )}
       </div>
 
-      {/* Parties */}
-      <div className="conso-section">
-        <h4 className="conso-section-title">✅ Parties comestibles</h4>
+      {/* ── Parties comestibles ── */}
+      <ConsoSection title="✅ Parties comestibles">
         <TagList items={c.parties_comestibles} variant="safe" />
-      </div>
+        {c.stade_developpement && (
+          <p className="conso-text" style={{ marginTop: 6 }}>
+            <strong>Stade :</strong> {c.stade_developpement}
+          </p>
+        )}
+      </ConsoSection>
 
+      {/* ── Parties toxiques ── */}
       {c.parties_toxiques?.length > 0 && (
-        <div className="conso-section">
-          <h4 className="conso-section-title">☠️ Parties toxiques ou à éviter</h4>
+        <ConsoSection title="☠️ Parties toxiques ou à éviter">
           <TagList items={c.parties_toxiques} variant="danger" />
-        </div>
+        </ConsoSection>
       )}
 
-      {/* Préparation */}
-      {c.preparation && (
-        <div className="conso-section">
-          <h4 className="conso-section-title">🍳 Préparation</h4>
-          <p className="conso-text">{c.preparation}</p>
-        </div>
-      )}
-
-      {/* Composés préoccupants */}
+      {/* ── Composés à surveiller ── */}
       {c.composes_preoccupants && Object.keys(c.composes_preoccupants).length > 0 && (
-        <div className="conso-section">
-          <h4 className="conso-section-title">⚗️ Composés à surveiller</h4>
+        <ConsoSection title="⚗️ Composés naturels à risque">
           <CompoundsList compounds={c.composes_preoccupants} />
-        </div>
+        </ConsoSection>
       )}
 
-      {/* Allergies */}
+      {/* ── Allergies croisées ── */}
       {c.allergies_croisees?.length > 0 && (
-        <div className="conso-section">
-          <h4 className="conso-section-title">🤧 Allergies croisées</h4>
+        <ConsoSection title="🤧 Allergies croisées">
           <TagList items={c.allergies_croisees} variant="warning" />
-        </div>
+        </ConsoSection>
       )}
 
-      {/* Contre-indications */}
+      {/* ── Interactions médicamenteuses ── */}
+      {c.interactions_medicamenteuses && (
+        <ConsoSection title="💊 Interactions médicamenteuses">
+          <p className="conso-text conso-text--alert">{c.interactions_medicamenteuses}</p>
+        </ConsoSection>
+      )}
+
+      {/* ── Populations sensibles ── */}
+      {c.populations_sensibles?.length > 0 && (
+        <ConsoSection title="👶 Populations sensibles">
+          <div className="conso-populations">
+            {c.populations_sensibles.map((item, i) => (
+              <div key={i} className="conso-population-row">
+                <span className="conso-population-icon">⚠️</span>
+                <span className="conso-text">{item}</span>
+              </div>
+            ))}
+          </div>
+        </ConsoSection>
+      )}
+
+      {/* ── Contre-indications ── */}
       {c.contre_indications?.length > 0 && (
-        <div className="conso-section">
-          <h4 className="conso-section-title">🚫 Contre-indications</h4>
+        <ConsoSection title="🚫 Contre-indications">
           <TagList items={c.contre_indications} variant="danger" />
-        </div>
+        </ConsoSection>
       )}
 
-      {/* Conservation */}
+      {/* ── Cueillette ── */}
+      {c.cueillette && (c.cueillette.lieu || c.cueillette.reglementation || c.cueillette.saisonnalite) && (
+        <ConsoSection title="🌿 Origine & Environnement de cueillette">
+          <div className="conso-inforows">
+            <ConsoInfoRow label="📍 Lieu"              value={c.cueillette.lieu} />
+            <ConsoInfoRow label="⚖️ Réglementation"   value={c.cueillette.reglementation} />
+            <ConsoInfoRow label="📅 Saisonnalité"      value={c.cueillette.saisonnalite} />
+          </div>
+        </ConsoSection>
+      )}
+
+      {/* ── Préparation & Cuisson ── */}
+      {c.preparation && (
+        <ConsoSection title="🍳 Préparation & Cuisson">
+          <PreparationBlock prep={c.preparation} />
+        </ConsoSection>
+      )}
+
+      {/* ── Conservation & Fraîcheur ── */}
       {c.conservation && (
-        <div className="conso-section">
-          <h4 className="conso-section-title">🧊 Conservation</h4>
-          <p className="conso-text">{c.conservation}</p>
-        </div>
+        <ConsoSection title="🧊 Conservation & Fraîcheur">
+          <ConservationBlock cons={c.conservation} />
+        </ConsoSection>
       )}
 
-      {/* Quantité recommandée */}
+      {/* ── Quantité recommandée ── */}
       {c.quantite_recommandee && (
-        <div className="conso-section">
-          <h4 className="conso-section-title">📊 Quantité recommandée</h4>
-          <p className="conso-text">{c.quantite_recommandee}</p>
-        </div>
+        <ConsoSection title="📊 Quantité recommandée">
+          <ConsoText value={c.quantite_recommandee} />
+        </ConsoSection>
       )}
 
-      {/* Risques pollution */}
+      {/* ── Risques de pollution ── */}
       {c.risques_pollution && (
-        <div className="conso-section">
-          <h4 className="conso-section-title">🏭 Risques de pollution</h4>
-          <p className="conso-text">{c.risques_pollution}</p>
-        </div>
+        <ConsoSection title="🏭 Risques de pollution">
+          <ConsoText value={c.risques_pollution} />
+        </ConsoSection>
       )}
 
-      {/* Avertissement */}
+      {/* ── Avertissement ── */}
       {c.avertissement_general && (
-        <div className="conso-warning">
-          <span>ℹ️ </span>{c.avertissement_general}
-        </div>
+        <div className="conso-warning">ℹ️ {c.avertissement_general}</div>
       )}
     </div>
   );
@@ -198,26 +279,25 @@ export default function ConsumptionPanel({ plant, onClose }) {
   const savedConsumption  = useStore(s => s.savedConsumption);
   const savedRaw          = savedConsumption[String(plant.id)] || null;
 
-  const [status, setStatus]     = useState(savedRaw ? 'saved' : 'idle');
-  const [rawText, setRawText]   = useState('');
-  const [parsedData, setParsed] = useState(savedRaw ? parseConsumptionJson(savedRaw) : null);
+  const [status, setStatus]         = useState(savedRaw ? 'saved' : 'idle');
+  const [rawText, setRawText]       = useState('');
+  const [parsedData, setParsed]     = useState(savedRaw ? parseConsumptionJson(savedRaw) : null);
   const [parseError, setParseError] = useState(false);
-  const [provider, setProvider] = useState(() => getApiKey() ? 'openrouter' : 'ollama');
-  const [saved, setSaved]       = useState(!!savedRaw);
-  const abortRef = useRef(false);
+  const [provider, setProvider]     = useState(() => getApiKey() ? 'openrouter' : 'ollama');
+  const [saved, setSaved]           = useState(!!savedRaw);
+  const abortRef  = useRef(false);
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
-    document.addEventListener('keydown', handleKey);
-    return () => document.removeEventListener('keydown', handleKey);
+    const h = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', h);
+    return () => document.removeEventListener('keydown', h);
   }, [onClose]);
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [rawText]);
 
-  // Auto-start if no saved data
   useEffect(() => {
     if (status === 'idle') handleGenerate();
   }, []);
@@ -260,8 +340,7 @@ export default function ConsumptionPanel({ plant, onClose }) {
   };
 
   const handleSave = () => {
-    const raw = JSON.stringify(parsedData);
-    storeConsumption(plant.id, raw);
+    storeConsumption(plant.id, JSON.stringify(parsedData));
     setSaved(true);
   };
 
@@ -273,21 +352,20 @@ export default function ConsumptionPanel({ plant, onClose }) {
     handleGenerate();
   };
 
-  const ollamaOk    = !!getOllamaModel();
-  const openrouterOk = !!getApiKey() && !!getSavedModel();
-  const canGenerate = provider === 'ollama' ? ollamaOk : openrouterOk;
+  const ollamaOk      = !!getOllamaModel();
+  const openrouterOk  = !!getApiKey() && !!getSavedModel();
+  const canGenerate   = provider === 'ollama' ? ollamaOk : openrouterOk;
 
   const providerWarning = provider === 'ollama' && !ollamaOk
-    ? '⚠️ Ollama non configuré — allez dans Paramètres'
+    ? '⚠️ Ollama non configuré — Paramètres'
     : provider === 'openrouter' && !openrouterOk
-      ? '⚠️ Clé / modèle OpenRouter manquant — allez dans Paramètres'
+      ? '⚠️ Clé / modèle OpenRouter manquant — Paramètres'
       : null;
 
   return (
     <div className="gemini-overlay" onClick={onClose}>
       <div className="gemini-panel conso-panel" onClick={e => e.stopPropagation()}>
 
-        {/* Header */}
         <div className="gemini-header">
           <span className="gemini-title">🍽 Consommation &amp; nutrition</span>
           <button className="gemini-close" onClick={onClose}>✕</button>
@@ -299,17 +377,14 @@ export default function ConsumptionPanel({ plant, onClose }) {
           {plant.family && <span className="conso-family"> — {plant.family}</span>}
         </div>
 
-        {/* Body */}
         <div className="gemini-body" ref={scrollRef}>
-          {status === 'loading' && !parsedData && (
+          {status === 'loading' && !rawText && (
             <div className="gemini-spinner">
               <span className="spin-dot" /><span className="spin-dot" /><span className="spin-dot" />
-              <span style={{ marginLeft: '0.5rem', color: 'var(--text-light)' }}>
-                Analyse nutritionnelle en cours…
-              </span>
+              <span style={{ marginLeft: '0.5rem', color: 'var(--text-light)' }}>Analyse nutritionnelle en cours…</span>
             </div>
           )}
-          {status === 'loading' && rawText && !parsedData && (
+          {status === 'loading' && rawText && (
             <pre className="conso-raw-stream">{rawText}<span className="cursor-blink">▌</span></pre>
           )}
           {(status === 'done' || status === 'saved') && parsedData && (
@@ -318,16 +393,10 @@ export default function ConsumptionPanel({ plant, onClose }) {
           {status === 'error' && parseError && (
             <div className="gemini-error">
               ❌ JSON incomplet ou invalide
-              {rawText && rawText.length < 200 && (
-                <p style={{ fontSize: '0.8rem', marginTop: '4px', color: '#666' }}>
-                  Réponse trop courte ({rawText.length} car.) — essayez un autre modèle ou régénérez.
-                </p>
-              )}
-              {rawText && rawText.length >= 200 && (
-                <p style={{ fontSize: '0.8rem', marginTop: '4px', color: '#666' }}>
-                  JSON tronqué ({rawText.length} car.) — le modèle a atteint sa limite de tokens. Régénérez ou choisissez un modèle avec un contexte plus long.
-                </p>
-              )}
+              {rawText && rawText.length < 200
+                ? <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>Réponse trop courte ({rawText.length} car.) — essayez un autre modèle.</p>
+                : <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>JSON tronqué ({rawText.length} car.) — modèle à contexte trop court. Régénérez ou choisissez un autre modèle.</p>
+              }
               <details style={{ marginTop: '0.5rem' }}>
                 <summary style={{ cursor: 'pointer', fontSize: '0.8rem' }}>Voir la réponse brute</summary>
                 <pre className="conso-raw-stream">{rawText}</pre>
@@ -343,9 +412,7 @@ export default function ConsumptionPanel({ plant, onClose }) {
           )}
         </div>
 
-        {/* Footer */}
         <div className="gemini-footer">
-          {/* Sélecteur de fournisseur */}
           <select
             className="gemini-model-select"
             value={provider}
@@ -356,9 +423,7 @@ export default function ConsumptionPanel({ plant, onClose }) {
             <option value="ollama">🖥 Ollama (local)</option>
           </select>
 
-          {providerWarning && (
-            <span className="conso-provider-warn">{providerWarning}</span>
-          )}
+          {providerWarning && <span className="conso-provider-warn">{providerWarning}</span>}
 
           {status === 'loading' && (
             <button className="gemini-stop-btn" onClick={() => { abortRef.current = true; setStatus('error'); setParseError(true); }}>
@@ -368,27 +433,19 @@ export default function ConsumptionPanel({ plant, onClose }) {
 
           {(status === 'done' || status === 'saved') && (
             <>
-              <button className="gemini-retry-btn" onClick={handleGenerate} disabled={!canGenerate}>
-                🔄 Régénérer
-              </button>
+              <button className="gemini-retry-btn" onClick={handleGenerate} disabled={!canGenerate}>🔄 Régénérer</button>
               {saved ? (
                 <>
                   <span className="gemini-saved-badge">✅ Sauvegardé</span>
-                  <button className="gemini-stop-btn" onClick={handleDelete} title="Supprimer la sauvegarde">
-                    🗑
-                  </button>
+                  <button className="gemini-stop-btn" onClick={handleDelete} title="Supprimer la sauvegarde">🗑</button>
                 </>
               ) : (
-                <button className="gemini-save-btn" onClick={handleSave}>
-                  💾 Sauvegarder
-                </button>
+                <button className="gemini-save-btn" onClick={handleSave}>💾 Sauvegarder</button>
               )}
             </>
           )}
 
-          <span className="gemini-powered">
-            {provider === 'openrouter' ? 'via OpenRouter' : 'via Ollama local'}
-          </span>
+          <span className="gemini-powered">{provider === 'openrouter' ? 'via OpenRouter' : 'via Ollama local'}</span>
         </div>
       </div>
     </div>
