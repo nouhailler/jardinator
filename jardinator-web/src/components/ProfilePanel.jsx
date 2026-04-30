@@ -428,14 +428,27 @@ export default function ProfilePanel({ plant, onClose }) {
           {status === 'error' && parseError && (
             <div className="gemini-error">
               ❌ JSON incomplet ou invalide
-              {rawText && rawText.length < 200
-                ? <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>Réponse trop courte ({rawText.length} car.) — essayez un autre modèle.</p>
-                : rawText.trimEnd().endsWith('}')
-                  ? <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>JSON malformé ({rawText.length} car.) — caractères parasites. Régénérez ou changez de modèle.</p>
-                  : rawText.trimEnd().endsWith(']')
-                    ? <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>JSON malformé ({rawText.length} car.) — fermeture incorrecte. Changez de modèle.</p>
-                    : <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>JSON tronqué ({rawText.length} car.) — contexte trop court. Régénérez ou choisissez un autre modèle.</p>
-              }
+              {rawText && (() => {
+                const hasCjk = /[぀-ヿ一-鿿가-힯]/.test(rawText);
+                if (hasCjk) return (
+                  <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#b71c1c' }}>
+                    Le modèle a généré des caractères dans une autre langue — il n'est pas adapté à cette tâche.
+                    Changez de modèle (ex : Qwen2.5-7B-Instruct, Mistral-7B, Gemma-2-9B).
+                  </p>
+                );
+                if (rawText.length < 200) return (
+                  <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>Réponse trop courte ({rawText.length} car.) — essayez un autre modèle.</p>
+                );
+                if (rawText.trimEnd().endsWith('}')) return (
+                  <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>JSON malformé ({rawText.length} car.) — caractères parasites. Régénérez ou changez de modèle.</p>
+                );
+                if (rawText.trimEnd().endsWith(']')) return (
+                  <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>JSON malformé ({rawText.length} car.) — fermeture incorrecte. Changez de modèle.</p>
+                );
+                return (
+                  <p style={{ fontSize: '0.8rem', marginTop: 4, color: '#666' }}>JSON tronqué ({rawText.length} car.) — contexte trop court. Régénérez ou choisissez un autre modèle.</p>
+                );
+              })()}
               <details style={{ marginTop: '0.5rem' }}>
                 <summary style={{ cursor: 'pointer', fontSize: '0.8rem' }}>Voir la réponse brute</summary>
                 <pre className="conso-raw-stream">{rawText}</pre>

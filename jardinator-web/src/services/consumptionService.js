@@ -64,10 +64,12 @@ Toutes les valeurs textuelles en français.`;
 
 function repairJson(raw) {
   let s = raw;
-  // Remove leading dashes/list markers before JSON keys (model markdown habit)
+  // Remove leading dashes/list markers before JSON keys
   s = s.replace(/([{,])\s*-+\s*"/g, '$1"');
-  // Remove stray ) between closing brace and , (another model hallucination)
+  // Remove stray ) between closing brace and ,
   s = s.replace(/([}\]])\s*\)\s*([,}])/g, '$1$2');
+  // Fix keys missing their opening quote: , key": → , "key":
+  s = s.replace(/([{,]\s*)([^"{\[\]\s,][^"]*?)(\s*"(?=\s*:))/g, '$1"$2$3');
   // Count unmatched { (string-aware) and close them; also strips trailing ]] etc.
   let opens = 0, inStr = false, esc = false;
   for (const ch of s) {

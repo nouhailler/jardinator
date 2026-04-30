@@ -47,6 +47,8 @@ Toutes les valeurs en français. Remplis chaque section avec les données connue
 function repairJson(raw) {
   let s = raw.replace(/([{,])\s*-+\s*"/g, '$1"');
   s = s.replace(/([}\]])\s*\)\s*([,}])/g, '$1$2');
+  // Fix keys missing their opening quote: , key": → , "key":
+  s = s.replace(/([{,]\s*)([^"{\[\]\s,][^"]*?)(\s*"(?=\s*:))/g, '$1"$2$3');
   let opens = 0, inStr = false, esc = false;
   for (const ch of s) {
     if (esc) { esc = false; continue; }
