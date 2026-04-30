@@ -1,22 +1,28 @@
 Package: jardinator
-Version: 2.4.1
+Version: 2.5.0
 Section: misc
 Priority: optional
 Architecture: all
-Installed-Size: 1024
+Installed-Size: 4096
 Depends: python3 (>= 3.10), xdg-utils
 Recommends: chromium | chromium-browser | firefox | firefox-esr
 Maintainer: nouhailler <nouhailler@github.com>
 Homepage: https://github.com/nouhailler/jardinator
-Description: Calendrier du jardinier — légumes d'Europe (v2.2.0)
+Description: Calendrier du jardinier — planification potager avec IA (v2.5.0)
  Jardinator est une application web de planification du potager.
- Elle recense 208 variétés de légumes, aromatiques, légumineuses,
+ Elle recense 220+ variétés de légumes, aromatiques, légumineuses,
  céréales et condimentaires avec :
   - Plan du potager interactif avec drag & drop
-  - Historique des cultures et alertes de rotation
+  - Compagnonnage & Biodiversité : détection conflits/harmonies en temps réel
+  - Score de biodiversité 0-100 et analyse IA de la planche
+  - Historique des analyses IA pour suivre l'évolution du potager
+  - Diagnostic phytosanitaire IA par photo (maladies, ravageurs, carences)
+  - Identification de plante par photo
+  - Journal de rendements avec suggestions IA
+  - Calculateur de compost + journal des traitements bio
+  - Météo-Agile : recommandations IA contextuelles + journal climatique 30j
+  - Export agenda .ics (Google Agenda / Apple Calendar)
   - Filtrage par zone climatique européenne (6 régions)
-  - Météo en temps réel via Open-Meteo (sans clé API)
-  - Conseils IA via OpenRouter (modèles gratuits)
-  - Export PDF du calendrier annuel
-  - Calendrier de culture mois par mois
-  - Fiches détaillées (températures, associations, distances…)
+  - Conseils IA via Ollama (local) ou OpenRouter (cloud)
+  - Export PDF par fiche individuelle
+  - Aide contextuelle sur toutes les pages
