@@ -317,7 +317,17 @@ export default function ConsumptionPanel({ plant, onClose }) {
           )}
           {status === 'error' && parseError && (
             <div className="gemini-error">
-              ❌ La réponse n'est pas un JSON valide. Essayez de régénérer ou changez de modèle.
+              ❌ JSON incomplet ou invalide
+              {rawText && rawText.length < 200 && (
+                <p style={{ fontSize: '0.8rem', marginTop: '4px', color: '#666' }}>
+                  Réponse trop courte ({rawText.length} car.) — essayez un autre modèle ou régénérez.
+                </p>
+              )}
+              {rawText && rawText.length >= 200 && (
+                <p style={{ fontSize: '0.8rem', marginTop: '4px', color: '#666' }}>
+                  JSON tronqué ({rawText.length} car.) — le modèle a atteint sa limite de tokens. Régénérez ou choisissez un modèle avec un contexte plus long.
+                </p>
+              )}
               <details style={{ marginTop: '0.5rem' }}>
                 <summary style={{ cursor: 'pointer', fontSize: '0.8rem' }}>Voir la réponse brute</summary>
                 <pre className="conso-raw-stream">{rawText}</pre>

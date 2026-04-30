@@ -165,5 +165,5 @@ export async function* askConsumptionStreamOR(prompt) {
   if (!key) throw new Error('NO_KEY');
   const model = getSavedModel();
   if (!model) throw new Error('NO_MODEL');
-  yield* _stream(key, model, prompt, 3000);
+  yield* _stream(key, model, prompt, 4096);
 }
