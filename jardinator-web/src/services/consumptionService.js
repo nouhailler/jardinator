@@ -30,7 +30,7 @@ export function getAllSavedConsumption() {
 // ── Prompt builder ────────────────────────────────────────────────────────────
 
 export function buildConsumptionPrompt(plant) {
-  return `JSON valide UNIQUEMENT. Pas de markdown, pas de commentaire, pas de tiret (-) ni d'astérisque devant les clés JSON. Commence par { et termine par }}. Toutes les accolades { } correctement appairées.
+  return `JSON valide UNIQUEMENT. Pas de markdown, pas de commentaire, pas de tiret (-) ni d'astérisque devant les clés JSON. Toutes les accolades { } correctement fermées.
 Sois concis : 1-2 phrases max par champ texte. Infos manquantes → "" ou [].
 
 Plante : ${plant.name} (${plant.nameLatin || '?'}, famille ${plant.family || '?'})
@@ -81,6 +81,11 @@ function repairJson(raw) {
   }
   if (opens > 0) {
     s = s.replace(/[\]\s,]+$/, '') + '}'.repeat(opens);
+  } else if (opens < 0) {
+    // Too many closing braces — strip excess from end
+    for (let i = 0; i < -opens; i++) {
+      s = s.replace(/}\s*$/, '').trimEnd();
+    }
   }
   return s;
 }

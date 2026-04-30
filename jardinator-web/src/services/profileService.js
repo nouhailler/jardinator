@@ -30,7 +30,7 @@ export function getAllSavedProfiles() {
 // ── Prompt builder ────────────────────────────────────────────────────────────
 
 export function buildProfilePrompt(plant) {
-  return `JSON valide UNIQUEMENT. Pas de markdown, pas de commentaire, pas de tiret devant les clés. Commence par { et termine par }}.
+  return `JSON valide UNIQUEMENT. Pas de markdown, pas de commentaire, pas de tiret devant les clés. Toutes les accolades { } correctement fermées.
 Sois concis : 1-2 phrases par texte. Infos manquantes → "Information manquante" ou [] ou {}.
 
 Plante : ${plant.name} (${plant.nameLatin || '?'}, famille ${plant.family || '?'})
@@ -57,7 +57,13 @@ function repairJson(raw) {
       else if (ch === '}') opens--;
     }
   }
-  if (opens > 0) s = s.replace(/[\]\s,]+$/, '') + '}'.repeat(opens);
+  if (opens > 0) {
+    s = s.replace(/[\]\s,]+$/, '') + '}'.repeat(opens);
+  } else if (opens < 0) {
+    for (let i = 0; i < -opens; i++) {
+      s = s.replace(/}\s*$/, '').trimEnd();
+    }
+  }
   return s;
 }
 
