@@ -74,6 +74,18 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    chunkSizeWarningLimit: 750,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          zustand: ['zustand'],
+          markdown: ['react-markdown', 'remark-gfm'],
+        },
+      },
+    },
+  },
   server: {
     port: process.env.PORT ? parseInt(process.env.PORT) : 5173,
     strictPort: !!process.env.PORT,

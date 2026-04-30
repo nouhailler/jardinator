@@ -257,7 +257,6 @@ const useStore = create((set, get) => ({
   init: () => {
     migrateOldCache();
     getAllPlants();
-    get()._recompute();
     const gardenBeds = loadGardenBeds();
     set({
       imageOverrides: getAllCached(),
@@ -272,6 +271,7 @@ const useStore = create((set, get) => ({
       diagnosticHistory: getDiagnosticHistory(),
       identificationHistory: getIdentificationHistory(),
     });
+    get()._recompute();
   },
 }));
 
