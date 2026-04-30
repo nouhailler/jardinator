@@ -13,6 +13,7 @@ import { loadGardenHistory } from '../services/gardenHistoryService';
 import { loadCompostData, saveCompostData, loadTreatments, saveTreatmentEntry } from '../services/inputsService';
 import { getYieldYears } from '../services/yieldService';
 import { getAllSavedConsumption, saveConsumption } from '../services/consumptionService';
+import { getAllSavedProfiles, saveProfile } from '../services/profileService';
 
 const YIELDS_KEY     = 'jardinator_yields';
 const FAVORITES_KEY  = 'jardinator_favorites';
@@ -67,6 +68,9 @@ export default function ExportImport() {
 
       // ── Données de consommation IA ─────────────────────────────────────────
       consumption: getAllSavedConsumption(),
+
+      // ── Profil complet IA ──────────────────────────────────────────────────
+      profile: getAllSavedProfiles(),
     };
 
     const counts = [
@@ -193,6 +197,15 @@ export default function ExportImport() {
           if (entries.length > 0) {
             for (const [plantId, jsonStr] of entries) saveConsumption(plantId, jsonStr);
             counts.push(`${entries.length} analyse(s) de consommation`);
+          }
+        }
+
+        // ── Profil complet IA ─────────────────────────────────────────────────
+        if (bundle.profile && typeof bundle.profile === 'object') {
+          const entries = Object.entries(bundle.profile);
+          if (entries.length > 0) {
+            for (const [plantId, jsonStr] of entries) saveProfile(plantId, jsonStr);
+            counts.push(`${entries.length} profil(s) complets`);
           }
         }
 

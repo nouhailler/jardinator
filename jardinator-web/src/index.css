@@ -5887,3 +5887,162 @@ select, input { font: inherit; }
   .conso-inforow { grid-template-columns: 1fr; }
   .conso-inforow-label { color: var(--green-dark); margin-bottom: -2px; }
 }
+
+/* ========== PROFIL PANEL ========== */
+
+.btn-profile {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  color: #1b5e20;
+  border: 1.5px solid #a5d6a7;
+  transition: box-shadow 0.15s, transform 0.1s;
+}
+.btn-profile:hover { box-shadow: 0 2px 8px rgba(27,94,32,0.18); transform: translateY(-1px); }
+.btn-profile.has-data {
+  background: linear-gradient(135deg, #1b5e20, #2e7d32);
+  color: #fff;
+  border-color: #1b5e20;
+}
+
+/* Profil sensoriel */
+.profil-sensoriel-card {
+  background: linear-gradient(135deg, #fffde7, #fff9c4);
+  border: 1px solid #f9a825;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.profil-sensor-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 8px;
+  align-items: baseline;
+}
+.profil-sensor-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #e65100;
+  white-space: nowrap;
+}
+.profil-sensor-value {
+  font-size: 0.87rem;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+/* Profil nutritionnel */
+.profil-nutritionnel { display: flex; flex-direction: column; gap: 14px; }
+.profil-nutri-sub { }
+.profil-nutri-subtitle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 7px;
+  padding-bottom: 3px;
+  border-bottom: 1.5px solid var(--green-pale);
+}
+
+/* Table nutriments */
+.profil-nutrient-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.profil-nutrient-table thead tr {
+  background: var(--green-bg);
+}
+.profil-nutrient-table th {
+  text-align: left;
+  padding: 5px 8px;
+  font-weight: 600;
+  color: var(--green-dark);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.profil-nutrient-table td {
+  padding: 5px 8px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: top;
+}
+.profil-nutrient-table tbody tr:last-child td { border-bottom: none; }
+.profil-nutrient-table tbody tr:hover { background: #f9f9f9; }
+.profil-nutrient-name { font-weight: 600; color: var(--text); }
+.profil-nutrient-qty  { color: var(--green-dark); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.profil-nutrient-role { color: var(--text-light); }
+
+/* Molécules bioactives */
+.profil-molecules { display: flex; flex-direction: column; gap: 8px; }
+.profil-molecule-card {
+  background: #f3e5f5;
+  border: 1px solid #ce93d8;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.profil-molecule-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+.profil-molecule-name {
+  font-weight: 700;
+  color: #4a148c;
+  font-size: 0.88rem;
+}
+.profil-molecule-type {
+  font-size: 0.73rem;
+  background: #e1bee7;
+  color: #6a1b9a;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.profil-molecule-bienfaits {
+  font-size: 0.83rem;
+  color: #1b5e20;
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+.profil-molecule-note {
+  font-size: 0.79rem;
+  color: var(--text-light);
+  line-height: 1.3;
+}
+
+/* Pharmacopée */
+.profil-pharmacopee { display: flex; flex-direction: column; gap: 14px; }
+.profil-pharma-sub { }
+
+/* Liste puces */
+.profil-list {
+  margin: 5px 0 0 1.2em;
+  padding: 0;
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+.profil-list li { margin-bottom: 2px; }
+
+/* Actions métaboliques */
+.profil-meta-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  margin-bottom: 5px;
+}
+
+@media (max-width: 540px) {
+  .profil-sensor-row { grid-template-columns: 1fr; gap: 2px; }
+  .profil-nutrient-table th:last-child,
+  .profil-nutrient-table td:last-child { display: none; }
+}

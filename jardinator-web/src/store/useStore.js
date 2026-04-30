@@ -15,6 +15,7 @@ import { getAllSavedHistory, saveHistory, deleteHistory } from '../services/hist
 import { getDiagnosticHistory, saveDiagnosticEntry, updateDiagnosticEntry } from '../services/diagnosticService';
 import { getIdentificationHistory, saveIdentificationEntry, updateIdentificationEntry } from '../services/identificationService';
 import { getAllSavedConsumption, saveConsumption, deleteConsumption } from '../services/consumptionService';
+import { getAllSavedProfiles, saveProfile, deleteProfile } from '../services/profileService';
 
 const useStore = create((set, get) => ({
   // ─── Navigation ────────────────────────────────────────────────────────────
@@ -213,6 +214,17 @@ const useStore = create((set, get) => ({
     set(s => { const c = { ...s.savedConsumption }; delete c[String(plantId)]; return { savedConsumption: c }; });
   },
 
+  // ─── Profile data ─────────────────────────────────────────────────────────
+  savedProfile: {},
+  storeProfile: (plantId, jsonStr) => {
+    saveProfile(plantId, jsonStr);
+    set(s => ({ savedProfile: { ...s.savedProfile, [String(plantId)]: jsonStr } }));
+  },
+  removeProfile: (plantId) => {
+    deleteProfile(plantId);
+    set(s => { const p = { ...s.savedProfile }; delete p[String(plantId)]; return { savedProfile: p }; });
+  },
+
   // ─── Saved AI history ─────────────────────────────────────────────────────
   savedHistory: {},
   storeHistory: (plantName, text) => {
@@ -283,6 +295,7 @@ const useStore = create((set, get) => ({
       diagnosticHistory: getDiagnosticHistory(),
       identificationHistory: getIdentificationHistory(),
       savedConsumption: getAllSavedConsumption(),
+      savedProfile: getAllSavedProfiles(),
     });
     get()._recompute();
   },

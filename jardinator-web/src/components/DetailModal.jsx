@@ -8,6 +8,7 @@ import AdvicePanel from './AdvicePanel';
 import HistoryPanel from './HistoryPanel';
 import HelpTip from './HelpTip';
 import ConsumptionPanel from './ConsumptionPanel';
+import ProfilePanel from './ProfilePanel';
 
 const ALL_MONTHS = [1,2,3,4,5,6,7,8,9,10,11,12];
 
@@ -97,10 +98,13 @@ export default function DetailModal() {
   const [adviceOpen, setAdviceOpen]         = useState(false);
   const [historyOpen, setHistoryOpen]       = useState(false);
   const [consumptionOpen, setConsumptionOpen] = useState(false);
+  const [profileOpen, setProfileOpen]         = useState(false);
   const savedAdvice = useStore(s => s.savedAdvice);
   const hasAdvice = plant ? !!savedAdvice[plant.id] : false;
   const savedConsumption = useStore(s => s.savedConsumption);
   const hasConsumption = plant ? !!savedConsumption[String(plant.id)] : false;
+  const savedProfile = useStore(s => s.savedProfile);
+  const hasProfile = plant ? !!savedProfile[String(plant.id)] : false;
   const savedHistory = useStore(s => s.savedHistory);
   const savedHistoryText = plant ? (savedHistory[plant.name] || null) : null;
 
@@ -222,6 +226,13 @@ export default function DetailModal() {
                     title="Analyse nutritionnelle, FODMAPs, allergies, conservation…"
                   >
                     🍽 Consommation
+                  </button>
+                  <button
+                    className={`btn-profile ${hasProfile ? 'has-data' : ''}`}
+                    onClick={() => setProfileOpen(true)}
+                    title="Profil sensoriel, nutritionnel, médicinal et métabolique"
+                  >
+                    🌿 Profil
                   </button>
                   <button
                     className="btn-gemini"
@@ -411,6 +422,12 @@ export default function DetailModal() {
         <ConsumptionPanel
           plant={plant}
           onClose={() => setConsumptionOpen(false)}
+        />
+      )}
+      {profileOpen && (
+        <ProfilePanel
+          plant={plant}
+          onClose={() => setProfileOpen(false)}
         />
       )}
 
