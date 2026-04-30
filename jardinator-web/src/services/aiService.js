@@ -155,3 +155,15 @@ export async function* askAIStream(plantName) {
   const prompt = `Fais un résumé pratique et structuré sur la meilleure manière de cultiver : ${plantName}\n\nRéponds en français pour un jardinier amateur. Organise ta réponse avec ces sections : préparation du sol, semis/plantation, entretien, arrosage, maladies fréquentes, et récolte.`;
   yield* _stream(key, model, prompt);
 }
+
+/**
+ * Ask the AI a consumption/nutrition question (returns JSON).
+ * prompt is pre-built by consumptionService.buildConsumptionPrompt().
+ */
+export async function* askConsumptionStreamOR(prompt) {
+  const key = getApiKey();
+  if (!key) throw new Error('NO_KEY');
+  const model = getSavedModel();
+  if (!model) throw new Error('NO_MODEL');
+  yield* _stream(key, model, prompt, 3000);
+}

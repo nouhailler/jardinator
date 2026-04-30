@@ -14,6 +14,7 @@ import { loadFavorites, toggleFavoriteEntry } from '../services/favoritesService
 import { getAllSavedHistory, saveHistory, deleteHistory } from '../services/historyService';
 import { getDiagnosticHistory, saveDiagnosticEntry, updateDiagnosticEntry } from '../services/diagnosticService';
 import { getIdentificationHistory, saveIdentificationEntry, updateIdentificationEntry } from '../services/identificationService';
+import { getAllSavedConsumption, saveConsumption, deleteConsumption } from '../services/consumptionService';
 
 const useStore = create((set, get) => ({
   // ─── Navigation ────────────────────────────────────────────────────────────
@@ -201,6 +202,17 @@ const useStore = create((set, get) => ({
     get()._recompute();
   },
 
+  // ─── Consumption data ─────────────────────────────────────────────────────
+  savedConsumption: {},
+  storeConsumption: (plantId, jsonStr) => {
+    saveConsumption(plantId, jsonStr);
+    set(s => ({ savedConsumption: { ...s.savedConsumption, [String(plantId)]: jsonStr } }));
+  },
+  removeConsumption: (plantId) => {
+    deleteConsumption(plantId);
+    set(s => { const c = { ...s.savedConsumption }; delete c[String(plantId)]; return { savedConsumption: c }; });
+  },
+
   // ─── Saved AI history ─────────────────────────────────────────────────────
   savedHistory: {},
   storeHistory: (plantName, text) => {
@@ -270,6 +282,7 @@ const useStore = create((set, get) => ({
       savedHistory: getAllSavedHistory(),
       diagnosticHistory: getDiagnosticHistory(),
       identificationHistory: getIdentificationHistory(),
+      savedConsumption: getAllSavedConsumption(),
     });
     get()._recompute();
   },

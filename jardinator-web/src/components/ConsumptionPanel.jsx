@@ -1,0 +1,386 @@
+import { useState, useRef, useEffect } from 'react';
+import useStore from '../store/useStore';
+import { buildConsumptionPrompt, parseConsumptionJson } from '../services/consumptionService';
+import { askConsumptionStreamOR, getApiKey, getSavedModel } from '../services/aiService';
+import { askOllamaStream, getOllamaUrl, getOllamaModel } from '../services/ollamaService';
+
+// ── FODMAP level badge ────────────────────────────────────────────────────────
+
+const FODMAP_LEVEL_STYLE = {
+  haut:  { bg: '#FFEBEE', color: '#C62828', label: 'Élevé' },
+  moyen: { bg: '#FFF8E1', color: '#F57F17', label: 'Moyen' },
+  bas:   { bg: '#F1F8E9', color: '#33691E', label: 'Bas'   },
+  nul:   { bg: '#E8F5E9', color: '#1B5E20', label: 'Nul'   },
+};
+
+function FodmapBadge({ level }) {
+  const style = FODMAP_LEVEL_STYLE[level] || FODMAP_LEVEL_STYLE.nul;
+  return (
+    <span className="conso-fodmap-badge" style={{ background: style.bg, color: style.color }}>
+      {style.label}
+    </span>
+  );
+}
+
+// ── Tag list ──────────────────────────────────────────────────────────────────
+
+function TagList({ items, variant = 'default' }) {
+  if (!items || items.length === 0) return <span className="conso-empty">—</span>;
+  return (
+    <div className="conso-tags">
+      {items.map((item, i) => (
+        <span key={i} className={`conso-tag conso-tag--${variant}`}>{item}</span>
+      ))}
+    </div>
+  );
+}
+
+// ── Compounds list ────────────────────────────────────────────────────────────
+
+function CompoundsList({ compounds }) {
+  if (!compounds || Object.keys(compounds).length === 0) return <span className="conso-empty">—</span>;
+  return (
+    <div className="conso-compounds">
+      {Object.entries(compounds).map(([name, desc]) => (
+        <div key={name} className="conso-compound-row">
+          <span className="conso-compound-name">{name}</span>
+          <span className="conso-compound-desc">{desc}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── FODMAP thresholds ─────────────────────────────────────────────────────────
+
+function ToleranceGrid({ thresholds }) {
+  if (!thresholds) return null;
+  const { portion_safe, portion_moderee, portion_limite } = thresholds;
+  if (portion_safe === 'Non applicable') return <p className="conso-text">Pas de seuil FODMAPs pour cette plante.</p>;
+  return (
+    <div className="conso-threshold-grid">
+      <div className="conso-threshold-cell conso-threshold--safe">
+        <div className="conso-threshold-label">✅ Phase élimination</div>
+        <div className="conso-threshold-value">{portion_safe}</div>
+      </div>
+      <div className="conso-threshold-cell conso-threshold--moderate">
+        <div className="conso-threshold-label">🔶 Réintroduction</div>
+        <div className="conso-threshold-value">{portion_moderee}</div>
+      </div>
+      <div className="conso-threshold-cell conso-threshold--limit">
+        <div className="conso-threshold-label">🔴 Limite absolue</div>
+        <div className="conso-threshold-value">{portion_limite}</div>
+      </div>
+    </div>
+  );
+}
+
+// ── Structured view ───────────────────────────────────────────────────────────
+
+function ConsumptionView({ data }) {
+  const c = data?.consommation;
+  if (!c) return <p className="conso-text conso-text--error">Données non disponibles.</p>;
+
+  const fodmaps = c.fodmaps || {};
+  const levelStyle = FODMAP_LEVEL_STYLE[fodmaps.niveau_global] || FODMAP_LEVEL_STYLE.nul;
+
+  return (
+    <div className="conso-view">
+
+      {/* FODMAPs — section principale mise en avant */}
+      <div className="conso-fodmap-card" style={{ borderColor: levelStyle.color + '88', background: levelStyle.bg + '55' }}>
+        <div className="conso-fodmap-header">
+          <span className="conso-fodmap-title">🧫 FODMAPs</span>
+          <FodmapBadge level={fodmaps.niveau_global} />
+        </div>
+        {fodmaps.types_fodmaps?.length > 0 && (
+          <div className="conso-fodmap-types">
+            <span className="conso-label">Types présents :</span>
+            <TagList items={fodmaps.types_fodmaps} variant="fodmap" />
+          </div>
+        )}
+        <ToleranceGrid thresholds={fodmaps.seuil_tolerance} />
+        {fodmaps.recommandations_specifiques && (
+          <p className="conso-text conso-text--tip">💡 {fodmaps.recommandations_specifiques}</p>
+        )}
+        {fodmaps.alternatives_low_fodmap?.length > 0 && (
+          <div className="conso-fodmap-alts">
+            <span className="conso-label">Alternatives low-FODMAP :</span>
+            <TagList items={fodmaps.alternatives_low_fodmap} variant="alt" />
+          </div>
+        )}
+      </div>
+
+      {/* Parties */}
+      <div className="conso-section">
+        <h4 className="conso-section-title">✅ Parties comestibles</h4>
+        <TagList items={c.parties_comestibles} variant="safe" />
+      </div>
+
+      {c.parties_toxiques?.length > 0 && (
+        <div className="conso-section">
+          <h4 className="conso-section-title">☠️ Parties toxiques ou à éviter</h4>
+          <TagList items={c.parties_toxiques} variant="danger" />
+        </div>
+      )}
+
+      {/* Préparation */}
+      {c.preparation && (
+        <div className="conso-section">
+          <h4 className="conso-section-title">🍳 Préparation</h4>
+          <p className="conso-text">{c.preparation}</p>
+        </div>
+      )}
+
+      {/* Composés préoccupants */}
+      {c.composes_preoccupants && Object.keys(c.composes_preoccupants).length > 0 && (
+        <div className="conso-section">
+          <h4 className="conso-section-title">⚗️ Composés à surveiller</h4>
+          <CompoundsList compounds={c.composes_preoccupants} />
+        </div>
+      )}
+
+      {/* Allergies */}
+      {c.allergies_croisees?.length > 0 && (
+        <div className="conso-section">
+          <h4 className="conso-section-title">🤧 Allergies croisées</h4>
+          <TagList items={c.allergies_croisees} variant="warning" />
+        </div>
+      )}
+
+      {/* Contre-indications */}
+      {c.contre_indications?.length > 0 && (
+        <div className="conso-section">
+          <h4 className="conso-section-title">🚫 Contre-indications</h4>
+          <TagList items={c.contre_indications} variant="danger" />
+        </div>
+      )}
+
+      {/* Conservation */}
+      {c.conservation && (
+        <div className="conso-section">
+          <h4 className="conso-section-title">🧊 Conservation</h4>
+          <p className="conso-text">{c.conservation}</p>
+        </div>
+      )}
+
+      {/* Quantité recommandée */}
+      {c.quantite_recommandee && (
+        <div className="conso-section">
+          <h4 className="conso-section-title">📊 Quantité recommandée</h4>
+          <p className="conso-text">{c.quantite_recommandee}</p>
+        </div>
+      )}
+
+      {/* Risques pollution */}
+      {c.risques_pollution && (
+        <div className="conso-section">
+          <h4 className="conso-section-title">🏭 Risques de pollution</h4>
+          <p className="conso-text">{c.risques_pollution}</p>
+        </div>
+      )}
+
+      {/* Avertissement */}
+      {c.avertissement_general && (
+        <div className="conso-warning">
+          <span>ℹ️ </span>{c.avertissement_general}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Main panel ────────────────────────────────────────────────────────────────
+
+export default function ConsumptionPanel({ plant, onClose }) {
+  const storeConsumption  = useStore(s => s.storeConsumption);
+  const removeConsumption = useStore(s => s.removeConsumption);
+  const savedConsumption  = useStore(s => s.savedConsumption);
+  const savedRaw          = savedConsumption[String(plant.id)] || null;
+
+  const [status, setStatus]     = useState(savedRaw ? 'saved' : 'idle');
+  const [rawText, setRawText]   = useState('');
+  const [parsedData, setParsed] = useState(savedRaw ? parseConsumptionJson(savedRaw) : null);
+  const [parseError, setParseError] = useState(false);
+  const [provider, setProvider] = useState(() => getApiKey() ? 'openrouter' : 'ollama');
+  const [saved, setSaved]       = useState(!!savedRaw);
+  const abortRef = useRef(false);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [onClose]);
+
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [rawText]);
+
+  // Auto-start if no saved data
+  useEffect(() => {
+    if (status === 'idle') handleGenerate();
+  }, []);
+
+  const handleGenerate = async () => {
+    setStatus('loading');
+    setRawText('');
+    setParsed(null);
+    setParseError(false);
+    setSaved(false);
+    abortRef.current = false;
+
+    const prompt = buildConsumptionPrompt(plant);
+    let fullText = '';
+
+    try {
+      const stream = provider === 'openrouter'
+        ? askConsumptionStreamOR(prompt)
+        : askOllamaStream(prompt, getOllamaUrl(), getOllamaModel());
+
+      for await (const chunk of stream) {
+        if (abortRef.current) break;
+        fullText += chunk;
+        setRawText(fullText);
+      }
+
+      const parsed = parseConsumptionJson(fullText);
+      if (parsed) {
+        setParsed(parsed);
+        setStatus('done');
+      } else {
+        setParseError(true);
+        setStatus('error');
+      }
+    } catch (err) {
+      setParseError(false);
+      setRawText(err.message);
+      setStatus('error');
+    }
+  };
+
+  const handleSave = () => {
+    const raw = JSON.stringify(parsedData);
+    storeConsumption(plant.id, raw);
+    setSaved(true);
+  };
+
+  const handleDelete = () => {
+    removeConsumption(plant.id);
+    setSaved(false);
+    setParsed(null);
+    setStatus('idle');
+    handleGenerate();
+  };
+
+  const ollamaOk    = !!getOllamaModel();
+  const openrouterOk = !!getApiKey() && !!getSavedModel();
+  const canGenerate = provider === 'ollama' ? ollamaOk : openrouterOk;
+
+  const providerWarning = provider === 'ollama' && !ollamaOk
+    ? '⚠️ Ollama non configuré — allez dans Paramètres'
+    : provider === 'openrouter' && !openrouterOk
+      ? '⚠️ Clé / modèle OpenRouter manquant — allez dans Paramètres'
+      : null;
+
+  return (
+    <div className="gemini-overlay" onClick={onClose}>
+      <div className="gemini-panel conso-panel" onClick={e => e.stopPropagation()}>
+
+        {/* Header */}
+        <div className="gemini-header">
+          <span className="gemini-title">🍽 Consommation &amp; nutrition</span>
+          <button className="gemini-close" onClick={onClose}>✕</button>
+        </div>
+
+        <div className="gemini-query">
+          <strong>{plant.name}</strong>
+          {plant.nameLatin && <span className="gemini-latin"> ({plant.nameLatin})</span>}
+          {plant.family && <span className="conso-family"> — {plant.family}</span>}
+        </div>
+
+        {/* Body */}
+        <div className="gemini-body" ref={scrollRef}>
+          {status === 'loading' && !parsedData && (
+            <div className="gemini-spinner">
+              <span className="spin-dot" /><span className="spin-dot" /><span className="spin-dot" />
+              <span style={{ marginLeft: '0.5rem', color: 'var(--text-light)' }}>
+                Analyse nutritionnelle en cours…
+              </span>
+            </div>
+          )}
+          {status === 'loading' && rawText && !parsedData && (
+            <pre className="conso-raw-stream">{rawText}<span className="cursor-blink">▌</span></pre>
+          )}
+          {(status === 'done' || status === 'saved') && parsedData && (
+            <ConsumptionView data={parsedData} />
+          )}
+          {status === 'error' && parseError && (
+            <div className="gemini-error">
+              ❌ La réponse n'est pas un JSON valide. Essayez de régénérer ou changez de modèle.
+              <details style={{ marginTop: '0.5rem' }}>
+                <summary style={{ cursor: 'pointer', fontSize: '0.8rem' }}>Voir la réponse brute</summary>
+                <pre className="conso-raw-stream">{rawText}</pre>
+              </details>
+              <button className="gemini-retry" onClick={handleGenerate}>🔄 Régénérer</button>
+            </div>
+          )}
+          {status === 'error' && !parseError && (
+            <div className="gemini-error">
+              ❌ {rawText}
+              <button className="gemini-retry" onClick={handleGenerate}>🔄 Réessayer</button>
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="gemini-footer">
+          {/* Sélecteur de fournisseur */}
+          <select
+            className="gemini-model-select"
+            value={provider}
+            onChange={e => setProvider(e.target.value)}
+            title="Source IA"
+          >
+            <option value="openrouter">☁️ OpenRouter</option>
+            <option value="ollama">🖥 Ollama (local)</option>
+          </select>
+
+          {providerWarning && (
+            <span className="conso-provider-warn">{providerWarning}</span>
+          )}
+
+          {status === 'loading' && (
+            <button className="gemini-stop-btn" onClick={() => { abortRef.current = true; setStatus('error'); setParseError(true); }}>
+              ⏹ Stop
+            </button>
+          )}
+
+          {(status === 'done' || status === 'saved') && (
+            <>
+              <button className="gemini-retry-btn" onClick={handleGenerate} disabled={!canGenerate}>
+                🔄 Régénérer
+              </button>
+              {saved ? (
+                <>
+                  <span className="gemini-saved-badge">✅ Sauvegardé</span>
+                  <button className="gemini-stop-btn" onClick={handleDelete} title="Supprimer la sauvegarde">
+                    🗑
+                  </button>
+                </>
+              ) : (
+                <button className="gemini-save-btn" onClick={handleSave}>
+                  💾 Sauvegarder
+                </button>
+              )}
+            </>
+          )}
+
+          <span className="gemini-powered">
+            {provider === 'openrouter' ? 'via OpenRouter' : 'via Ollama local'}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}

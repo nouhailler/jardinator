@@ -7,6 +7,7 @@ import GeminiPanel from './GeminiPanel';
 import AdvicePanel from './AdvicePanel';
 import HistoryPanel from './HistoryPanel';
 import HelpTip from './HelpTip';
+import ConsumptionPanel from './ConsumptionPanel';
 
 const ALL_MONTHS = [1,2,3,4,5,6,7,8,9,10,11,12];
 
@@ -91,12 +92,15 @@ export default function DetailModal() {
   const setImage = useStore(s => s.setImage);
   const removeImage = useStore(s => s.removeImage);
   const restoreDefault = useStore(s => s.restoreDefault);
-  const [pickerOpen, setPickerOpen] = useState(false);
-  const [geminiOpen, setGeminiOpen]   = useState(false);
-  const [adviceOpen, setAdviceOpen]   = useState(false);
-  const [historyOpen, setHistoryOpen] = useState(false);
+  const [pickerOpen, setPickerOpen]         = useState(false);
+  const [geminiOpen, setGeminiOpen]         = useState(false);
+  const [adviceOpen, setAdviceOpen]         = useState(false);
+  const [historyOpen, setHistoryOpen]       = useState(false);
+  const [consumptionOpen, setConsumptionOpen] = useState(false);
   const savedAdvice = useStore(s => s.savedAdvice);
   const hasAdvice = plant ? !!savedAdvice[plant.id] : false;
+  const savedConsumption = useStore(s => s.savedConsumption);
+  const hasConsumption = plant ? !!savedConsumption[String(plant.id)] : false;
   const savedHistory = useStore(s => s.savedHistory);
   const savedHistoryText = plant ? (savedHistory[plant.name] || null) : null;
 
@@ -212,6 +216,13 @@ export default function DetailModal() {
                       📋 Conseil IA
                     </button>
                   )}
+                  <button
+                    className={`btn-consumption ${hasConsumption ? 'has-data' : ''}`}
+                    onClick={() => setConsumptionOpen(true)}
+                    title="Analyse nutritionnelle, FODMAPs, allergies, conservation…"
+                  >
+                    🍽 Consommation
+                  </button>
                   <button
                     className="btn-gemini"
                     onClick={() => setGeminiOpen(true)}
@@ -396,6 +407,13 @@ export default function DetailModal() {
           initialText={savedHistoryText}
         />
       )}
+      {consumptionOpen && (
+        <ConsumptionPanel
+          plant={plant}
+          onClose={() => setConsumptionOpen(false)}
+        />
+      )}
+
       {geminiOpen && (
         <GeminiPanel
           plant={plant}

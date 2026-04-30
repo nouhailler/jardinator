@@ -12,6 +12,7 @@ import { getIdentificationHistory } from '../services/identificationService';
 import { loadGardenHistory } from '../services/gardenHistoryService';
 import { loadCompostData, saveCompostData, loadTreatments, saveTreatmentEntry } from '../services/inputsService';
 import { getYieldYears } from '../services/yieldService';
+import { getAllSavedConsumption, saveConsumption } from '../services/consumptionService';
 
 const YIELDS_KEY     = 'jardinator_yields';
 const FAVORITES_KEY  = 'jardinator_favorites';
@@ -63,6 +64,9 @@ export default function ExportImport() {
       // ── Intrants (compost + traitements) ──────────────────────────────────
       compost:    loadCompostData(),
       treatments: loadTreatments(),
+
+      // ── Données de consommation IA ─────────────────────────────────────────
+      consumption: getAllSavedConsumption(),
     };
 
     const counts = [
@@ -181,6 +185,15 @@ export default function ExportImport() {
         if (Array.isArray(bundle.treatments) && bundle.treatments.length > 0) {
           for (const t of bundle.treatments) saveTreatmentEntry(t);
           counts.push(`${bundle.treatments.length} traitement(s) bio`);
+        }
+
+        // ── Données de consommation IA ────────────────────────────────────────
+        if (bundle.consumption && typeof bundle.consumption === 'object') {
+          const entries = Object.entries(bundle.consumption);
+          if (entries.length > 0) {
+            for (const [plantId, jsonStr] of entries) saveConsumption(plantId, jsonStr);
+            counts.push(`${entries.length} analyse(s) de consommation`);
+          }
         }
 
         invalidatePlantsCache();
