@@ -648,7 +648,7 @@ select, input { font: inherit; }
 
 .detail-section { padding: 1rem 0; border-bottom: 1px solid #f0f0f0; }
 .detail-section:last-child { border-bottom: none; }
-.detail-section-title { font-size: 0.95rem; font-weight: 700; color: var(--green-primary); margin-bottom: 0.75rem; }
+.detail-section-title { font-size: 0.95rem; font-weight: 700; color: var(--green-primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
 
 /* Month calendar in detail */
 .month-grid { width: 100%; overflow-x: auto; }

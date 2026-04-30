@@ -6,6 +6,7 @@ import ImagePicker from './ImagePicker';
 import GeminiPanel from './GeminiPanel';
 import AdvicePanel from './AdvicePanel';
 import HistoryPanel from './HistoryPanel';
+import HelpTip from './HelpTip';
 
 const ALL_MONTHS = [1,2,3,4,5,6,7,8,9,10,11,12];
 
@@ -54,10 +55,13 @@ function InfoRow({ label, value }) {
   );
 }
 
-function Section({ title, children }) {
+function Section({ title, helpText, children }) {
   return (
     <div className="detail-section">
-      <h3 className="detail-section-title">{title}</h3>
+      <h3 className="detail-section-title">
+        {title}
+        {helpText && <HelpTip text={helpText} />}
+      </h3>
       {children}
     </div>
   );
@@ -250,11 +254,17 @@ export default function DetailModal() {
           </div>
 
           <div className="detail-body">
-            <Section title="📅 Calendrier de culture">
+            <Section
+              title="📅 Calendrier de culture"
+              helpText="Les 12 mois de l'année. Chaque ligne indique la période optimale : semis en intérieur (sous abri chaud), semis en extérieur (pleine terre), plantation des jeunes plants, et récolte."
+            >
               <MonthCalendarGrid plant={plant} />
             </Section>
 
-            <Section title="🌡️ Températures">
+            <Section
+              title="🌡️ Températures"
+              helpText="Plein air : températures min/max tolérées en pleine terre. Sous abri (serre, tunnel) : températures permettant d'avancer ou de prolonger la culture. En dessous du min, la plante souffre ou gèle."
+            >
               <div className="temp-grid">
                 <div className="temp-card outdoor">
                   <div className="temp-card-title">🌳 Plein air</div>
@@ -273,14 +283,20 @@ export default function DetailModal() {
               </div>
             </Section>
 
-            <Section title="🌿 Entretien">
+            <Section
+              title="🌿 Entretien"
+              helpText="Arrosage : fréquence et méthode conseillées. Exposition : ensoleillement optimal (plein soleil, mi-ombre…). Durée de croissance : nombre de jours entre semis/plantation et première récolte."
+            >
               <InfoRow label="💧 Arrosage" value={plant.arrosage} />
               <InfoRow label="☀️ Exposition" value={plant.exposition} />
               <InfoRow label="⏱ Durée de croissance" value={plant.dureeCroissanceJours ? `${plant.dureeCroissanceJours} jours` : null} />
             </Section>
 
             {(plant.infos.profondeurSemisCm || plant.infos.germinationJoursMin || plant.infos.hauteurPlantsCm || plant.infos.faciliteGermination) && (
-              <Section title="📋 Informations complémentaires">
+              <Section
+                title="📋 Informations complémentaires"
+                helpText="Profondeur de semis : profondeur à laquelle enterrer la graine. Germination : délai avant l'apparition des premières pousses. Facilité : note de simplicité pour germer et cultiver (Facile, Moyen, Difficile)."
+              >
                 <InfoRow label="Profondeur de semis" value={plant.infos.profondeurSemisCm ? `${plant.infos.profondeurSemisCm} cm` : null} />
                 <InfoRow
                   label="Germination"
@@ -295,7 +311,10 @@ export default function DetailModal() {
             )}
 
             {plant.sousVarietes.length > 0 && (
-              <Section title="🌿 Sous-variétés">
+              <Section
+                title="🌿 Sous-variétés"
+                helpText="Principales variétés cultivées de cette espèce. Chaque variété peut avoir ses propres caractéristiques : couleur, taille, résistance aux maladies, précocité…"
+              >
                 <div className="sous-varietes-list">
                   {plant.sousVarietes.map(v => (
                     <span key={v} className="sous-variete-tag">{v}</span>
@@ -305,7 +324,10 @@ export default function DetailModal() {
             )}
 
             {hasSemisType && (
-              <Section title="🌱 Type de semis">
+              <Section
+                title="🌱 Type de semis"
+                helpText="En poquet : 2-3 graines dans un même trou. En ligne : graines semées en rang continu. À la volée : graines dispersées sur toute la surface. En surface : graines posées sans les recouvrir (nécessitent la lumière pour germer)."
+              >
                 <div className="semis-types">
                   {plant.typesSemis.poquet && <span className="semis-tag">En poquet</span>}
                   {plant.typesSemis.ligne && <span className="semis-tag">En ligne</span>}
@@ -316,7 +338,10 @@ export default function DetailModal() {
             )}
 
             {(plant.sol.typeSol.length > 0 || plant.sol.compostType) && (
-              <Section title="🪱 Sol et compost">
+              <Section
+                title="🪱 Sol et compost"
+                helpText="Type de sol recommandé pour cette culture (argileux, limoneux, sableux…). Type de compost ou amendement conseillé avant plantation pour enrichir et préparer le sol."
+              >
                 {plant.sol.typeSol.length > 0 && (
                   <InfoRow label="Type de sol" value={plant.sol.typeSol.join(', ')} />
                 )}
@@ -325,7 +350,10 @@ export default function DetailModal() {
             )}
 
             {(plant.distances.distanceRangCm || plant.distances.distanceRangsCm || plant.distances.eclaircissageCm) && (
-              <Section title="📏 Distances de plantation">
+              <Section
+                title="📏 Distances de plantation"
+                helpText="Entre les plants : espace à laisser sur le même rang. Entre les rangs : espace entre deux rangées parallèles. Éclaircissage : distance finale à conserver après avoir arraché les plants en surnombre."
+              >
                 <InfoRow label="Entre les plants" value={plant.distances.distanceRangCm ? `${plant.distances.distanceRangCm} cm` : null} />
                 <InfoRow label="Entre les rangs" value={plant.distances.distanceRangsCm ? `${plant.distances.distanceRangsCm} cm` : null} />
                 <InfoRow label="Éclaircissage" value={plant.distances.eclaircissageCm ? `${plant.distances.eclaircissageCm} cm` : null} />
@@ -333,7 +361,10 @@ export default function DetailModal() {
             )}
 
             {(plant.associations.favorables.length > 0 || plant.associations.defavorables.length > 0) && (
-              <Section title="🤝 Associations de plantes">
+              <Section
+                title="🤝 Associations de plantes"
+                helpText="Favorables : plantes voisines qui stimulent la croissance, repoussent les ravageurs ou améliorent le sol. Défavorables : plantes qui entrent en compétition pour les nutriments ou favorisent les maladies. À planter à distance."
+              >
                 <div className="assoc-row">
                   <div className="assoc-group">
                     <div className="assoc-group-title" style={{ color: '#2E7D32' }}>✅ Favorables</div>
