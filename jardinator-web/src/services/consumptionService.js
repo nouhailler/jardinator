@@ -30,7 +30,7 @@ export function getAllSavedConsumption() {
 // ── Prompt builder ────────────────────────────────────────────────────────────
 
 export function buildConsumptionPrompt(plant) {
-  return `JSON UNIQUEMENT. Pas de markdown, pas de commentaire. Commence par { et termine par }.
+  return `JSON valide UNIQUEMENT. Pas de markdown, pas de commentaire, pas de tiret (-) ni d'astérisque devant les clés JSON. Commence par { et termine par }}. Toutes les accolades { } correctement appairées.
 Sois concis : 1-2 phrases max par champ texte. Infos manquantes → "" ou [].
 
 Plante : ${plant.name} (${plant.nameLatin || '?'}, famille ${plant.family || '?'})
@@ -62,14 +62,36 @@ Toutes les valeurs textuelles en français.`;
 
 // ── JSON parser robuste ───────────────────────────────────────────────────────
 
+function repairJson(raw) {
+  let s = raw;
+  // Remove leading dashes/list markers before JSON keys (model markdown habit)
+  s = s.replace(/([{,])\s*-+\s*"/g, '$1"');
+  // Remove stray ) between closing brace and , (another model hallucination)
+  s = s.replace(/([}\]])\s*\)\s*([,}])/g, '$1$2');
+  // Count unmatched { (string-aware) and close them; also strips trailing ]] etc.
+  let opens = 0, inStr = false, esc = false;
+  for (const ch of s) {
+    if (esc) { esc = false; continue; }
+    if (ch === '\\' && inStr) { esc = true; continue; }
+    if (ch === '"') { inStr = !inStr; continue; }
+    if (!inStr) {
+      if (ch === '{') opens++;
+      else if (ch === '}') opens--;
+    }
+  }
+  if (opens > 0) {
+    s = s.replace(/[\]\s,]+$/, '') + '}'.repeat(opens);
+  }
+  return s;
+}
+
 export function parseConsumptionJson(raw) {
   try { return JSON.parse(raw); } catch {}
   const fenced = raw.match(/```(?:json)?\s*([\s\S]+?)\s*```/);
   if (fenced) { try { return JSON.parse(fenced[1]); } catch {} }
   const obj = raw.match(/\{[\s\S]+\}/);
   if (obj) { try { return JSON.parse(obj[0]); } catch {} }
-  // Repair stray ) characters the model inserts after closing braces/brackets
-  const repaired = raw.replace(/([}\]])\s*\)\s*([,}])/g, '$1$2');
+  const repaired = repairJson(raw);
   if (repaired !== raw) {
     try { return JSON.parse(repaired); } catch {}
     const obj2 = repaired.match(/\{[\s\S]+\}/);
