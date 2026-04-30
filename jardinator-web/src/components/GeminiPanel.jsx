@@ -92,17 +92,21 @@ function KeySetup({ onSaved }) {
 }
 
 export default function GeminiPanel({ plant, onClose }) {
+  const storeAdvice  = useStore(s => s.storeAdvice);
+  const removeAdvice = useStore(s => s.removeAdvice);
+  const savedAdvice  = useStore(s => s.savedAdvice);
+  const existingText = savedAdvice[plant.id] || null;
+
   const [hasKey, setHasKey] = useState(!!getApiKey());
   const [models, setModels] = useState([]);
   const [modelsLoading, setModelsLoading] = useState(false);
   const [model, setModel] = useState(getSavedModel());
-  const [status, setStatus] = useState('idle');
-  const [text, setText] = useState('');
+  const [status, setStatus] = useState(existingText ? 'done' : 'idle');
+  const [text, setText] = useState(existingText || '');
   const [errorMsg, setErrorMsg] = useState('');
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(!!existingText);
   const scrollRef = useRef(null);
   const abortRef = useRef(false);
-  const storeAdvice = useStore(s => s.storeAdvice);
 
   // Load model list when key is present
   useEffect(() => {
@@ -132,9 +136,9 @@ export default function GeminiPanel({ plant, onClose }) {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [text]);
 
-  // Auto-ask once models are loaded
+  // Auto-ask only if no saved advice and models are ready
   useEffect(() => {
-    if (hasKey && models.length > 0 && status === 'idle') handleAsk();
+    if (hasKey && models.length > 0 && status === 'idle' && !existingText) handleAsk();
   }, [models]);
 
   const handleAsk = async () => {
@@ -251,13 +255,20 @@ export default function GeminiPanel({ plant, onClose }) {
                 <>
                   <button className="gemini-retry-btn" onClick={handleAsk}>🔄 Régénérer</button>
                   {saved ? (
-                    <span className="gemini-saved-badge">✅ Sauvegardé</span>
+                    <>
+                      <span className="gemini-saved-badge">✅ Sauvegardé</span>
+                      <button
+                        className="gemini-stop-btn"
+                        title="Supprimer les conseils sauvegardés"
+                        onClick={() => { removeAdvice(plant.id); setSaved(false); }}
+                      >🗑</button>
+                    </>
                   ) : (
                     <button
                       className="gemini-save-btn"
                       onClick={() => { storeAdvice(plant.id, text); setSaved(true); }}
                     >
-                      💾 Sauvegarder les conseils
+                      💾 Sauvegarder
                     </button>
                   )}
                 </>
