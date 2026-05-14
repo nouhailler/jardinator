@@ -1,10 +1,10 @@
-# Jardinator — Contexte technique (2026-04-30)
+# Jardinator — Contexte technique (2026-05-14)
 
 ## Vue d'ensemble
 
 Application web de gestion du potager, convertie de PyQt6 vers React. Déployée sur Netlify en PWA installable. Dev sur `localhost:5173`.
 
-- **Stack** : React 18, Vite 7, Zustand, CSS vanilla (pas de framework UI)
+- **Stack** : React 19, Vite 7, Zustand, CSS vanilla (pas de framework UI)
 - **Repo** : `main` branch → déploiement automatique Netlify sur push
 - **Dev** : `cd jardinator-web && npm run dev`
 - **Build** : `npm run build` (chunks : vendor / zustand / markdown / index ~720 kB)
@@ -34,7 +34,7 @@ Zustand unique. État global : `plants`, `selectedPlant`, `favorites`, `imageOve
 | `imageService.js` | Surcharges d'images utilisateur | `jardinator_images_v2` |
 | `gardenService.js` | Plan potager (planches, cellules, historique cultural) | `jardinator_garden_beds`, `jardinator_crop_history` |
 | `favoritesService.js` | Favoris | `jardinator_favorites` |
-| `historyService.js` | Historique culture IA | `jardinator_ai_history` |
+| `historyService.js` | Historique culture IA | `jardinator_plant_history` |
 | `diagnosticService.js` | Diagnostics phytosanitaires IA | `jardinator_diagnostic_history` |
 | `identificationService.js` | Identifications de plantes par photo IA | `jardinator_identification_history` |
 | `customPlantsService.js` | Fiches plantes personnalisées | `jardinator_custom_plants` |
@@ -70,7 +70,7 @@ Zustand unique. État global : `plants`, `selectedPlant`, `favorites`, `imageOve
 - `CardGrid` / `VegetableCard` : grille filtrée
 - `GardenPlanner` : plan potager drag-and-drop
 - `CalendarView` : vue calendrier
-- `ExportImport` : export/import JSON v4 (toutes données)
+- `ExportImport` : export/import JSON v4 (toutes données). Case **🔒** (`protectExisting`, activée par défaut) — à l'import, skip les clés déjà présentes en localStorage pour `advice`, `history`, `consumption`, `profile`.
 - `MeteoWidget` : widget météo
 - `OllamaChat` : chat libre avec Ollama
 - `SettingsPanel` : config API, Ollama, zone climatique
@@ -122,6 +122,20 @@ Clé racine : `"profil_complet"`. Champs : `profil_sensoriel` (goût/texture/ar�
 Bundle : `customPlants`, `gardenBeds`, `cropHistory`, `favorites`, `images`, `advice`, `history`, `gardenAiHistory`, `diagnosticHistory`, `identificationHistory`, `yields`, `compost`, `treatments`, `consumption`, `profile`.
 
 Rétrocompatible v2/v3.
+
+**Import non-destructif** : state `protectExisting` (useState, défaut `true`) — pour chaque entrée `advice`/`history`/`consumption`/`profile`, vérifie via `getSaved*()` si une valeur existe déjà avant d'appeler `save*()`. Le message de confirmation détaille importés vs conservés.
+
+---
+
+## Script batch (`scripts/batch-ai.mjs`)
+
+Génère les 4 panneaux IA (advice / consumption / profile / history) pour les 208 plantes via l'API OpenRouter en mode non-streaming.
+
+- **Usage** : `node scripts/batch-ai.mjs --key sk-or-v1-xxx --model qwen/qwen-2.5-7b-instruct:free [--limit 50] [--delay 3500]`
+- **Reprise** : progression sauvegardée dans `scripts/batch-ai-progress.json` après chaque requête (clé `"plantId:panel"`). Relancer la même commande continue là où ça s'est arrêté.
+- **Sortie** : `scripts/batch-ai-output.json` — bundle v4 importable directement via 📂 Importer (compatible avec le mode 🔒).
+- **Clés de stockage** : identiques à l'appli (`String(plant.id)` pour advice/consumption/profile, `plant.name` pour history).
+- **Rate limiting** : délai configurable entre requêtes (défaut 3 500 ms), backoff exponentiel sur 429 (30 s / 60 s / 90 s).
 
 ---
 
