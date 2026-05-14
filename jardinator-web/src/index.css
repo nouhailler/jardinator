@@ -125,6 +125,17 @@ select, input { font: inherit; }
   gap: 0.35rem;
   flex-shrink: 0;
 }
+.import-protect-label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  opacity: 0.75;
+  transition: opacity 0.15s;
+}
+.import-protect-label:hover { opacity: 1; }
+.import-protect-label input { cursor: pointer; }
 .export-btn, .import-btn {
   padding: 0.35rem 0.7rem;
   border-radius: 16px;

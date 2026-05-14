@@ -1,8 +1,8 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import useStore from '../store/useStore';
 import { getAllCached, saveImage } from '../services/imageService';
-import { getAllSavedAdvice, saveAdvice } from '../services/aiService';
-import { getAllSavedHistory, saveHistory } from '../services/historyService';
+import { getAllSavedAdvice, saveAdvice, getSavedAdvice } from '../services/aiService';
+import { getAllSavedHistory, saveHistory, getSavedHistory } from '../services/historyService';
 import { loadCustomPlants, saveCustomPlant } from '../services/customPlantsService';
 import { invalidatePlantsCache } from '../services/vegetableService';
 import { loadGardenBeds, saveGardenBeds, loadCropHistory, saveCropHistory } from '../services/gardenService';
@@ -12,8 +12,8 @@ import { getIdentificationHistory } from '../services/identificationService';
 import { loadGardenHistory } from '../services/gardenHistoryService';
 import { loadCompostData, saveCompostData, loadTreatments, saveTreatmentEntry } from '../services/inputsService';
 import { getYieldYears } from '../services/yieldService';
-import { getAllSavedConsumption, saveConsumption } from '../services/consumptionService';
-import { getAllSavedProfiles, saveProfile } from '../services/profileService';
+import { getAllSavedConsumption, saveConsumption, getSavedConsumption } from '../services/consumptionService';
+import { getAllSavedProfiles, saveProfile, getSavedProfile } from '../services/profileService';
 
 const YIELDS_KEY     = 'jardinator_yields';
 const FAVORITES_KEY  = 'jardinator_favorites';
@@ -27,6 +27,7 @@ function rawLS(key) {
 
 export default function ExportImport() {
   const fileRef = useRef(null);
+  const [protectExisting, setProtectExisting] = useState(true);
   const { imageOverrides, savedAdvice, savedHistory, customPlants, gardenBeds, cropHistory, favorites, init } = useStore();
 
   const handleExport = () => {
@@ -106,6 +107,7 @@ export default function ExportImport() {
         if (typeof bundle !== 'object') throw new Error('format invalide');
 
         const counts = [];
+        const skipped = [];
 
         // ── Rétrocompatibilité v2/v3 (images seules ou avec advice/history) ──
         const images  = bundle._jardinator ? bundle.images  : bundle;
@@ -121,18 +123,24 @@ export default function ExportImport() {
         if (imgCount) counts.push(`${imgCount} image(s)`);
 
         // ── Conseils IA ───────────────────────────────────────────────────────
-        let advCount = 0;
+        let advCount = 0; let advSkip = 0;
         for (const [plantId, text] of Object.entries(advice || {})) {
-          if (text) { saveAdvice(plantId, text); advCount++; }
+          if (!text) continue;
+          if (protectExisting && getSavedAdvice(plantId)) { advSkip++; continue; }
+          saveAdvice(plantId, text); advCount++;
         }
         if (advCount) counts.push(`${advCount} conseil(s) IA`);
+        if (advSkip)  skipped.push(`${advSkip} conseil(s) conservé(s)`);
 
         // ── Historique culture ────────────────────────────────────────────────
-        let histCount = 0;
+        let histCount = 0; let histSkip = 0;
         for (const [plantName, text] of Object.entries(history || {})) {
-          if (text) { saveHistory(plantName, text); histCount++; }
+          if (!text) continue;
+          if (protectExisting && getSavedHistory(plantName)) { histSkip++; continue; }
+          saveHistory(plantName, text); histCount++;
         }
         if (histCount) counts.push(`${histCount} historique(s) culture`);
+        if (histSkip)  skipped.push(`${histSkip} historique(s) conservé(s)`);
 
         // ── Fiches plantes personnalisées (v4) ────────────────────────────────
         if (Array.isArray(bundle.customPlants) && bundle.customPlants.length > 0) {
@@ -194,29 +202,39 @@ export default function ExportImport() {
         // ── Données de consommation IA ────────────────────────────────────────
         if (bundle.consumption && typeof bundle.consumption === 'object') {
           const entries = Object.entries(bundle.consumption);
-          if (entries.length > 0) {
-            for (const [plantId, jsonStr] of entries) saveConsumption(plantId, jsonStr);
-            counts.push(`${entries.length} analyse(s) de consommation`);
+          let conCount = 0; let conSkip = 0;
+          for (const [plantId, jsonStr] of entries) {
+            if (!jsonStr) continue;
+            if (protectExisting && getSavedConsumption(plantId)) { conSkip++; continue; }
+            saveConsumption(plantId, jsonStr); conCount++;
           }
+          if (conCount) counts.push(`${conCount} analyse(s) de consommation`);
+          if (conSkip)  skipped.push(`${conSkip} consommation(s) conservée(s)`);
         }
 
         // ── Profil complet IA ─────────────────────────────────────────────────
         if (bundle.profile && typeof bundle.profile === 'object') {
           const entries = Object.entries(bundle.profile);
-          if (entries.length > 0) {
-            for (const [plantId, jsonStr] of entries) saveProfile(plantId, jsonStr);
-            counts.push(`${entries.length} profil(s) complets`);
+          let proCount = 0; let proSkip = 0;
+          for (const [plantId, jsonStr] of entries) {
+            if (!jsonStr) continue;
+            if (protectExisting && getSavedProfile(plantId)) { proSkip++; continue; }
+            saveProfile(plantId, jsonStr); proCount++;
           }
+          if (proCount) counts.push(`${proCount} profil(s) complets`);
+          if (proSkip)  skipped.push(`${proSkip} profil(s) conservé(s)`);
         }
 
         invalidatePlantsCache();
         init();
 
-        if (counts.length > 0) {
-          alert(`✅ Importé avec succès :\n• ${counts.join('\n• ')}`);
-        } else {
-          alert('✅ Fichier importé (aucune donnée nouvelle trouvée).');
-        }
+        const msg = counts.length > 0
+          ? `✅ Importé avec succès :\n• ${counts.join('\n• ')}`
+          : '✅ Fichier importé (aucune donnée nouvelle trouvée).';
+        const skipMsg = skipped.length > 0
+          ? `\n\n🔒 Conservés (existants non écrasés) :\n• ${skipped.join('\n• ')}`
+          : '';
+        alert(msg + skipMsg);
       } catch (err) {
         alert(`❌ Fichier invalide.\n${err.message}\nUtilisez un fichier exporté depuis Jardinator.`);
       }
@@ -251,10 +269,25 @@ export default function ExportImport() {
       >
         💾 Exporter ({total})
       </button>
+      <label
+        className="import-protect-label"
+        title={protectExisting
+          ? 'Les fiches déjà renseignées ne seront pas écrasées'
+          : 'Les fiches existantes seront remplacées par celles du fichier importé'}
+      >
+        <input
+          type="checkbox"
+          checked={protectExisting}
+          onChange={e => setProtectExisting(e.target.checked)}
+        />
+        🔒
+      </label>
       <button
         className="import-btn"
         onClick={() => fileRef.current?.click()}
-        title="Importer une sauvegarde Jardinator (.json)"
+        title={protectExisting
+          ? 'Importer (vos données existantes seront conservées)'
+          : 'Importer (écrase les données existantes)'}
       >
         📂 Importer
       </button>
