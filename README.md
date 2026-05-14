@@ -58,6 +58,20 @@ Conseils de culture personnalisés via **Ollama** ou **OpenRouter**. Streaming e
 <tr>
 <td>
 
+### 🍽 Consommation & FODMAPs
+Sur chaque fiche, le bouton **🍽 Consommation** génère une analyse complète : parties comestibles/toxiques, allergies croisées, composés préoccupants, **niveau FODMAPs Monash** avec portions seuils, préparation, conservation, contre-indications. Sauvegardé localement.
+
+</td>
+<td>
+
+### 🌿 Profil complet IA
+Le bouton **🌿 Profil** génère une fiche approfondie : profil sensoriel (goût, texture, arôme), profil nutritionnel (oligoéléments, vitamines, acides gras), molécules bioactives, usages en pharmacopée traditionnelle et médecine douce, actions métaboliques. Sauvegardé localement.
+
+</td>
+</tr>
+<tr>
+<td>
+
 ### 📜 Historique & origine
 Sur chaque fiche, le bouton **📜 Historique** génère une fiche historique structurée (origine géographique, premières cultures, introduction en Europe, étymologie, anecdotes). Sauvegardé localement, inclus dans l'export.
 
@@ -171,7 +185,7 @@ Recherche intégrée **Wikimedia Commons**, URL personnalisée ou image par déf
 <td>
 
 ### 💾 Export / Import complet
-Bundle JSON v3 : images, conseils IA, **historiques IA** — tout est exportable et réimportable en un clic. Export agenda **.ics** compatible Google Agenda et Apple Calendar.
+Bundle JSON **v4** : images, conseils IA, historiques, consommation, profil, favoris, plan potager, rendements, traitements — tout en un clic. **Case 🔒** (activée par défaut) : l'import ne remplace jamais vos données existantes. Export agenda **.ics** compatible Google Agenda et Apple Calendar.
 
 </td>
 <td>
@@ -265,6 +279,8 @@ jardinator/
 │   │   │   ├── DetailModal.jsx      # Fiche plante (12 sections + PDF + IA + Historique)
 │   │   │   ├── GeminiPanel.jsx      # Conseils IA OpenRouter (streaming)
 │   │   │   ├── AdvicePanel.jsx      # Conseils sauvegardés
+│   │   │   ├── ConsumptionPanel.jsx # Consommation/FODMAPs IA (JSON structuré + sauvegarde)
+│   │   │   ├── ProfilePanel.jsx     # Profil complet IA (JSON structuré + sauvegarde)
 │   │   │   ├── HistoryPanel.jsx     # Historique IA de la plante (streaming + sauvegarde)
 │   │   │   ├── NewPlantModal.jsx    # Assistant 5 étapes création fiche personnalisée
 │   │   │   ├── ImagePicker.jsx      # Wikimedia Commons + URL custom
@@ -278,7 +294,7 @@ jardinator/
 │   │   │   ├── InputsPanel.jsx      # Calculateur compost + traitements bio
 │   │   │   ├── SettingsPanel.jsx    # Configuration Ollama & OpenRouter
 │   │   │   ├── HelpPanel.jsx        # Aide contextuelle par onglet
-│   │   │   └── ExportImport.jsx     # Export/import JSON bundle v3
+│   │   │   └── ExportImport.jsx     # Export/import JSON bundle v4 (🔒 non-destructif)
 │   │   ├── services/
 │   │   │   ├── vegetableService.js   # Fusion JSONs + filtres + zones climatiques
 │   │   │   ├── imageService.js       # CRUD images + Wikimedia API
@@ -294,13 +310,17 @@ jardinator/
 │   │   │   ├── historyService.js     # Historiques IA par plante (localStorage)
 │   │   │   ├── newPlantService.js    # IA lookup Latin/Wikipedia + génération fiche
 │   │   │   ├── plantPdfService.js    # Génération PDF fiche individuelle
+│   │   │   ├── consumptionService.js # Prompt FODMAPs/nutrition + repairJson + storage
+│   │   │   ├── profileService.js     # Prompt profil nutraceutique + repairJson + storage
 │   │   │   ├── diagnosticService.js  # Diagnostic phytosanitaire IA (prompt + streaming)
 │   │   │   ├── identificationService.js # Identification plante IA (prompt + streaming)
 │   │   │   ├── yieldService.js       # CRUD journal de rendements
 │   │   │   └── icsService.js         # Génération fichier .ics (agenda)
 │   │   ├── store/
 │   │   │   └── useStore.js       # État global Zustand
-│   │   └── data/                 # 12 fichiers JSON (220+ plantes + 120 questions IA)
+│   │   └── data/                 # 11 fichiers JSON (208 plantes + images)
+│   ├── scripts/
+│   │   └── batch-ai.mjs          # Pré-génération IA en lot (208 plantes × 4 panneaux)
 │   └── package.json
 │
 ├── main.py                      # 🖥️ Application Python/PyQt6 (version desktop legacy)
@@ -349,6 +369,12 @@ jardinator/
 ### Conseils de culture (✨ IA)
 Sur chaque fiche plante, génère un résumé pratique (sol, semis, arrosage, maladies, récolte). Sauvegardé localement, visible en badge sur les miniatures avec aperçu au survol.
 
+### Consommation & FODMAPs (🍽 Consommation)
+Analyse complète générée par IA : parties comestibles/toxiques, allergies croisées, composés préoccupants (glycoalcaloïdes, oxalates, lectines…), **niveau FODMAPs Monash** avec portions seuils et équivalents ménagers, préparation, conservation, contre-indications, interactions médicamenteuses. Sauvegardé par plante.
+
+### Profil complet (🌿 Profil)
+Fiche nutraceutique et botanique : profil sensoriel, oligoéléments & vitamines avec quantités, acides gras, protéines, molécules bioactives, usages en pharmacopée traditionnelle, médecine douce, huiles essentielles, actions métaboliques. Sauvegardé par plante.
+
 ### Historique & origine (📜 Historique)
 Fiche historique structurée en 5 sections : origine géographique, premières cultures, introduction en Europe, étymologie du nom, anecdotes historiques. Sauvegardé et inclus dans le PDF et l'export.
 
@@ -369,6 +395,18 @@ Photo d'une feuille, fleur ou écorce → nom commun, nom latin, famille, habita
 
 ### Suggestions rendements (🌾)
 Pour chaque récolte enregistrée, l'IA propose des améliorations ciblées (variété, densité, rotation) pour la saison suivante.
+
+### Pré-génération IA en lot (`batch-ai.mjs`)
+Pour remplir les 4 panneaux IA sur toutes les plantes sans intervention manuelle, un script Node.js est fourni. Il reprend automatiquement là où il s'est arrêté (limite quotidienne OpenRouter), et génère un fichier bundle v4 importable directement dans l'appli.
+
+```bash
+cd jardinator-web
+node scripts/batch-ai.mjs \
+  --key sk-or-v1-VOTRE_CLE \
+  --model qwen/qwen-2.5-7b-instruct:free \
+  --limit 50          # requêtes par run (reprend au prochain run)
+# Puis : Jardinator → 📂 Importer → scripts/batch-ai-output.json
+```
 
 ### Chat IA libre (💬)
 Questions libres en langage naturel. 120 questions suggérées en 20 catégories.
@@ -417,11 +455,14 @@ Toutes les personnalisations sont stockées dans le **localStorage** de votre na
 | `jardinator_diagnostic_history` | Historique diagnostics phytosanitaires |
 | `jardinator_identification_history` | Historique identifications de plantes |
 | `jardinator_compost` | Données calculateur compost |
+| `jardinator_consumption` | Analyses de consommation/FODMAPs IA par plante |
+| `jardinator_profile` | Profils complets IA par plante |
 | `jardinator_treatments` | Journal des traitements bio |
 | `jardinator_yields` | Journal de rendements |
 
 Pour sauvegarder ou transférer vos données → bouton **💾 Exporter** dans la barre de navigation.  
-Le bundle JSON v3 contient : images + conseils IA + historiques IA.
+Le bundle JSON **v4** contient : images + conseils IA + historiques + consommation + profils + favoris + plan potager + rendements + traitements.  
+La case **🔒** sur le bouton Importer (cochée par défaut) protège vos données existantes lors d'un import partiel.
 
 ---
 
