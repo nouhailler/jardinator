@@ -1,4 +1,4 @@
-# Jardinator — Contexte technique (2026-05-14)
+# Jardinator — Contexte technique (2026-05-31)
 
 ## Vue d'ensemble
 
@@ -154,3 +154,50 @@ Génère les 4 panneaux IA (advice / consumption / profile / history) pour les 2
 - `max_tokens: 4096` pour les prompts JSON. Prompt (~300 tokens) + réponse (~800-1200 tokens) tient dans ce budget pour modèles ≥ 7B.
 - Modèles OpenRouter fiables pour JSON complexe : `Qwen/Qwen2.5-7B-Instruct`, `mistralai/Mistral-7B-Instruct-v0.3`, `google/gemma-2-9b-it`.
 - Les instructions "termine par }}" dans les prompts ont été supprimées — elles poussaient certains modèles à ajouter `}}` en double.
+
+---
+
+## Audit ergonomie mobile (2026-05-31)
+
+Analyse complète de tous les fichiers CSS et JSX — problèmes identifiés, corrections planifiées.
+
+### Problèmes critiques (à corriger en priorité)
+
+| Problème | Fichier / Ligne | Détail |
+|---------|-----------------|--------|
+| Un seul breakpoint à 640px | `index.css:2710` | Aucun breakpoint 768px / 1024px |
+| Garden Planner non responsive | `index.css:1443` | Sidebars `220px + 340px` fixes |
+| Meteo panel largeur fixe | `index.css:792` | `width: 460px` → déborde sur < 480px |
+| Month grid layout cassé | `index.css:668` | 12 colonnes + `padding-left: 130px` → scroll horizontal |
+| Navigation sans menu mobile | `Header.jsx` | Tabs défilent horizontalement, pas de hamburger |
+| Touch target 18×18px | `index.css:2619` | `.help-tip-btn` (min requis : 44px) |
+| OllamaChat deux colonnes fixes | `index.css:~2066` | Sidebar 280px + main → débordement mobile |
+
+### Problèmes majeurs
+
+- **Font-size racine 14px** (`index.css:23`) — doit être 16px (les navigateurs mobiles zooment sur les inputs < 16px)
+- **8 boutons de fermeture entre 28–32px** — tous sous le seuil de 44px
+- **Font-sizes illisibles** : badges 11px, labels calendrier 11px, noms latin 11.5px
+- **`<div onClick>` sans rôle natif** dans `VegetableCard.jsx`, `DetailModal.jsx`
+- **Inputs sans `inputmode`** dans `NewPlantModal.jsx`, `ImagePicker.jsx`, `DetailModal.jsx`
+- **Grilles 2 colonnes** dans les formulaires non repliables sur mobile
+
+### Plan de corrections (à faire)
+
+**Phase 1 — Quick wins** :
+1. Font-size racine `14px` → `16px`
+2. Tous les boutons de fermeture/icônes à `min-width/height: 44px`
+3. Breakpoints `@media (max-width: 768px)` et `@media (max-width: 1024px)`
+4. Card grid `minmax(175px)` → `minmax(140px, 1fr)`
+
+**Phase 2 — Composants cassés sur mobile** :
+5. Garden Planner : `flex-direction: column` sous 768px
+6. Meteo panel : `width: min(460px, 95vw)`
+7. Month grid / CalendarView : scroll horizontal avec indicateur
+8. OllamaChat : sidebar rétractable sur mobile
+
+**Phase 3 — Qualité et accessibilité** :
+9. `inputmode` sur tous les champs numériques et URL
+10. `<div onClick>` → `<button>` dans VegetableCard et DetailModal
+11. Navigation tabs avec `aria-label` ou hamburger < 640px
+12. Font-sizes badges/labels minimum 12px

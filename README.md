@@ -504,7 +504,7 @@ git push origin feature/ma-fonctionnalite
 
 ### 💡 Idées d'améliorations futures
 
-- 📱 **Progressive Web App** — installation sur mobile/tablette
+- 📱 **Ergonomie mobile** — refonte responsive : breakpoints 768px/1024px, touch targets 44px, Garden Planner et CalendarView adaptés au smartphone *(en cours)*
 - 🗺️ **Export potager** — export image/PDF de la grille du plan
 - 🔄 **Rotations automatiques** — suggestions de rotations sur N années
 - 🌍 **Zones USDA** — filtrage en plus des zones EU déjà implémentées

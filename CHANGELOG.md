@@ -1,5 +1,20 @@
 # Changelog — Jardinator
 
+## [Unreleased] — Ergonomie mobile
+
+### À venir
+- Refonte responsive complète : breakpoints 768px et 1024px (actuellement seul 640px)
+- Touch targets : tous les boutons portés à 44×44px minimum (fermeture modales, icônes action)
+- Font-size racine : 14px → 16px pour éviter le zoom automatique mobile
+- Garden Planner : layout colonne sur mobile, sidebars en drawers
+- CalendarView : scroll horizontal avec indicateur visuel
+- OllamaChat : sidebar rétractable sur mobile
+- Meteo panel : largeur fluide (`min(460px, 95vw)`)
+- Remplacement des `<div onClick>` par des `<button>` natifs (`VegetableCard`, `DetailModal`)
+- Ajout `inputmode` sur les champs numériques et URL
+
+---
+
 ## [v2.5.0] — 2026-04-30
 
 ### Nouvelles fonctionnalités
