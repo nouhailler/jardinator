@@ -504,11 +504,11 @@ git push origin feature/ma-fonctionnalite
 
 ### 💡 Idées d'améliorations futures
 
-- 📱 **Ergonomie mobile** — refonte responsive : breakpoints 768px/1024px, touch targets 44px, Garden Planner et CalendarView adaptés au smartphone *(en cours)*
 - 🗺️ **Export potager** — export image/PDF de la grille du plan
 - 🔄 **Rotations automatiques** — suggestions de rotations sur N années
 - 🌍 **Zones USDA** — filtrage en plus des zones EU déjà implémentées
-- 📦 **Paquet .deb v2.5** — packaging incluant toutes les nouvelles fonctionnalités
+- 📦 **Paquet .deb v2.6** — packaging incluant toutes les nouvelles fonctionnalités
+- 📱 **Hamburger mobile** — menu de navigation rétractable < 640px
 
 ---
 
