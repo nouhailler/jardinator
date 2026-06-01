@@ -2830,6 +2830,10 @@ select, input { font: inherit; }
   .meteo-panel { right: 0; top: auto; bottom: 0; width: 100%; }
   .meteo-widget { border-radius: 14px 14px 0 0; }
 
+  /* Les tab-btn sont cachés sur mobile — plus rien à scroller,
+     overflow:visible permet au drawer absolu de s'afficher */
+  .tabs { overflow: visible; }
+
   /* Boutons d'action de la fiche — tous visibles sans scroll horizontal */
   .detail-name-row {
     flex-direction: column;
