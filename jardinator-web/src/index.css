@@ -162,8 +162,29 @@ select, input { font: inherit; }
   overflow-x: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+  position: relative;
 }
 .tabs::-webkit-scrollbar { display: none; }
+
+/* Mobile hamburger — caché sur desktop */
+.tabs-mobile { display: none; }
+
+.btn-hamburger {
+  min-width: 44px; min-height: 44px;
+  color: white; font-size: 1.3rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px; flex-shrink: 0;
+  transition: background 0.15s;
+}
+.btn-hamburger:hover { background: rgba(255,255,255,0.12); }
+
+/* Drawer — caché sur desktop, s'affiche via rendu conditionnel mobile */
+.tabs-drawer { display: none; }
+
+@keyframes tabs-slide-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 .tab-btn {
   padding: 0.6rem 1rem;
@@ -2808,6 +2829,56 @@ select, input { font: inherit; }
   .search-input { min-width: 0; width: 100%; }
   .meteo-panel { right: 0; top: auto; bottom: 0; width: 100%; }
   .meteo-widget { border-radius: 14px 14px 0 0; }
+
+  /* Cacher les onglets desktop, afficher hamburger */
+  .tab-btn  { display: none; }
+  .tab-count { display: none; }
+
+  .tabs-mobile {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .tabs-mobile-label {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+    white-space: nowrap;
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Drawer de navigation */
+  .tabs-drawer {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--green-dark);
+    z-index: 200;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    animation: tabs-slide-down 0.15s ease;
+  }
+  .tabs-drawer-item {
+    padding: 0.85rem 1.25rem;
+    color: rgba(255,255,255,0.8);
+    text-align: left;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: background 0.1s;
+  }
+  .tabs-drawer-item:hover  { background: rgba(255,255,255,0.08); color: white; }
+  .tabs-drawer-item.active {
+    color: white;
+    background: rgba(255,255,255,0.1);
+    border-left: 3px solid var(--green-pale);
+    padding-left: calc(1.25rem - 3px);
+  }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════

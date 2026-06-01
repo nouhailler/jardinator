@@ -155,6 +155,8 @@ export default function Header({ onIcsExport }) {
   const [plantFilter, setPlantFilter] = useState(
     PLANT_FILTER_KEYS.has(activeTab) ? activeTab : 'all'
   );
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
   const isPlantView = PLANT_FILTER_KEYS.has(activeTab);
 
@@ -163,7 +165,26 @@ export default function Header({ onIcsExport }) {
     setTab(key);
   }
 
+  // Fermer le drawer au clic extérieur
+  useEffect(() => {
+    if (!menuOpen) return;
+    function handler(e) {
+      if (!menuRef.current?.contains(e.target)) setMenuOpen(false);
+    }
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [menuOpen]);
+
+  // Fermer le drawer à Escape
+  useEffect(() => {
+    if (!menuOpen) return;
+    function handler(e) { if (e.key === 'Escape') setMenuOpen(false); }
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [menuOpen]);
+
   const favLabel = favorites.size > 0 ? `⭐ Favoris (${favorites.size})` : '⭐ Favoris';
+  const currentNavLabel = NAV_TABS.find(t => t.key === activeTab)?.label ?? '🌿 Plantes';
 
   return (
     <header className="header">
@@ -211,7 +232,7 @@ export default function Header({ onIcsExport }) {
         </div>
       </div>
 
-      <nav className="tabs" aria-label="Navigation principale">
+      <nav className="tabs" aria-label="Navigation principale" ref={menuRef}>
         <select
           className={`tab-plant-select ${isPlantView ? 'active' : ''}`}
           value={plantFilter}
@@ -235,6 +256,36 @@ export default function Header({ onIcsExport }) {
             {t.label}
           </button>
         ))}
+
+        {/* Hamburger — visible uniquement sur mobile via CSS */}
+        <div className="tabs-mobile">
+          <span className="tabs-mobile-label">{currentNavLabel}</span>
+          <button
+            className="btn-hamburger"
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu de navigation'}
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? '✕' : '☰'}
+          </button>
+        </div>
+
+        {/* Drawer de navigation mobile */}
+        {menuOpen && (
+          <div className="tabs-drawer" role="menu">
+            {NAV_TABS.map(t => (
+              <button
+                key={t.key}
+                className={`tabs-drawer-item ${activeTab === t.key ? 'active' : ''}`}
+                onClick={() => { setTab(t.key); setMenuOpen(false); }}
+                aria-current={activeTab === t.key ? 'page' : undefined}
+                role="menuitem"
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="tab-count">
           {activeTab === 'potager'
