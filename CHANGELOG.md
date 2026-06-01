@@ -15,6 +15,7 @@
 
 - **Badge "Conseil IA" dupliqué** : suppression du pseudo-élément CSS `::after { content: ' Conseil IA' }` qui doublait le texte déjà présent dans le JSX de `VegetableCard`
 - **Boutons fiche plante scrollables horizontalement sur mobile** : `.detail-name-row` passe en `flex-direction: column` sous 640px — la barre d'action prend toute la largeur et les boutons s'y répartissent via `flex-wrap` sans déborder du viewport. Padding réduit pour tenir en ~2 rangées sur 375px
+- **Drawer hamburger invisible** : `.tabs` avait `overflow-x: auto` qui coupait le drawer en `position: absolute`. Ajout de `overflow: visible` sur `.tabs` sous 640px (les onglets desktop étant masqués, plus rien à scroller)
 
 ---
 
