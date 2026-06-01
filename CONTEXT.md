@@ -182,3 +182,9 @@ Audit complet + corrections appliquées sur `index.css`, `VegetableCard.jsx`, `D
 - `DetailModal` : `role="dialog" aria-modal="true" aria-label={plant.name}` sur `.modal-content`
 - `<nav aria-label="Navigation principale">` + `aria-current="page"` sur l'onglet actif
 - 6 classes de badges/labels portées à `0.75rem` minimum : `.vcard-badge`, `.vcard-harvest`, `.vcard-latin`, `.month-col-label`, `.vcard-ai-badge`, `.card-custom-badge`
+
+### Correctifs post-audit ✅
+
+- **Hamburger mobile** (`Header.jsx`) : bouton ☰/✕ sous 640px avec drawer animé (8 onglets). États `menuOpen` + `menuRef` ; fermeture clic extérieur / Escape. Desktop inchangé. CSS : `.tabs-mobile`, `.btn-hamburger`, `.tabs-drawer`, `.tabs-drawer-item`.
+- **Badge "Conseil IA" dupliqué** : suppression de `.vcard-ai-badge::after { content: ' Conseil IA' }` — le texte était déjà dans le JSX.
+- **Boutons fiche plante sur mobile** : `.detail-name-row` passe en `flex-direction: column; align-items: stretch` sous 640px → barre d'action pleine largeur, `flex-wrap` distribue les boutons en ~2 rangées sans scroll horizontal. Padding réduit (`5px 10px`, `0.75rem`) sur les 6 boutons d'action.

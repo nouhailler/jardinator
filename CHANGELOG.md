@@ -1,5 +1,23 @@
 # Changelog — Jardinator
 
+## [v2.6.1] — 2026-06-01
+
+### Nouvelles fonctionnalités
+
+#### Menu hamburger mobile (`Header.jsx`)
+- Bouton ☰/✕ visible sous 640px, à droite du sélecteur de vue plantes
+- Affiche le nom de l'onglet actif à côté du bouton
+- Drawer animé (`slideDown`) avec les 8 onglets de navigation
+- Fermeture au tap extérieur, à Escape, ou à la sélection d'un onglet
+- Desktop inchangé : tabs horizontaux conservés
+
+### Corrections
+
+- **Badge "Conseil IA" dupliqué** : suppression du pseudo-élément CSS `::after { content: ' Conseil IA' }` qui doublait le texte déjà présent dans le JSX de `VegetableCard`
+- **Boutons fiche plante scrollables horizontalement sur mobile** : `.detail-name-row` passe en `flex-direction: column` sous 640px — la barre d'action prend toute la largeur et les boutons s'y répartissent via `flex-wrap` sans déborder du viewport. Padding réduit pour tenir en ~2 rangées sur 375px
+
+---
+
 ## [v2.6.0] — 2026-06-01
 
 ### Nouvelles fonctionnalités

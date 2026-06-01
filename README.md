@@ -508,7 +508,6 @@ git push origin feature/ma-fonctionnalite
 - 🔄 **Rotations automatiques** — suggestions de rotations sur N années
 - 🌍 **Zones USDA** — filtrage en plus des zones EU déjà implémentées
 - 📦 **Paquet .deb v2.6** — packaging incluant toutes les nouvelles fonctionnalités
-- 📱 **Hamburger mobile** — menu de navigation rétractable < 640px
 
 ---
 
