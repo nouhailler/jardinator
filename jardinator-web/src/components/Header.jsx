@@ -211,7 +211,7 @@ export default function Header({ onIcsExport }) {
         </div>
       </div>
 
-      <nav className="tabs">
+      <nav className="tabs" aria-label="Navigation principale">
         <select
           className={`tab-plant-select ${isPlantView ? 'active' : ''}`}
           value={plantFilter}
@@ -230,6 +230,7 @@ export default function Header({ onIcsExport }) {
             key={t.key}
             className={`tab-btn ${activeTab === t.key ? 'active' : ''}`}
             onClick={() => setTab(t.key)}
+            aria-current={activeTab === t.key ? 'page' : undefined}
           >
             {t.label}
           </button>

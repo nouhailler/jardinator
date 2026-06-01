@@ -126,6 +126,7 @@ export default function ImagePicker({ plant, onSelect, onClose }) {
                 onChange={e => setCustomUrl(e.target.value)}
                 placeholder="https://…"
                 type="url"
+                inputMode="url"
               />
               <button className="custom-url-btn" type="submit" disabled={!customUrl.trim()}>
                 Utiliser cette image

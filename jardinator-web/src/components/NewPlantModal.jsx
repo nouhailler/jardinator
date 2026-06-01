@@ -220,6 +220,7 @@ export default function NewPlantModal() {
   });
   const num = (key) => ({
     type: 'number',
+    inputMode: 'decimal',
     value: formData?.[key] ?? '',
     onChange: e => set(key, e.target.value === '' ? '' : Number(e.target.value)),
     className: 'np-input np-input-num',
@@ -502,7 +503,7 @@ export default function NewPlantModal() {
                   )}
                   <div style={{ flex: 1 }}>
                     <Field label="URL de l'image" hint=" (Wikipédia, lien direct…)">
-                      <input {...inp('imageUrl')} placeholder="https://…" />
+                      <input {...inp('imageUrl')} placeholder="https://…" type="url" inputMode="url" />
                     </Field>
                   </div>
                 </div>

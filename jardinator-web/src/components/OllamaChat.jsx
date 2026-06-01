@@ -31,6 +31,7 @@ export default function OllamaChat() {
   const [selected, setSelected]         = useState(null);
   const [showSuggestions, setShowSugg]  = useState(false);
   const [activeCategory, setActiveCat]  = useState(jardinageQA.categories[0].id);
+  const [showHistory, setShowHistory]   = useState(false);
   const abortRef                        = useRef(false);
   const responseRef                     = useRef(null);
 
@@ -138,7 +139,7 @@ export default function OllamaChat() {
   return (
     <div className="ollama-chat">
       {/* ── Historique ── */}
-      <aside className="chat-history">
+      <aside className={`chat-history${showHistory ? ' chat-history--open' : ''}`}>
         <div className="chat-history-header">
           <span>Historique</span>
           {chatHistory.length > 0 && (
@@ -174,6 +175,14 @@ export default function OllamaChat() {
 
       {/* ── Zone principale ── */}
       <section className="chat-main">
+
+        {/* Toggle historique — visible uniquement sur mobile via CSS */}
+        <button
+          className="btn-toggle-history"
+          onClick={() => setShowHistory(h => !h)}
+        >
+          {showHistory ? '▲ Masquer l\'historique' : '▼ Historique' + (chatHistory.length > 0 ? ` (${chatHistory.length})` : '')}
+        </button>
 
         {/* Sélecteur fournisseur + zone de saisie */}
         <div className="chat-input-area">

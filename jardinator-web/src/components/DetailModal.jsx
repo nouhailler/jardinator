@@ -142,7 +142,7 @@ export default function DetailModal() {
   return (
     <>
       <div className="modal-overlay" onClick={closeDetail}>
-        <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <div className="modal-content" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={plant.name}>
           <button className="modal-close" onClick={closeDetail}>✕</button>
           {plant.isCustom && (
             <button
