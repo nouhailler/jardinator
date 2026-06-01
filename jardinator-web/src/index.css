@@ -3432,9 +3432,6 @@ select, input { font: inherit; }
   border-radius: 10px;
   font-weight: 600;
 }
-.vcard-ai-badge::after {
-  content: ' Conseil IA';
-}
 
 /* ── AI advice preview tooltip on card badge ── */
 .vcard-ai-badge {
