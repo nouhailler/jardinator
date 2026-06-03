@@ -314,6 +314,14 @@ export default function Header({ onIcsExport, onStartDemo, demoActive }) {
               📅 Agenda
             </button>
             <ExportImport />
+            <div className="tabs-drawer-divider" />
+            <button
+              className="tabs-drawer-item tabs-drawer-item--demo"
+              onClick={() => { setMenuOpen(false); onStartDemo(); }}
+              disabled={demoActive}
+            >
+              ◉ Démo
+            </button>
           </div>
         )}
 

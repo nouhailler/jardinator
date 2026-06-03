@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import useStore from '../store/useStore';
+
+const isMobile = () => window.innerWidth <= 640;
 
 const PHASES = [
   {
@@ -86,10 +88,17 @@ function getCenter(el) {
 }
 
 export default function DemoMode({ onStop }) {
+  const mobile = useRef(isMobile()).current;
   const [phaseIdx, setPhaseIdx] = useState(0);
-  const [xy, setXY] = useState({ x: window.innerWidth * 0.6, y: window.innerHeight * 0.15 });
+  const [xy, setXY] = useState({ x: window.innerWidth * 0.5, y: window.innerHeight * 0.35 });
   const [caption, setCaption] = useState('');
   const [captionOn, setCaptionOn] = useState(false);
+  const [tapping, setTapping] = useState(false);
+
+  const triggerTap = useCallback(() => {
+    setTapping(true);
+    setTimeout(() => setTapping(false), 480);
+  }, []);
 
   useEffect(() => {
     const ids = [];
@@ -113,6 +122,7 @@ export default function DemoMode({ onStop }) {
         if (pos) setXY(pos);
         setCaption(phase.caption);
         setCaptionOn(true);
+        if (mobile) triggerTap();
       }, 350);
 
       addT(() => setCaptionOn(false), phase.duration + 350);
@@ -128,14 +138,14 @@ export default function DemoMode({ onStop }) {
       ids.forEach(clearTimeout);
       useStore.getState().closeDetail();
     };
-  }, []);
+  }, [mobile, triggerTap]);
 
   return (
     <div className="demo-overlay">
-      <div className="demo-label">◉ DÉMO</div>
+      {!mobile && <div className="demo-label">◉ DÉMO</div>}
 
       <button className="demo-stop" onClick={onStop}>
-        ✕ Quitter la démo
+        {mobile ? '✕' : '✕ Quitter la démo'}
       </button>
 
       <div className={`demo-caption${captionOn ? ' on' : ''}`}>
@@ -149,10 +159,10 @@ export default function DemoMode({ onStop }) {
       </div>
 
       <div
-        className="demo-cursor"
+        className={`demo-cursor${mobile ? ' demo-touch' : ''}`}
         style={{ transform: `translate(${xy.x}px, ${xy.y}px)` }}
       >
-        <div className="demo-cursor-wrap">
+        <div className={`demo-cursor-wrap${tapping ? ' demo-tapping' : ''}`}>
           <div className="demo-cursor-ring" />
           <div className="demo-cursor-ring demo-cursor-ring2" />
           <div className="demo-cursor-dot" />
