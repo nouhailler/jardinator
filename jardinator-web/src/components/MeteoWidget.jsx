@@ -171,7 +171,7 @@ function WeatherAiSection({ weather }) {
       }
       setStatus('done');
     } catch (err) {
-      const msgs = { NO_KEY: 'Clé API OpenRouter manquante.', NO_MODEL: 'Modèle non configuré.', BAD_KEY: 'Clé API invalide.' };
+      const msgs = { NO_KEY: 'Clé API OpenRouter manquante.', NO_MODEL: 'Modèle non configuré.', BAD_KEY: 'Clé API invalide.', RATE_LIMIT: '⏳ Limite de requêtes atteinte — attendez ~60s et réessayez (quota modèle gratuit).' };
       setErrorMsg(msgs[err.message] || `Erreur : ${err.message}`);
       setStatus('error');
     }

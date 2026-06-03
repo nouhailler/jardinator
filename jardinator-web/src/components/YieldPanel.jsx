@@ -78,7 +78,7 @@ function SuggestionCell({ entry, year, provider }) {
         saveYieldEntry(year, updated);
       }
     } catch (err) {
-      const msgs = { NO_KEY: 'Clé API manquante.', NO_MODEL: 'Modèle non configuré.', BAD_KEY: 'Clé invalide.' };
+      const msgs = { NO_KEY: 'Clé API manquante.', NO_MODEL: 'Modèle non configuré.', BAD_KEY: 'Clé invalide.', RATE_LIMIT: '⏳ Limite atteinte — attendez ~60s.' };
       setError(msgs[err.message] || err.message);
       setStatus('error');
     }

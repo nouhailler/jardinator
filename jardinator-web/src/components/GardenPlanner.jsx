@@ -364,7 +364,7 @@ function CompanionPanel({ bed, allPlants, conflicts, harmonies, bioScore }) {
       }
       setAiStatus('done');
     } catch (err) {
-      const msgs = { NO_KEY: 'Clé API OpenRouter manquante.', NO_MODEL: 'Modèle non configuré.', BAD_KEY: 'Clé API invalide.' };
+      const msgs = { NO_KEY: 'Clé API OpenRouter manquante.', NO_MODEL: 'Modèle non configuré.', BAD_KEY: 'Clé API invalide.', RATE_LIMIT: '⏳ Limite de requêtes atteinte — attendez ~60s et réessayez.' };
       setAiError(msgs[err.message] || `Erreur : ${err.message}`);
       setAiStatus('error');
     }

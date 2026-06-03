@@ -142,10 +142,14 @@ async function* _stream(key, model, prompt, maxTokens = 2048) {
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    const msg = err?.error?.message || `Erreur HTTP ${res.status}`;
-    addLog('error', `Erreur HTTP ${res.status}`, msg);
+    const raw = err?.error?.message || `Erreur HTTP ${res.status}`;
+    if (res.status === 429) {
+      addLog('warn', '⏳ Limite de requêtes (429)', `Attendez ~60s avant de réessayer — quota modèle gratuit atteint`);
+      throw new Error('RATE_LIMIT');
+    }
+    addLog('error', `Erreur HTTP ${res.status}`, raw);
     if (res.status === 401) throw new Error('BAD_KEY');
-    throw new Error(msg);
+    throw new Error(raw);
   }
 
   addLog('ok', 'Streaming démarré', model);

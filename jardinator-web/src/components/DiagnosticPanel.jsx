@@ -163,9 +163,10 @@ export default function DiagnosticPanel() {
       setStatus('done');
     } catch (err) {
       const msgs = {
-        NO_KEY:   'Clé API OpenRouter manquante. Configurez-la dans Paramètres.',
-        NO_MODEL: 'Aucun modèle configuré. Rendez-vous dans Paramètres.',
-        BAD_KEY:  'Clé API invalide. Vérifiez-la dans Paramètres.',
+        NO_KEY:     'Clé API OpenRouter manquante. Configurez-la dans Paramètres.',
+        NO_MODEL:   'Aucun modèle configuré. Rendez-vous dans Paramètres.',
+        BAD_KEY:    'Clé API invalide. Vérifiez-la dans Paramètres.',
+        RATE_LIMIT: '⏳ Limite de requêtes atteinte — attendez ~60s et réessayez.',
       };
       setErrorMsg(msgs[err.message] || `Erreur : ${err.message}`);
       setStatus('error');
