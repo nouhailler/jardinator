@@ -292,6 +292,21 @@ export default function Header({ onIcsExport, onStartDemo, demoActive }) {
                 {t.label}
               </button>
             ))}
+
+            {/* ─── Actions ─── */}
+            <div className="tabs-drawer-divider" />
+            <div className="tabs-drawer-section">Actions</div>
+
+            <button className="tabs-drawer-item" onClick={() => { toggleMeteo(); setMenuOpen(false); }}>
+              🌡️ Météo
+            </button>
+            <button className="tabs-drawer-item" onClick={() => { openNewPlant(); setMenuOpen(false); }}>
+              ➕ Nouvelle fiche
+            </button>
+            <button className="tabs-drawer-item" onClick={() => { onIcsExport(); setMenuOpen(false); }}>
+              📅 Agenda
+            </button>
+            <ExportImport />
           </div>
         )}
 

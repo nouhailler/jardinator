@@ -2824,8 +2824,20 @@ select, input { font: inherit; }
 }
 
 @media (max-width: 640px) {
-  .header-top { flex-direction: column; align-items: stretch; }
-  .header-controls { justify-content: stretch; }
+  /* header-top reste en row : brand (flex:1) + FilterDropdown compact à droite */
+  .header-top { align-items: center; }
+  .header-controls { flex-wrap: nowrap; }
+
+  /* Masquer les boutons d'action dans le header — ils migrent dans le drawer */
+  .header-controls .btn-meteo,
+  .header-controls .btn-new-plant,
+  .header-controls .btn-ics,
+  .header-controls .export-import,
+  .header-controls .btn-demo { display: none; }
+
+  /* Cible tactile ≥ 44px pour le déclencheur de recherche */
+  .filter-dropdown-trigger { min-height: 44px; }
+
   .search-input { min-width: 0; width: 100%; }
   .meteo-panel { right: 0; top: auto; bottom: 0; width: 100%; }
   .meteo-widget { border-radius: 14px 14px 0 0; }
@@ -2845,9 +2857,12 @@ select, input { font: inherit; }
     font-size: 0.75rem;
   }
 
-  /* Cacher les onglets desktop, afficher hamburger */
-  .tab-btn  { display: none; }
-  .tab-count { display: none; }
+  /* Cacher les onglets desktop ; afficher hamburger + compteur */
+  .tab-btn { display: none; }
+  .tab-count { display: flex; align-items: center; }
+
+  /* Sélecteur de vue plein largeur en ligne 2 */
+  .tab-plant-select { flex: 1; min-height: 44px; }
 
   .tabs-mobile {
     display: flex;
@@ -2856,15 +2871,8 @@ select, input { font: inherit; }
     margin-left: auto;
     flex-shrink: 0;
   }
-  .tabs-mobile-label {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.9);
-    font-weight: 600;
-    white-space: nowrap;
-    max-width: 130px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  /* Label fantôme « Plantes » — supprimé sur mobile */
+  .tabs-mobile-label { display: none; }
 
   /* Drawer de navigation */
   .tabs-drawer {
@@ -2886,6 +2894,7 @@ select, input { font: inherit; }
     font-size: 0.9rem;
     border-bottom: 1px solid rgba(255,255,255,0.07);
     transition: background 0.1s;
+    min-height: 44px;
   }
   .tabs-drawer-item:hover  { background: rgba(255,255,255,0.08); color: white; }
   .tabs-drawer-item.active {
@@ -2894,6 +2903,50 @@ select, input { font: inherit; }
     border-left: 3px solid var(--green-pale);
     padding-left: calc(1.25rem - 3px);
   }
+
+  /* Section « Actions » dans le drawer */
+  .tabs-drawer-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.12);
+    margin: 0.4rem 0;
+  }
+  .tabs-drawer-section {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    padding: 0.7rem 1.25rem 0.3rem;
+  }
+
+  /* ExportImport à l'intérieur du drawer : pleine largeur, style cohérent */
+  .tabs-drawer .export-import {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+  .tabs-drawer .export-import .export-btn,
+  .tabs-drawer .export-import .import-btn {
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    border-radius: 0;
+    box-shadow: none;
+    cursor: pointer;
+    min-height: 44px;
+    transition: background 0.1s;
+  }
+  .tabs-drawer .export-import .export-btn:hover,
+  .tabs-drawer .export-import .import-btn:hover {
+    background: rgba(255,255,255,0.08);
+    color: white;
+  }
+  .tabs-drawer .export-import .import-protect-label { display: none; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
