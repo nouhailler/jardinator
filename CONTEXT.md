@@ -1,4 +1,4 @@
-# Jardinator — Contexte technique (2026-06-01)
+# Jardinator — Contexte technique (2026-06-03)
 
 ## Vue d'ensemble
 
@@ -26,7 +26,8 @@ Zustand unique. État global : `plants`, `selectedPlant`, `favorites`, `imageOve
 
 | Fichier | Rôle | localStorage key |
 |---|---|---|
-| `aiService.js` | OpenRouter streaming, conseils culture, liste modèles libres | `jardinator_openrouter_key`, `jardinator_ai_advice`, `jardinator_free_models_cache` |
+| `aiService.js` | OpenRouter streaming, conseils culture, liste modèles libres, `orStream()`, `checkApiKey()`, `testModel()` | `jardinator_openrouter_key`, `jardinator_ai_advice`, `jardinator_free_models_cache` |
+| `logService.js` | Pub/sub log IA en mémoire (`addLog`, `subscribeLogs`, `clearLogs`, 150 entrées max) | — (mémoire session) |
 | `ollamaService.js` | Ollama local streaming, chat | — |
 | `consumptionService.js` | Prompt FODMAPs/nutrition/sécurité, storage, `repairJson` | `jardinator_consumption` |
 | `profileService.js` | Prompt profil complet (sensoriel/nutritionnel/médicinal/métabolique), storage, `repairJson` | `jardinator_profile` |
@@ -71,9 +72,9 @@ Zustand unique. État global : `plants`, `selectedPlant`, `favorites`, `imageOve
 - `GardenPlanner` : plan potager drag-and-drop
 - `CalendarView` : vue calendrier
 - `ExportImport` : export/import JSON v4 (toutes données). Case **🔒** (`protectExisting`, activée par défaut) — à l'import, skip les clés déjà présentes en localStorage pour `advice`, `history`, `consumption`, `profile`.
-- `MeteoWidget` : widget météo
+- `MeteoWidget` : widget météo — `WeatherAiSection` contient un panneau de diagnostic inline (logs locaux, s'ouvre automatiquement en cas d'erreur)
 - `OllamaChat` : chat libre avec Ollama
-- `SettingsPanel` : config API, Ollama, zone climatique
+- `SettingsPanel` : config API, Ollama, zone climatique — boutons **🔑 Vérifier la clé**, **🧪 Tester le modèle**, panneau **📋 Journal IA** (abonné à `logService`)
 - `HelpTip` : tooltip `?` sur les sections de la fiche plante
 - `NewPlantModal` : création/édition de fiches personnalisées
 
@@ -87,11 +88,16 @@ Zustand unique. État global : `plants`, `selectedPlant`, `favorites`, `imageOve
 
 ### Fonctions de streaming
 ```
+orStream(prompt, maxTokens)      → point d'entrée unique OpenRouter texte (clé+modèle lus en localStorage)
 askAIStream(plantName)           → conseils culture (texte)
 askAIStreamChat(question)        → chat libre (texte)
 askConsumptionStreamOR(prompt)   → JSON consommation/profil (max_tokens 4096)
 askOllamaStream(prompt, url, m)  → générique Ollama
 ```
+
+`weatherService`, `yieldService` et `gardenAnalysisService` délèguent à `orStream()`. `diagnosticService` et `identificationService` conservent leur propre implémentation (messages multipart avec image).
+
+**Détection erreur in-stream** : OpenRouter peut renvoyer HTTP 200 avec `{"error": {...}}` dans les chunks SSE. `_stream()` vérifie `chunk.error` et lève une exception — évite les silences inattendus.
 
 ### Repair JSON (`repairJson` — dans consumptionService et profileService)
 Pipeline de corrections appliqué quand `JSON.parse` échoue :
@@ -191,6 +197,20 @@ Audit complet + corrections appliquées sur `index.css`, `VegetableCard.jsx`, `D
 
 ---
 
+## Header mobile (v2.8.0 — 2026-06-03)
+
+Sur mobile (≤ 640px) le header passe sur **2 lignes** :
+- Ligne 1 : `🌱 Jardinator` + `🔍 Rechercher` (FilterDropdown seul dans `header-controls`)
+- Ligne 2 : sélecteur de vue (`tab-plant-select`, `flex: 1`) + compteur + `☰`
+
+Les 5 boutons d'action masqués dans `header-controls` migrent dans le **drawer ☰** sous une section « Actions » : Météo, Nouvelle fiche, Agenda, Export/Import, ◉ Démo.
+
+Clic sur la marque → `handlePlantFilter('all')` (retour accueil depuis n'importe quel onglet).
+
+Fix positionnement `.meteo-panel` sur mobile : `left: 0; right: 0; width: auto` (ancrage viewport) + `html, body { overflow-x: hidden }` (empêche le body de grandir et de décaler les éléments `position: fixed`).
+
+---
+
 ## Démo cinématique (ajoutée 2026-06-03)
 
 Bouton **◉ Démo** (amber) dans `header-controls` — lance une démo autonome en boucle.
@@ -224,3 +244,13 @@ Overlay `position: fixed; inset: 0; z-index: 9999; pointer-events: none` — tra
 **Éléments UI** : badge `◉ DÉMO` clignotant (top-left), bouton stop (top-right), légende (bottom-center, fade), points de progression amber (bottom-center).
 
 **Nettoyage** (`useEffect` return) : clearTimeout sur tous les timers + `closeDetail()` au cas où la modal serait ouverte.
+
+### Adaptation mobile (v2.8.0)
+
+- Bouton **◉ Démo** déplacé dans le drawer ☰ (texte doré, section séparée)
+- Détection `isMobile` (`window.innerWidth <= 640`) → classe `demo-touch` sur le curseur
+- **Indicateur de toucher** : cercle 64px (fond doré translucide) + anneau pulsant — remplace le pointeur souris sur mobile
+- **Animation tap** (`demo-tapping`) : contraction → expansion 0.45s à chaque changement de cible
+- Bouton stop : icône seule (✕), circulaire 44px sur mobile
+- Captions : `bottom: 100px` (au-dessus de la barre OS), dots : `bottom: 72px`
+- Transition curseur : 0.5s sur mobile (vs 0.75s desktop)

@@ -1,5 +1,61 @@
 # Changelog — Jardinator
 
+## [v2.8.0] — 2026-06-03
+
+### Header mobile rationalisé
+
+- **2 lignes** sur mobile (≤ 640px) : ligne 1 = marque + 🔍 Rechercher, ligne 2 = sélecteur vue + compteur + ☰
+- Boutons d'action masqués dans `header-controls` sur mobile (`btn-meteo`, `btn-new-plant`, `btn-ics`, `export-import`, `btn-demo`)
+- **Section « Actions » dans le drawer ☰** : Météo, Nouvelle fiche, Agenda, Export, Import, et ◉ Démo (nouveau)
+- Label fantôme `.tabs-mobile-label` supprimé
+- Sélecteur de vue `tab-plant-select` pleine largeur (`flex: 1`) + `min-height: 44px`
+- Compteur de plantes `tab-count` désormais visible sur mobile
+
+### Navigation
+
+- **Clic sur la marque 🌱 Jardinator** → retour à la vue « Tous » depuis n'importe quel onglet (`handlePlantFilter('all')`, `cursor: pointer`)
+
+### Paramètres — diagnostic OpenRouter
+
+- **🔑 Vérifier la clé** : appel `GET /api/v1/auth/key` OpenRouter, affiche validité + type de compte (gratuit/payant)
+- **🧪 Tester le modèle** : envoie un mini-message au modèle sélectionné, confirme qu'il répond ou affiche l'erreur exacte
+- **📋 Journal IA** : panneau terminal sombre (fond `#0f172a`, monospace) — affiche toutes les interactions IA de la session (niveau info/ok/warn/error), bouton Effacer
+
+### Observabilité IA — `logService.js`
+
+- Nouveau service pub/sub (`addLog`, `subscribeLogs`, `clearLogs`) — 150 entrées max en mémoire
+- `aiService.js` : `_stream()` instrumenté (requête → streaming → réponse complète / erreur HTTP / erreur in-stream)
+- `orStream(prompt, maxTokens)` exporté — point d'entrée unique pour les services texte
+- `checkApiKey(key)` et `testModel(key, model)` ajoutés
+- `weatherService`, `yieldService`, `gardenAnalysisService` refactorisés pour utiliser `orStream` (suppression de ~120 lignes de code dupliqué)
+- `diagnosticService`, `identificationService` instrumentés manuellement (format image)
+
+### Gestion d'erreurs IA
+
+- **Erreurs in-stream détectées** : `chunk.error` (HTTP 200 + erreur dans le stream) remontait silencieusement — maintenant capturé et loggé dans tous les services
+- **HTTP 429 → message clair** : `RATE_LIMIT` dans tous les composants (`MeteoWidget`, `OllamaChat`, `GardenPlanner`, `YieldPanel`, `DiagnosticPanel`, `IdentificationPanel`) → « ⏳ Limite de requêtes atteinte — attendez ~60s »
+
+### Corrections mobiles — Météo
+
+- **Panneau décalé après Settings** : `html, body { overflow-x: hidden }` sur mobile + `.meteo-panel` passe à `left: 0; right: 0; width: auto` (ancrage viewport garanti, indépendant de la largeur body)
+- **Bouton Générer hors écran** : conséquence du décalage ci-dessus, corrigé par la même fix ; `.chat-model-badge` limité à `max-width: 140px` dans les contrôles IA météo
+- **Panneau de diagnostic inline** dans `WeatherAiSection` : logs locaux (provider, clé, météo, prompt, chunks), s'ouvre automatiquement en cas d'erreur
+
+### Mode démo — adaptation mobile
+
+- **Bouton ◉ Démo** dans le drawer ☰ (texte doré, section séparée)
+- Indicateur de **toucher** (64px, rond doré translucide) remplace le curseur souris sur mobile
+- **Animation « tap »** à chaque changement de phase (contraction → expansion, 0.45s)
+- Bouton stop circulaire (44px) en coin haut-droit ; captions remontées (`bottom: 100px`) pour éviter la barre OS
+- Transition de déplacement 0.75s → 0.5s sur mobile
+
+### Documentation
+
+- README root mis à jour avec 5 captures d'écran (desktop vue principale, fiche plante, calendrier, mobile header, mobile drawer)
+- `jardinator-web/README.md` : remplace le template Vite par une présentation complète
+
+---
+
 ## [v2.6.1] — 2026-06-01
 
 ### Nouvelles fonctionnalités
