@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   getOllamaUrl, saveOllamaUrl, getOllamaModel, saveOllamaModel,
   fetchOllamaModels,
 } from '../services/ollamaService';
 import {
   getApiKey, saveApiKey, clearApiKey,
-  getSavedModel, saveModel, fetchFreeModels, clearModelsCache,
+  getSavedModel, saveModel, fetchFreeModels, clearModelsCache, checkApiKey,
 } from '../services/aiService';
+import { subscribeLogs, clearLogs } from '../services/logService';
 import useStore from '../store/useStore';
 import HelpTip from './HelpTip';
 import { useIsLocalMode } from '../hooks/useNetworkStatus';
@@ -28,6 +29,17 @@ export default function SettingsPanel() {
   const [orModels, setOrModels]           = useState([]);
   const [orStatus, setOrStatus]           = useState('idle'); // idle | loading | ok | error
   const [orError, setOrError]             = useState('');
+  const [checkStatus, setCheckStatus]     = useState('idle'); // idle | loading | ok | error
+  const [checkInfo, setCheckInfo]         = useState(null);
+
+  // ── Logs ──────────────────────────────────────────────────────────────────
+  const [logs, setLogs]   = useState([]);
+  const logsEndRef        = useRef(null);
+
+  useEffect(() => subscribeLogs(setLogs), []);
+  useEffect(() => {
+    logsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [logs]);
 
   // ── Ollama actions ────────────────────────────────────────────────────────
 
@@ -69,6 +81,20 @@ export default function SettingsPanel() {
     } catch (err) {
       setOrError(err.message);
       setOrStatus('error');
+    }
+  }
+
+  async function handleCheckKey() {
+    if (!apiKey.trim()) return;
+    setCheckStatus('loading');
+    setCheckInfo(null);
+    try {
+      const info = await checkApiKey(apiKey.trim());
+      setCheckInfo(info);
+      setCheckStatus('ok');
+    } catch (err) {
+      setCheckInfo({ error: err.message });
+      setCheckStatus('error');
     }
   }
 
@@ -199,7 +225,7 @@ export default function SettingsPanel() {
               className="settings-input"
               type="password"
               value={apiKey}
-              onChange={e => setApiKey(e.target.value)}
+              onChange={e => { setApiKey(e.target.value); setCheckStatus('idle'); setCheckInfo(null); }}
               placeholder="sk-or-v1-…"
             />
             {apiKey && (
@@ -209,6 +235,30 @@ export default function SettingsPanel() {
             )}
           </div>
         </div>
+
+        {apiKey && (
+          <div className="settings-row">
+            <label className="settings-label" />
+            <div className="settings-input-group">
+              <button
+                className="btn-settings-action"
+                onClick={handleCheckKey}
+                disabled={checkStatus === 'loading'}
+              >
+                {checkStatus === 'loading' ? '…' : '🔑 Vérifier la clé'}
+              </button>
+              {checkStatus === 'ok' && checkInfo && (
+                <span className="settings-ok">
+                  ✅ Clé valide — {checkInfo.is_free_tier ? 'compte gratuit' : 'compte payant'}
+                  {checkInfo.limit != null && ` · limite $${checkInfo.limit}`}
+                </span>
+              )}
+              {checkStatus === 'error' && (
+                <span className="settings-error">❌ {checkInfo?.error}</span>
+              )}
+            </div>
+          </div>
+        )}
 
         <div className="settings-row">
           <label className="settings-label">Modèle</label>
@@ -257,6 +307,32 @@ export default function SettingsPanel() {
           >
             💾 Enregistrer OpenRouter
           </button>
+        </div>
+      </section>
+
+      {/* ── Journal des appels IA ── */}
+      <section className="settings-section">
+        <h3 className="settings-section-title" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span>📋 Journal IA</span>
+          {logs.length > 0 && (
+            <button className="btn-settings-action" style={{ fontSize: '0.75rem', padding: '2px 8px' }} onClick={clearLogs}>
+              Effacer
+            </button>
+          )}
+        </h3>
+        <div className="ai-log-panel">
+          {logs.length === 0 ? (
+            <p className="ai-log-empty">Aucun appel IA pour l'instant.</p>
+          ) : (
+            logs.map(entry => (
+              <div key={entry.id} className={`ai-log-entry ai-log-${entry.level}`}>
+                <span className="ai-log-ts">{entry.ts}</span>
+                <span className="ai-log-msg">{entry.msg}</span>
+                {entry.detail && <span className="ai-log-detail">{entry.detail}</span>}
+              </div>
+            ))
+          )}
+          <div ref={logsEndRef} />
         </div>
       </section>
     </div>

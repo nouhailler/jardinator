@@ -1,3 +1,5 @@
+import { addLog } from './logService';
+
 const KEY_STORAGE = 'jardinator_openrouter_key';
 const MODELS_CACHE_KEY = 'jardinator_free_models_cache';
 const ADVICE_STORAGE = 'jardinator_ai_advice';
@@ -78,6 +80,27 @@ export function clearApiKey() {
   localStorage.removeItem(KEY_STORAGE);
 }
 
+/**
+ * Vérifie si la clé API OpenRouter est valide via GET /auth/key.
+ * Retourne les infos du compte (usage, limit, is_free_tier).
+ */
+export async function checkApiKey(key) {
+  addLog('info', 'Vérification de la clé API…', 'GET /api/v1/auth/key');
+  const res = await fetch('https://openrouter.ai/api/v1/auth/key', {
+    headers: { 'Authorization': `Bearer ${key}` },
+  });
+  if (!res.ok) {
+    const msg = `Clé invalide ou expirée (HTTP ${res.status})`;
+    addLog('error', 'Clé API rejetée', msg);
+    throw new Error(msg);
+  }
+  const data = await res.json();
+  const info = data.data || data;
+  const detail = info.is_free_tier ? 'Compte gratuit' : 'Compte payant';
+  addLog('ok', 'Clé API valide ✓', detail);
+  return info;
+}
+
 export function getSavedModel() {
   return localStorage.getItem('jardinator_ai_model') || DEFAULT_MODEL;
 }
@@ -98,6 +121,9 @@ export async function* askAIStreamChat(question) {
 }
 
 async function* _stream(key, model, prompt, maxTokens = 2048) {
+  const preview = prompt.length > 100 ? prompt.slice(0, 100) + '…' : prompt;
+  addLog('info', `→ ${model}`, preview);
+
   const res = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -117,13 +143,17 @@ async function* _stream(key, model, prompt, maxTokens = 2048) {
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     const msg = err?.error?.message || `Erreur ${res.status}`;
+    addLog('error', `Erreur HTTP ${res.status}`, msg);
     if (res.status === 401) throw new Error('BAD_KEY');
     throw new Error(msg);
   }
 
+  addLog('ok', 'Streaming démarré', model);
+
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
   let buffer = '';
+  let totalChars = 0;
 
   while (true) {
     const { done, value } = await reader.read();
@@ -138,10 +168,12 @@ async function* _stream(key, model, prompt, maxTokens = 2048) {
       try {
         const chunk = JSON.parse(json);
         const text = chunk?.choices?.[0]?.delta?.content;
-        if (text) yield text;
+        if (text) { totalChars += text.length; yield text; }
       } catch {}
     }
   }
+
+  addLog('ok', `Réponse complète`, `${totalChars} caractères reçus`);
 }
 
 /**
