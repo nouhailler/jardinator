@@ -119,6 +119,8 @@ function WeatherAiSection({ weather }) {
   const [status, setStatus]     = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [savedRecs, setSavedRecs] = useState(() => loadWeatherAiRecs());
+  const [meteoLogs, setMeteoLogs] = useState([]);
+  const [showLogs, setShowLogs]   = useState(false);
   const abortRef    = useRef(false);
   const responseRef = useRef(null);
 
@@ -150,19 +152,40 @@ function WeatherAiSection({ weather }) {
     setStreaming('');
     setErrorMsg('');
     abortRef.current = false;
+
+    const ts = () => new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const localLogs = [];
+    const mlog = (level, msg, detail = '') => {
+      localLogs.push({ id: Date.now() + Math.random(), ts: ts(), level, msg, detail });
+      setMeteoLogs([...localLogs]);
+    };
+
+    setMeteoLogs([]);
     let full = '';
 
     try {
+      mlog('info', `Provider : ${provider}`, activeModel || '(aucun)');
+      mlog('info', `Clé API : ${orKey ? '✓ ' + orKey.slice(0, 14) + '…' : '✗ manquante'}`, '');
+      mlog('info', `Météo chargée : ${weather ? `${weather.temp}°C à ${weather.location || '?'}` : '⚠️ null'}`,
+        weather ? `forecast : ${weather.forecast?.length ?? 0} jours` : '');
+
       const prompt = buildWeatherAiPrompt(weather);
+      mlog('info', `Prompt : ${prompt.length} caractères`, prompt.slice(0, 80) + '…');
+
+      mlog('info', 'Envoi requête…', '');
       const stream = provider === 'ollama'
         ? askOllamaWeatherStream(prompt, getOllamaUrl(), ollamaModel)
         : askOpenRouterWeatherStream(prompt);
 
+      let chunkCount = 0;
       for await (const chunk of stream) {
         if (abortRef.current) break;
         full += chunk;
+        chunkCount++;
+        if (chunkCount === 1) mlog('ok', `1er chunk reçu ✓`, chunk.slice(0, 60));
         setStreaming(full);
       }
+      mlog('ok', `Terminé`, `${chunkCount} chunks — ${full.length} caractères`);
 
       if (!abortRef.current && full) {
         const recs = { text: full, provider, model: activeModel, location: weather.location };
@@ -171,9 +194,11 @@ function WeatherAiSection({ weather }) {
       }
       setStatus('done');
     } catch (err) {
+      mlog('error', `Erreur : ${err.message}`, '');
       const msgs = { NO_KEY: 'Clé API OpenRouter manquante.', NO_MODEL: 'Modèle non configuré.', BAD_KEY: 'Clé API invalide.', RATE_LIMIT: '⏳ Limite de requêtes atteinte — attendez ~60s et réessayez (quota modèle gratuit).' };
       setErrorMsg(msgs[err.message] || `Erreur : ${err.message}`);
       setStatus('error');
+      setShowLogs(true);
     }
   }
 
@@ -205,6 +230,29 @@ function WeatherAiSection({ weather }) {
           </div>
 
           {status === 'error' && <div className="chat-error">{errorMsg}</div>}
+
+          {/* ── Logs de diagnostic ── */}
+          {meteoLogs.length > 0 && (
+            <div className="meteo-debug">
+              <button
+                className="meteo-debug-toggle"
+                onClick={() => setShowLogs(v => !v)}
+              >
+                🔍 Diagnostic {showLogs ? '▲' : '▼'} ({meteoLogs.length})
+              </button>
+              {showLogs && (
+                <div className="meteo-debug-panel">
+                  {meteoLogs.map(e => (
+                    <div key={e.id} className={`meteo-debug-line meteo-debug-${e.level}`}>
+                      <span className="meteo-debug-ts">{e.ts}</span>
+                      <span className="meteo-debug-msg">{e.msg}</span>
+                      {e.detail && <span className="meteo-debug-detail">{e.detail}</span>}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           {status === 'loading' && !streaming && (
             <div className="meteo-loading" style={{ padding: '0.75rem' }}>
