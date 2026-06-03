@@ -188,3 +188,39 @@ Audit complet + corrections appliquées sur `index.css`, `VegetableCard.jsx`, `D
 - **Hamburger mobile** (`Header.jsx`) : bouton ☰/✕ sous 640px avec drawer animé (8 onglets). États `menuOpen` + `menuRef` ; fermeture clic extérieur / Escape. Desktop inchangé. CSS : `.tabs-mobile`, `.btn-hamburger`, `.tabs-drawer`, `.tabs-drawer-item`. **Point d'attention** : `.tabs` a `overflow-x: auto` sur desktop — sur mobile (`< 640px`) on passe en `overflow: visible` sinon le drawer absolu est coupé par la boîte overflow.
 - **Badge "Conseil IA" dupliqué** : suppression de `.vcard-ai-badge::after { content: ' Conseil IA' }` — le texte était déjà dans le JSX.
 - **Boutons fiche plante sur mobile** : `.detail-name-row` passe en `flex-direction: column; align-items: stretch` sous 640px → barre d'action pleine largeur, `flex-wrap` distribue les boutons en ~2 rangées sans scroll horizontal. Padding réduit (`5px 10px`, `0.75rem`) sur les 6 boutons d'action.
+
+---
+
+## Démo cinématique (ajoutée 2026-06-03)
+
+Bouton **◉ Démo** (amber) dans `header-controls` — lance une démo autonome en boucle.
+
+### Composant `DemoMode.jsx`
+
+Overlay `position: fixed; inset: 0; z-index: 9999; pointer-events: none` — transparent, ne bloque pas l'interaction avec l'app. Seul le bouton `✕ Quitter la démo` a `pointer-events: auto`.
+
+**11 phases en boucle**, définies dans le tableau `PHASES` :
+
+| # | Onglet | Cible curseur | Action de fin |
+|---|---|---|---|
+| 1 | `all` | `.card-grid` | — |
+| 2 | `all` | `.filter-dropdown-trigger` | — |
+| 3 | `all` | `.vcard` (4e) | `openDetail(plants[3])` |
+| 4 | `all` | `.modal-content` | `closeDetail()` |
+| 5 | `calendar` | `main` | — |
+| 6 | `potager` | `main` | — |
+| 7 | `diagnostic` | `main` | — |
+| 8 | `identification` | `main` | — |
+| 9 | `chat` | `main` | — |
+| 10 | `yields` | `main` | — |
+| 11 | `all` | `.header-brand` | — |
+
+**Timing par phase** : setTab → +350 ms (DOM) → move cursor + show caption → +duration → hide caption → +330 ms → endAction → +470 ms → phase suivante.
+
+**Curseur** : `position: fixed; top:0; left:0; transform: translate(Xpx, Ypx)` avec `transition: 0.75s cubic-bezier(0.4,0,0.2,1)`. Point ambre (#FFB300) + double anneau en expansion (`animation: demo-ring 1.6s ease-out infinite`, offset 0.8s sur le second). Position calculée via `getBoundingClientRect()` sur le sélecteur DOM de la phase.
+
+**Actions store** : appelées via `useStore.getState()` (accès statique Zustand, stable hors hook) — pas de dépendance au cycle de re-render.
+
+**Éléments UI** : badge `◉ DÉMO` clignotant (top-left), bouton stop (top-right), légende (bottom-center, fade), points de progression amber (bottom-center).
+
+**Nettoyage** (`useEffect` return) : clearTimeout sur tous les timers + `closeDetail()` au cas où la modal serait ouverte.
