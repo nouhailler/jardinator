@@ -140,7 +140,7 @@ function FilterDropdown({ search, setSearch, groupe, setGroupe, groupes, family,
 
 // ─── Header ───────────────────────────────────────────────────────────────────
 
-export default function Header({ onIcsExport }) {
+export default function Header({ onIcsExport, onStartDemo, demoActive }) {
   const isOnline = useNetworkStatus();
   const {
     activeTab, setTab, search, setSearch,
@@ -229,6 +229,14 @@ export default function Header({ onIcsExport }) {
             📅 Agenda
           </button>
           <ExportImport />
+          <button
+            className={`btn-demo${demoActive ? ' active' : ''}`}
+            onClick={onStartDemo}
+            title="Lancer la démo cinématique"
+            disabled={demoActive}
+          >
+            ◉ Démo
+          </button>
         </div>
       </div>
 

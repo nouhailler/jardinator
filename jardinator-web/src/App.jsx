@@ -16,11 +16,13 @@ import YieldPanel from './components/YieldPanel';
 import InputsPanel from './components/InputsPanel';
 import IcsExportModal from './components/IcsExportModal';
 import InstallPWA from './components/InstallPWA';
+import DemoMode from './components/DemoMode';
 
 export default function App() {
   const { init, activeTab, meteoOpen, newPlantOpen } = useStore();
-  const [helpOpen, setHelpOpen]   = useState(false);
-  const [icsOpen, setIcsOpen]     = useState(false);
+  const [helpOpen, setHelpOpen]     = useState(false);
+  const [icsOpen, setIcsOpen]       = useState(false);
+  const [demoActive, setDemoActive] = useState(false);
 
   useEffect(() => { init(); }, []);
 
@@ -38,7 +40,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <Header onIcsExport={() => setIcsOpen(true)} />
+      <Header onIcsExport={() => setIcsOpen(true)} onStartDemo={() => setDemoActive(true)} demoActive={demoActive} />
       <main className="main">
         {renderMain()}
       </main>
@@ -53,6 +55,7 @@ export default function App() {
       <button className="btn-help-float" onClick={() => setHelpOpen(true)} title="Aide">?</button>
       <HelpPanel isOpen={helpOpen} onClose={() => setHelpOpen(false)} activeTab={activeTab} />
       <InstallPWA />
+      {demoActive && <DemoMode onStop={() => setDemoActive(false)} />}
     </div>
   );
 }
