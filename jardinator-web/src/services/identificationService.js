@@ -1,5 +1,6 @@
 import { getOllamaUrl, getOllamaModel } from './ollamaService';
 import { getApiKey, getSavedModel } from './aiService';
+import { addLog } from './logService';
 
 const IDENTIFICATION_HISTORY_KEY = 'jardinator_identification_history';
 const OR_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
@@ -144,14 +145,18 @@ export async function* askOpenRouterIdentificationStream(dataUrl, hint) {
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    const msg = err?.error?.message || `Erreur ${res.status}`;
+    const msg = err?.error?.message || `Erreur HTTP ${res.status}`;
+    addLog('error', `Identification — erreur HTTP ${res.status}`, msg);
     if (res.status === 401) throw new Error('BAD_KEY');
     throw new Error(msg);
   }
 
+  addLog('ok', 'Identification — streaming démarré', getSavedModel());
+
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
   let buffer = '';
+  let totalChars = 0;
 
   while (true) {
     const { done, value } = await reader.read();
@@ -165,9 +170,15 @@ export async function* askOpenRouterIdentificationStream(dataUrl, hint) {
       if (!json || json === '[DONE]') continue;
       try {
         const chunk = JSON.parse(json);
+        if (chunk.error) {
+          const msg = chunk.error.message || 'Erreur provider';
+          addLog('error', 'Identification — erreur dans le stream', msg);
+          throw new Error(msg);
+        }
         const text = chunk?.choices?.[0]?.delta?.content;
-        if (text) yield text;
-      } catch {}
+        if (text) { totalChars += text.length; yield text; }
+      } catch (e) { if (e.message && !e.message.startsWith('JSON')) throw e; }
     }
   }
+  addLog('ok', 'Identification — réponse complète', `${totalChars} car.`);
 }

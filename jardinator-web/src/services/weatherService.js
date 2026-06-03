@@ -1,7 +1,7 @@
 // Open-Meteo API — completely free, no API key required
 // https://open-meteo.com/
 
-import { getApiKey, getSavedModel } from './aiService';
+import { getApiKey, getSavedModel, orStream } from './aiService';
 import { getOllamaUrl, getOllamaModel } from './ollamaService';
 
 const CACHE_KEY = 'jardinator_weather';
@@ -250,52 +250,5 @@ export async function* askOllamaWeatherStream(prompt, baseUrl, model) {
 }
 
 export async function* askOpenRouterWeatherStream(prompt) {
-  const key = getApiKey();
-  if (!key) throw new Error('NO_KEY');
-  const model = getSavedModel();
-  if (!model) throw new Error('NO_MODEL');
-
-  const res = await fetch(OR_API_URL, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${key}`,
-      'Content-Type': 'application/json',
-      'HTTP-Referer': window.location.origin,
-      'X-Title': 'Jardinator',
-    },
-    body: JSON.stringify({
-      model,
-      messages: [{ role: 'user', content: prompt }],
-      stream: true,
-      max_tokens: 800,
-    }),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    if (res.status === 401) throw new Error('BAD_KEY');
-    throw new Error(err?.error?.message || `Erreur ${res.status}`);
-  }
-
-  const reader  = res.body.getReader();
-  const decoder = new TextDecoder();
-  let buffer = '';
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-    const lines = buffer.split('\n');
-    buffer = lines.pop();
-    for (const line of lines) {
-      if (!line.startsWith('data: ')) continue;
-      const json = line.slice(6).trim();
-      if (!json || json === '[DONE]') continue;
-      try {
-        const chunk = JSON.parse(json);
-        const text = chunk?.choices?.[0]?.delta?.content;
-        if (text) yield text;
-      } catch {}
-    }
-  }
+  yield* orStream(prompt, 800);
 }

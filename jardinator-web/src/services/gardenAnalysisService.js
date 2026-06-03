@@ -3,7 +3,7 @@
  * Companion planting analysis and biodiversity scoring for the garden planner.
  */
 
-import { getApiKey, getSavedModel } from './aiService';
+import { getApiKey, getSavedModel, orStream } from './aiService';
 import { getOllamaUrl, getOllamaModel } from './ollamaService';
 
 const OR_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
@@ -196,28 +196,5 @@ export async function* askOllamaGardenStream(prompt) {
 }
 
 export async function* askOpenRouterGardenStream(prompt) {
-  const key   = getApiKey();   if (!key)   throw new Error('NO_KEY');
-  const model = getSavedModel(); if (!model) throw new Error('NO_MODEL');
-
-  const res = await fetch(OR_API_URL, {
-    method: 'POST',
-    headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json', 'HTTP-Referer': window.location.origin, 'X-Title': 'Jardinator' },
-    body: JSON.stringify({ model, messages: [{ role: 'user', content: prompt }], stream: true, max_tokens: 1000 }),
-  });
-  if (!res.ok) { const e = await res.json().catch(() => ({})); if (res.status === 401) throw new Error('BAD_KEY'); throw new Error(e?.error?.message || `Erreur ${res.status}`); }
-
-  const reader = res.body.getReader(), dec = new TextDecoder();
-  let buf = '';
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buf += dec.decode(value, { stream: true });
-    const lines = buf.split('\n'); buf = lines.pop();
-    for (const line of lines) {
-      if (!line.startsWith('data: ')) continue;
-      const json = line.slice(6).trim();
-      if (!json || json === '[DONE]') continue;
-      try { const c = JSON.parse(json); const t = c?.choices?.[0]?.delta?.content; if (t) yield t; } catch {}
-    }
-  }
+  yield* orStream(prompt, 1000);
 }

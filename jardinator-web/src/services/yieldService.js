@@ -1,5 +1,5 @@
 import { getOllamaUrl, getOllamaModel } from './ollamaService';
-import { getApiKey, getSavedModel } from './aiService';
+import { getApiKey, getSavedModel, orStream } from './aiService';
 
 const YIELDS_KEY = 'jardinator_yields';
 const OR_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
@@ -155,53 +155,5 @@ export async function* askOllamaYieldStream(prompt, baseUrl, model) {
 // ── OpenRouter streaming ──────────────────────────────────────────────────────
 
 export async function* askOpenRouterYieldStream(prompt) {
-  const key = getApiKey();
-  if (!key) throw new Error('NO_KEY');
-  const model = getSavedModel();
-  if (!model) throw new Error('NO_MODEL');
-
-  const res = await fetch(OR_API_URL, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${key}`,
-      'Content-Type': 'application/json',
-      'HTTP-Referer': window.location.origin,
-      'X-Title': 'Jardinator',
-    },
-    body: JSON.stringify({
-      model,
-      messages: [{ role: 'user', content: prompt }],
-      stream: true,
-      max_tokens: 512,
-    }),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    const msg = err?.error?.message || `Erreur ${res.status}`;
-    if (res.status === 401) throw new Error('BAD_KEY');
-    throw new Error(msg);
-  }
-
-  const reader = res.body.getReader();
-  const decoder = new TextDecoder();
-  let buffer = '';
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-    const lines = buffer.split('\n');
-    buffer = lines.pop();
-    for (const line of lines) {
-      if (!line.startsWith('data: ')) continue;
-      const json = line.slice(6).trim();
-      if (!json || json === '[DONE]') continue;
-      try {
-        const chunk = JSON.parse(json);
-        const text = chunk?.choices?.[0]?.delta?.content;
-        if (text) yield text;
-      } catch {}
-    }
-  }
+  yield* orStream(prompt, 512);
 }

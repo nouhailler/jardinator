@@ -5,7 +5,7 @@ import {
 } from '../services/ollamaService';
 import {
   getApiKey, saveApiKey, clearApiKey,
-  getSavedModel, saveModel, fetchFreeModels, clearModelsCache, checkApiKey,
+  getSavedModel, saveModel, fetchFreeModels, clearModelsCache, checkApiKey, testModel,
 } from '../services/aiService';
 import { subscribeLogs, clearLogs } from '../services/logService';
 import useStore from '../store/useStore';
@@ -31,6 +31,8 @@ export default function SettingsPanel() {
   const [orError, setOrError]             = useState('');
   const [checkStatus, setCheckStatus]     = useState('idle'); // idle | loading | ok | error
   const [checkInfo, setCheckInfo]         = useState(null);
+  const [testStatus, setTestStatus]       = useState('idle'); // idle | loading | ok | error
+  const [testInfo, setTestInfo]           = useState(null);
 
   // ── Logs ──────────────────────────────────────────────────────────────────
   const [logs, setLogs]   = useState([]);
@@ -81,6 +83,20 @@ export default function SettingsPanel() {
     } catch (err) {
       setOrError(err.message);
       setOrStatus('error');
+    }
+  }
+
+  async function handleTestModel() {
+    if (!apiKey.trim() || !orModel) return;
+    setTestStatus('loading');
+    setTestInfo(null);
+    try {
+      const result = await testModel(apiKey.trim(), orModel);
+      setTestInfo({ reply: result.reply });
+      setTestStatus('ok');
+    } catch (err) {
+      setTestInfo({ error: err.message });
+      setTestStatus('error');
     }
   }
 
@@ -297,6 +313,28 @@ export default function SettingsPanel() {
         )}
         {orStatus === 'ok' && (
           <p className="settings-ok">✅ {orModels.length} modèle(s) gratuit(s) disponible(s)</p>
+        )}
+
+        {/* Bouton test modèle */}
+        {apiKey && orModel && (
+          <div className="settings-row">
+            <label className="settings-label" />
+            <div className="settings-input-group" style={{ flexWrap: 'wrap', gap: '0.4rem' }}>
+              <button
+                className="btn-settings-action"
+                onClick={handleTestModel}
+                disabled={testStatus === 'loading'}
+              >
+                {testStatus === 'loading' ? '…' : '🧪 Tester le modèle'}
+              </button>
+              {testStatus === 'ok' && (
+                <span className="settings-ok">✅ Modèle opérationnel</span>
+              )}
+              {testStatus === 'error' && (
+                <span className="settings-error">❌ {testInfo?.error}</span>
+              )}
+            </div>
+          </div>
         )}
 
         <div className="settings-actions">

@@ -142,7 +142,7 @@ async function* _stream(key, model, prompt, maxTokens = 2048) {
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    const msg = err?.error?.message || `Erreur ${res.status}`;
+    const msg = err?.error?.message || `Erreur HTTP ${res.status}`;
     addLog('error', `Erreur HTTP ${res.status}`, msg);
     if (res.status === 401) throw new Error('BAD_KEY');
     throw new Error(msg);
@@ -167,13 +167,52 @@ async function* _stream(key, model, prompt, maxTokens = 2048) {
       if (!json || json === '[DONE]') continue;
       try {
         const chunk = JSON.parse(json);
+        // OpenRouter peut renvoyer HTTP 200 avec une erreur dans le stream
+        if (chunk.error) {
+          const msg = chunk.error.message || 'Erreur provider';
+          addLog('error', 'Erreur dans le stream', msg);
+          throw new Error(msg);
+        }
         const text = chunk?.choices?.[0]?.delta?.content;
         if (text) { totalChars += text.length; yield text; }
-      } catch {}
+      } catch (e) {
+        if (e.message && !e.message.startsWith('JSON')) throw e;
+      }
     }
   }
 
-  addLog('ok', `Réponse complète`, `${totalChars} caractères reçus`);
+  addLog('ok', `Réponse complète`, `${totalChars} car. — ${model}`);
+}
+
+/**
+ * Stream OpenRouter partagé — pour les services qui font du texte simple.
+ * Lit la clé et le modèle depuis localStorage.
+ */
+export async function* orStream(prompt, maxTokens = 2048) {
+  const key = getApiKey();
+  if (!key) throw new Error('NO_KEY');
+  const model = getSavedModel();
+  if (!model) throw new Error('NO_MODEL');
+  yield* _stream(key, model, prompt, maxTokens);
+}
+
+/**
+ * Envoie un mini-message pour vérifier qu'un modèle répond correctement.
+ * Retourne { ok: true } ou throw avec le message d'erreur.
+ */
+export async function testModel(key, model) {
+  addLog('info', `🧪 Test → ${model}`, 'Envoi message de test…');
+  let reply = '';
+  try {
+    for await (const chunk of _stream(key, model, 'Réponds uniquement "ok".', 10)) {
+      reply += chunk;
+    }
+    addLog('ok', `Modèle opérationnel ✓`, reply.trim() || '(réponse vide)');
+    return { ok: true, reply: reply.trim() };
+  } catch (err) {
+    addLog('error', `Modèle indisponible`, err.message);
+    throw err;
+  }
 }
 
 /**
