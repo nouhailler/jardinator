@@ -64,6 +64,8 @@ select, input { font: inherit; }
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
 }
 
 .header-logo { font-size: 2rem; }

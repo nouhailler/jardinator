@@ -189,7 +189,14 @@ export default function Header({ onIcsExport, onStartDemo, demoActive }) {
   return (
     <header className="header">
       <div className="header-top">
-        <div className="header-brand">
+        <div
+          className="header-brand"
+          onClick={() => handlePlantFilter('all')}
+          role="button"
+          tabIndex={0}
+          onKeyDown={e => e.key === 'Enter' && handlePlantFilter('all')}
+          title="Retour à l'accueil"
+        >
           <span className="header-logo">🌱</span>
           <div>
             <div className="header-title">
