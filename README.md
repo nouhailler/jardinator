@@ -24,6 +24,41 @@ Accessible depuis n'importe quel navigateur — aucune installation requise
 
 ---
 
+## 📸 Aperçu
+
+### Desktop — vue principale
+
+![Vue principale desktop](jardinator-web/docs/screenshots/desktop-main.png)
+
+### Fiche plante
+
+![Fiche détail](jardinator-web/docs/screenshots/desktop-detail.png)
+
+### Calendrier mensuel
+
+![Calendrier de juin](jardinator-web/docs/screenshots/desktop-calendar.png)
+
+<table>
+<tr>
+<td align="center" width="50%">
+
+**Mobile — Header**
+
+![Header mobile](jardinator-web/docs/screenshots/mobile-header.png)
+
+</td>
+<td align="center" width="50%">
+
+**Mobile — Menu ☰**
+
+![Drawer mobile](jardinator-web/docs/screenshots/mobile-drawer.png)
+
+</td>
+</tr>
+</table>
+
+---
+
 ## ✨ Fonctionnalités
 
 <table>
