@@ -2881,6 +2881,10 @@ select, input { font: inherit; }
 }
 
 @media (max-width: 640px) {
+  /* Empêche le body de s'élargir au-delà du viewport — fixe le positionnement
+     des éléments fixed (MeteoPanel, modales) quand du contenu déborde */
+  html, body { overflow-x: hidden; }
+
   /* header-top reste en row : brand (flex:1) + FilterDropdown compact à droite */
   .header-top { align-items: center; }
   .header-controls { flex-wrap: nowrap; }
@@ -2896,8 +2900,18 @@ select, input { font: inherit; }
   .filter-dropdown-trigger { min-height: 44px; }
 
   .search-input { min-width: 0; width: 100%; }
-  .meteo-panel { right: 0; top: auto; bottom: 0; width: 100%; }
-  .meteo-widget { border-radius: 14px 14px 0 0; }
+  /* left+right=0 sur un fixed ancre au viewport, pas au body — évite le décalage */
+  .meteo-panel { left: 0; right: 0; top: auto; bottom: 0; width: auto; }
+  .meteo-widget { border-radius: 14px 14px 0 0; max-height: 75vh; }
+
+  /* Contrôles IA météo : modèle tronqué pour que le bouton Générer reste visible */
+  .meteo-ai-controls { flex-wrap: wrap; gap: 0.4rem; }
+  .meteo-ai-controls .chat-model-badge {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
   /* Les tab-btn sont cachés sur mobile — plus rien à scroller,
      overflow:visible permet au drawer absolu de s'afficher */
