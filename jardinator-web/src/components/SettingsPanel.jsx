@@ -9,15 +9,21 @@ import {
 } from '../services/aiService';
 import { subscribeLogs, clearLogs } from '../services/logService';
 import {
-  getClientId, saveClientId, isTokenValid, clearAuth, connect, push, pull, getLastSync,
+  getClientId, saveClientId, isTokenValid, clearAuth, connect,
+  push as gdPush, pull as gdPull, getLastSync as gdGetLastSync,
 } from '../services/googleDriveService';
+import {
+  getApiKey as jbGetApiKey, saveApiKey as jbSaveApiKey,
+  getBinId, clearJsonbin,
+  push as jbPush, pull as jbPull, getLastSync as jbGetLastSync,
+} from '../services/jsonbinService';
 import { buildBundle, applyBundle } from '../services/bundleService';
 import useStore from '../store/useStore';
 import HelpTip from './HelpTip';
 import { useIsLocalMode } from '../hooks/useNetworkStatus';
 
 export default function SettingsPanel() {
-  const { setChatHistory } = useStore();
+  const { setChatHistory, init } = useStore();
   const isLocal = useIsLocalMode();
 
   // ── Ollama ────────────────────────────────────────────────────────────────
@@ -44,8 +50,16 @@ export default function SettingsPanel() {
   const [gdStatus, setGdStatus]           = useState('idle'); // idle | loading | ok | error
   const [gdMsg, setGdMsg]                 = useState('');
   const [gdProtect, setGdProtect]         = useState(true);
-  const [gdLastSync, setGdLastSync]       = useState(getLastSync);
+  const [gdLastSync, setGdLastSync]       = useState(gdGetLastSync);
   const [gdShowHelp, setGdShowHelp]       = useState(false);
+
+  // ── JSONBin ───────────────────────────────────────────────────────────────
+  const [jbKey, setJbKey]           = useState(jbGetApiKey);
+  const [jbBinId, setJbBinId]       = useState(getBinId);
+  const [jbStatus, setJbStatus]     = useState('idle'); // idle | loading | ok | error
+  const [jbMsg, setJbMsg]           = useState('');
+  const [jbProtect, setJbProtect]   = useState(true);
+  const [jbLastSync, setJbLastSync] = useState(jbGetLastSync);
 
   // ── Logs ──────────────────────────────────────────────────────────────────
   const [logs, setLogs]   = useState([]);
@@ -150,7 +164,7 @@ export default function SettingsPanel() {
     setGdStatus('loading');
     setGdMsg('');
     try {
-      await connect(id);
+      await connect(id);  // googleDriveService
       setGdConnected(true);
       setGdStatus('ok');
       setGdMsg('Connecté avec succès.');
@@ -171,7 +185,7 @@ export default function SettingsPanel() {
     setGdStatus('loading');
     setGdMsg('');
     try {
-      const ts = await push(buildBundle());
+      const ts = await gdPush(buildBundle());
       setGdLastSync(ts);
       setGdStatus('ok');
       setGdMsg('Données sauvegardées sur Google Drive.');
@@ -185,12 +199,12 @@ export default function SettingsPanel() {
     setGdStatus('loading');
     setGdMsg('');
     try {
-      const bundle = await pull();
+      const bundle = await gdPull();
       if (!bundle) { setGdStatus('ok'); setGdMsg('Aucun fichier trouvé sur Google Drive.'); return; }
       const { counts, skipped, warnings } = applyBundle(bundle, { protectExisting: gdProtect });
       init();
       const summary = counts.length > 0 ? counts.join(', ') : 'aucune donnée nouvelle';
-      const ts = getLastSync();
+      const ts = gdGetLastSync();
       setGdLastSync(ts);
       setGdStatus('ok');
       setGdMsg(`Importé : ${summary}${skipped.length ? ` · ${skipped.length} conservé(s)` : ''}${warnings.length ? ` · ⚠️ ${warnings.length} ignoré(s)` : ''}`);
@@ -198,6 +212,56 @@ export default function SettingsPanel() {
       setGdStatus('error');
       setGdMsg(err.message);
     }
+  }
+
+  // ── JSONBin actions ───────────────────────────────────────────────────────
+
+  async function handleJbPush() {
+    const key = jbKey.trim();
+    if (!key) { setJbMsg('Entrez votre clé API JSONBin.'); setJbStatus('error'); return; }
+    jbSaveApiKey(key);
+    setJbStatus('loading');
+    setJbMsg('');
+    try {
+      const ts = await jbPush(buildBundle());
+      setJbBinId(getBinId());
+      setJbLastSync(ts);
+      setJbStatus('ok');
+      setJbMsg('Données sauvegardées sur JSONBin.');
+    } catch (err) {
+      setJbStatus('error');
+      setJbMsg(err.message);
+    }
+  }
+
+  async function handleJbPull() {
+    const key = jbKey.trim();
+    if (!key) { setJbMsg('Entrez votre clé API JSONBin.'); setJbStatus('error'); return; }
+    jbSaveApiKey(key);
+    setJbStatus('loading');
+    setJbMsg('');
+    try {
+      const bundle = await jbPull();
+      if (!bundle) { setJbStatus('ok'); setJbMsg('Aucun bin trouvé — poussez d\'abord depuis le PC.'); return; }
+      const { counts, skipped, warnings } = applyBundle(bundle, { protectExisting: jbProtect });
+      init();
+      const summary = counts.length > 0 ? counts.join(', ') : 'aucune donnée nouvelle';
+      setJbLastSync(jbGetLastSync());
+      setJbStatus('ok');
+      setJbMsg(`Importé : ${summary}${skipped.length ? ` · ${skipped.length} conservé(s)` : ''}${warnings.length ? ` · ⚠️ ${warnings.length} ignoré(s)` : ''}`);
+    } catch (err) {
+      setJbStatus('error');
+      setJbMsg(err.message);
+    }
+  }
+
+  function handleJbClear() {
+    clearJsonbin();
+    setJbKey('');
+    setJbBinId('');
+    setJbLastSync(null);
+    setJbStatus('idle');
+    setJbMsg('');
   }
 
   // ── Load saved OR models on mount if key exists ───────────────────────────
@@ -526,6 +590,85 @@ export default function SettingsPanel() {
 
         {gdStatus === 'ok'    && gdMsg && <p className="settings-ok gdrive-msg">{gdMsg}</p>}
         {gdStatus === 'error' && gdMsg && <p className="settings-error gdrive-msg">{gdMsg}</p>}
+      </section>
+
+      {/* ── JSONBin ── */}
+      <section className="settings-section">
+        <h3 className="settings-section-title">
+          <span className="settings-badge settings-badge-jsonbin">JSONBin</span>
+          Backup cloud simplifié
+        </h3>
+        <p className="settings-hint">
+          Solution simple sans OAuth. Créez un compte sur{' '}
+          <strong>jsonbin.io</strong>, copiez votre <strong>Master Key</strong>{' '}
+          (onglet API Keys) et collez-la ici.
+        </p>
+
+        <div className="settings-row">
+          <label className="settings-label">Master Key</label>
+          <div className="settings-input-group">
+            <input
+              className="settings-input"
+              type="password"
+              value={jbKey}
+              onChange={e => setJbKey(e.target.value)}
+              placeholder="$2a$10$…"
+            />
+            {jbKey && (
+              <button className="btn-settings-danger" onClick={handleJbClear} title="Effacer">
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
+
+        {jbBinId && (
+          <div className="settings-row">
+            <label className="settings-label">Bin ID</label>
+            <code className="jsonbin-id">{jbBinId}</code>
+          </div>
+        )}
+
+        <div className="settings-row">
+          <label className="settings-label" />
+          <div className="settings-input-group" style={{ flexWrap: 'wrap', gap: '0.5rem' }}>
+            <button
+              className="btn-gdrive-push"
+              onClick={handleJbPush}
+              disabled={jbStatus === 'loading' || !jbKey.trim()}
+            >
+              {jbStatus === 'loading' ? '…' : '☁️ Pousser'}
+            </button>
+            <label
+              className="import-protect-label"
+              title={jbProtect ? 'Conserver les données locales existantes' : 'Écraser les données locales'}
+              style={{ marginLeft: 0 }}
+            >
+              <input
+                type="checkbox"
+                checked={jbProtect}
+                onChange={e => setJbProtect(e.target.checked)}
+              />
+              🔒
+            </label>
+            <button
+              className="btn-gdrive-pull"
+              onClick={handleJbPull}
+              disabled={jbStatus === 'loading' || !jbKey.trim()}
+            >
+              {jbStatus === 'loading' ? '…' : '⬇️ Tirer'}
+            </button>
+          </div>
+        </div>
+
+        {jbLastSync && (
+          <p className="gdrive-last-sync">
+            Dernière sync : {new Date(jbLastSync).toLocaleString('fr-FR')}
+          </p>
+        )}
+
+        {jbStatus === 'ok'    && jbMsg && <p className="settings-ok gdrive-msg">{jbMsg}</p>}
+        {jbStatus === 'error' && jbMsg && <p className="settings-error gdrive-msg">{jbMsg}</p>}
       </section>
 
       {/* ── Journal des appels IA ── */}
