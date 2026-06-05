@@ -70,6 +70,13 @@ function repairJson(raw) {
   s = s.replace(/([}\]])\s*\)\s*([,}])/g, '$1$2');
   // Fix keys missing their opening quote: , key": → , "key":
   s = s.replace(/([{,]\s*)([^"{\[\]\s,][^"]*?)(\s*"(?=\s*:))/g, '$1"$2$3');
+  // Fix premature closure: }},"field": → },"field":
+  // Happens when LLM closes the outer object too early while more sibling fields follow.
+  for (const key of ['cueillette','interactions_medicamenteuses','populations_sensibles',
+    'preparation','conservation','contre_indications','risques_pollution',
+    'quantite_recommandee','avertissement_general']) {
+    s = s.replace(new RegExp(`}}(\\s*,\\s*"${key}"\\s*:)`, 'g'), `}$1`);
+  }
   // Count unmatched { (string-aware) and close them; also strips trailing ]] etc.
   let opens = 0, inStr = false, esc = false;
   for (const ch of s) {

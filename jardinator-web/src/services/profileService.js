@@ -49,6 +49,11 @@ function repairJson(raw) {
   s = s.replace(/([}\]])\s*\)\s*([,}])/g, '$1$2');
   // Fix keys missing their opening quote: , key": → , "key":
   s = s.replace(/([{,]\s*)([^"{\[\]\s,][^"]*?)(\s*"(?=\s*:))/g, '$1"$2$3');
+  // Fix premature closure: }},"field": → },"field":
+  for (const key of ['profil_nutritionnel','molecules_bioactives','usages_pharmacopee',
+    'actions_metaboliques','avertissement']) {
+    s = s.replace(new RegExp(`}}(\\s*,\\s*"${key}"\\s*:)`, 'g'), `}$1`);
+  }
   let opens = 0, inStr = false, esc = false;
   for (const ch of s) {
     if (esc) { esc = false; continue; }
