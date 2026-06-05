@@ -8,6 +8,10 @@ import {
   getSavedModel, saveModel, fetchFreeModels, clearModelsCache, checkApiKey, testModel,
 } from '../services/aiService';
 import { subscribeLogs, clearLogs } from '../services/logService';
+import {
+  getClientId, saveClientId, isTokenValid, clearAuth, connect, push, pull, getLastSync,
+} from '../services/googleDriveService';
+import { buildBundle, applyBundle } from '../services/bundleService';
 import useStore from '../store/useStore';
 import HelpTip from './HelpTip';
 import { useIsLocalMode } from '../hooks/useNetworkStatus';
@@ -33,6 +37,15 @@ export default function SettingsPanel() {
   const [checkInfo, setCheckInfo]         = useState(null);
   const [testStatus, setTestStatus]       = useState('idle'); // idle | loading | ok | error
   const [testInfo, setTestInfo]           = useState(null);
+
+  // ── Google Drive ──────────────────────────────────────────────────────────
+  const [gdClientId, setGdClientId]       = useState(getClientId);
+  const [gdConnected, setGdConnected]     = useState(isTokenValid);
+  const [gdStatus, setGdStatus]           = useState('idle'); // idle | loading | ok | error
+  const [gdMsg, setGdMsg]                 = useState('');
+  const [gdProtect, setGdProtect]         = useState(true);
+  const [gdLastSync, setGdLastSync]       = useState(getLastSync);
+  const [gdShowHelp, setGdShowHelp]       = useState(false);
 
   // ── Logs ──────────────────────────────────────────────────────────────────
   const [logs, setLogs]   = useState([]);
@@ -126,6 +139,65 @@ export default function SettingsPanel() {
     setOrModels([]);
     setOrModel('');
     setOrStatus('idle');
+  }
+
+  // ── Google Drive actions ──────────────────────────────────────────────────
+
+  async function handleGdConnect() {
+    const id = gdClientId.trim();
+    if (!id) { setGdMsg('Entrez votre Client ID Google d\'abord.'); setGdStatus('error'); return; }
+    saveClientId(id);
+    setGdStatus('loading');
+    setGdMsg('');
+    try {
+      await connect(id);
+      setGdConnected(true);
+      setGdStatus('ok');
+      setGdMsg('Connecté avec succès.');
+    } catch (err) {
+      setGdStatus('error');
+      setGdMsg(err.message);
+    }
+  }
+
+  function handleGdDisconnect() {
+    clearAuth();
+    setGdConnected(false);
+    setGdStatus('idle');
+    setGdMsg('');
+  }
+
+  async function handleGdPush() {
+    setGdStatus('loading');
+    setGdMsg('');
+    try {
+      const ts = await push(buildBundle());
+      setGdLastSync(ts);
+      setGdStatus('ok');
+      setGdMsg('Données sauvegardées sur Google Drive.');
+    } catch (err) {
+      setGdStatus('error');
+      setGdMsg(err.message);
+    }
+  }
+
+  async function handleGdPull() {
+    setGdStatus('loading');
+    setGdMsg('');
+    try {
+      const bundle = await pull();
+      if (!bundle) { setGdStatus('ok'); setGdMsg('Aucun fichier trouvé sur Google Drive.'); return; }
+      const { counts, skipped, warnings } = applyBundle(bundle, { protectExisting: gdProtect });
+      init();
+      const summary = counts.length > 0 ? counts.join(', ') : 'aucune donnée nouvelle';
+      const ts = getLastSync();
+      setGdLastSync(ts);
+      setGdStatus('ok');
+      setGdMsg(`Importé : ${summary}${skipped.length ? ` · ${skipped.length} conservé(s)` : ''}${warnings.length ? ` · ⚠️ ${warnings.length} ignoré(s)` : ''}`);
+    } catch (err) {
+      setGdStatus('error');
+      setGdMsg(err.message);
+    }
   }
 
   // ── Load saved OR models on mount if key exists ───────────────────────────
@@ -346,6 +418,114 @@ export default function SettingsPanel() {
             💾 Enregistrer OpenRouter
           </button>
         </div>
+      </section>
+
+      {/* ── Google Drive ── */}
+      <section className="settings-section">
+        <h3 className="settings-section-title">
+          <span className="settings-badge settings-badge-gdrive">Google Drive</span>
+          Synchronisation cloud
+        </h3>
+
+        {/* Instructions collapsibles */}
+        <div className="gdrive-instructions-toggle">
+          <button
+            className="btn-settings-action"
+            style={{ fontSize: '0.8rem', padding: '3px 10px' }}
+            onClick={() => setGdShowHelp(h => !h)}
+          >
+            {gdShowHelp ? '▲ Masquer les instructions' : '▼ Comment obtenir un Client ID ?'}
+          </button>
+        </div>
+        {gdShowHelp && (
+          <div className="gdrive-instructions">
+            <ol>
+              <li>Ouvrez <strong>console.cloud.google.com</strong></li>
+              <li>Créez un projet (ou sélectionnez-en un)</li>
+              <li>APIs &amp; Services → <strong>Identifiants</strong> → Créer des identifiants → <strong>ID client OAuth 2.0</strong></li>
+              <li>Type d'application : <strong>Application Web</strong></li>
+              <li>Origines autorisées : ajoutez <code>http://localhost:5173</code> (dev) et votre URL Netlify</li>
+              <li>Copiez le <strong>Client ID</strong> (format <code>…googleusercontent.com</code>)</li>
+              <li>APIs &amp; Services → <strong>Bibliothèque</strong> → activez l'<strong>API Google Drive</strong></li>
+            </ol>
+          </div>
+        )}
+
+        <div className="settings-row">
+          <label className="settings-label">Client ID</label>
+          <div className="settings-input-group">
+            <input
+              className="settings-input"
+              value={gdClientId}
+              onChange={e => setGdClientId(e.target.value)}
+              placeholder="….apps.googleusercontent.com"
+              disabled={gdConnected}
+            />
+            {!gdConnected ? (
+              <button
+                className="btn-gdrive-connect"
+                onClick={handleGdConnect}
+                disabled={gdStatus === 'loading' || !gdClientId.trim()}
+              >
+                {gdStatus === 'loading' ? '…' : '🔐 Connecter'}
+              </button>
+            ) : (
+              <button
+                className="btn-settings-danger"
+                onClick={handleGdDisconnect}
+                title="Déconnecter Google Drive"
+              >
+                Déconnecter
+              </button>
+            )}
+          </div>
+        </div>
+
+        {gdConnected && (
+          <>
+            <div className="settings-row">
+              <label className="settings-label" />
+              <div className="settings-input-group" style={{ flexWrap: 'wrap', gap: '0.5rem' }}>
+                <button
+                  className="btn-gdrive-push"
+                  onClick={handleGdPush}
+                  disabled={gdStatus === 'loading'}
+                  title="Envoyer toutes les données locales vers Google Drive"
+                >
+                  {gdStatus === 'loading' ? '…' : '☁️ Pousser'}
+                </button>
+                <label
+                  className="import-protect-label"
+                  title={gdProtect ? 'Conserver les données locales existantes' : 'Écraser les données locales'}
+                  style={{ marginLeft: 0 }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={gdProtect}
+                    onChange={e => setGdProtect(e.target.checked)}
+                  />
+                  🔒
+                </label>
+                <button
+                  className="btn-gdrive-pull"
+                  onClick={handleGdPull}
+                  disabled={gdStatus === 'loading'}
+                  title="Récupérer les données depuis Google Drive"
+                >
+                  {gdStatus === 'loading' ? '…' : '⬇️ Tirer'}
+                </button>
+              </div>
+            </div>
+            {gdLastSync && (
+              <p className="gdrive-last-sync">
+                Dernière sync : {new Date(gdLastSync).toLocaleString('fr-FR')}
+              </p>
+            )}
+          </>
+        )}
+
+        {gdStatus === 'ok'    && gdMsg && <p className="settings-ok gdrive-msg">{gdMsg}</p>}
+        {gdStatus === 'error' && gdMsg && <p className="settings-error gdrive-msg">{gdMsg}</p>}
       </section>
 
       {/* ── Journal des appels IA ── */}

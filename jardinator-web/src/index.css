@@ -2769,6 +2769,80 @@ select, input { font: inherit; }
 .settings-error { color: #ef4444; font-size: 0.85rem; margin: 0; }
 .settings-warn  { color: #b45309; font-size: 0.85rem; margin: 0; }
 
+/* ── Google Drive ── */
+.settings-badge-gdrive { background: #dbeafe; color: #1d4ed8; }
+
+.gdrive-instructions-toggle { margin-bottom: 0.5rem; }
+
+.gdrive-instructions {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  color: #0c4a6e;
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+.gdrive-instructions ol { margin: 0; padding-left: 1.25rem; }
+.gdrive-instructions li  { margin-bottom: 0.25rem; }
+.gdrive-instructions code {
+  background: #e0f2fe;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.btn-gdrive-connect {
+  background: #1d4ed8;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.btn-gdrive-connect:hover:not(:disabled) { background: #1e40af; }
+.btn-gdrive-connect:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-gdrive-push {
+  background: #0ea5e9;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-gdrive-push:hover:not(:disabled) { background: #0284c7; }
+.btn-gdrive-push:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-gdrive-pull {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-gdrive-pull:hover:not(:disabled) { background: #6d28d9; }
+.btn-gdrive-pull:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.gdrive-last-sync {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 4px 0 0;
+}
+.gdrive-msg { margin-top: 6px; }
+
 /* ── Journal IA ── */
 .ai-log-panel {
   background: #0f172a;
