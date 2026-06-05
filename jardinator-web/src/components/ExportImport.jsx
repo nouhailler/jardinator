@@ -15,11 +15,12 @@ import { getYieldYears } from '../services/yieldService';
 import { getAllSavedConsumption, saveConsumption, getSavedConsumption } from '../services/consumptionService';
 import { getAllSavedProfiles, saveProfile, getSavedProfile } from '../services/profileService';
 
-const YIELDS_KEY     = 'jardinator_yields';
-const FAVORITES_KEY  = 'jardinator_favorites';
-const DIAG_KEY       = 'jardinator_diagnostic_history';
-const ID_KEY         = 'jardinator_identification_history';
-const GARDEN_AI_KEY  = 'jardinator_garden_ai_history';
+const YIELDS_KEY      = 'jardinator_yields';
+const YIELDS_BILAN    = 'jardinator_yields_bilan';
+const FAVORITES_KEY   = 'jardinator_favorites';
+const DIAG_KEY        = 'jardinator_diagnostic_history';
+const ID_KEY          = 'jardinator_identification_history';
+const GARDEN_AI_KEY   = 'jardinator_garden_ai_history';
 
 function rawLS(key) {
   try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
@@ -61,7 +62,8 @@ export default function ExportImport() {
       identificationHistory: getIdentificationHistory(),
 
       // ── Rendements ─────────────────────────────────────────────────────────
-      yields: rawLS(YIELDS_KEY) || {},
+      yields:      rawLS(YIELDS_KEY)   || {},
+      yieldsBilan: rawLS(YIELDS_BILAN) || {},
 
       // ── Intrants (compost + traitements) ──────────────────────────────────
       compost:    loadCompostData(),
@@ -186,6 +188,9 @@ export default function ExportImport() {
           localStorage.setItem(YIELDS_KEY, JSON.stringify(bundle.yields));
           const years = Object.keys(bundle.yields);
           counts.push(`rendements ${years.join('/')}`);
+        }
+        if (bundle.yieldsBilan && typeof bundle.yieldsBilan === 'object' && Object.keys(bundle.yieldsBilan).length > 0) {
+          localStorage.setItem(YIELDS_BILAN, JSON.stringify(bundle.yieldsBilan));
         }
 
         // ── Intrants — compost (v4) ───────────────────────────────────────────
