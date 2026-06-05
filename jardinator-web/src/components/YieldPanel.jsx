@@ -5,6 +5,7 @@ import {
   getYieldsForYear, getYieldYears, saveYieldEntry, deleteYieldEntry,
   clearYieldsForYear, newEntry, buildSuggestionPrompt,
   askOllamaYieldStream, askOpenRouterYieldStream,
+  buildYearSummaryPrompt, getYearBilan, saveYearBilan, deleteYearBilan,
 } from '../services/yieldService';
 import { getOllamaUrl, getOllamaModel } from '../services/ollamaService';
 import { getApiKey, getSavedModel } from '../services/aiService';
@@ -12,6 +13,181 @@ import { getAllPlants } from '../services/vegetableService';
 
 const UNITS = ['kg', 'g', 'nombre', 'litre'];
 const CURRENT_YEAR = new Date().getFullYear();
+
+// ── Stats visuelles ───────────────────────────────────────────────────────────
+function YieldStats({ entries }) {
+  const totals = {};
+  let bestEntry = null, bestVal = -1;
+
+  entries.forEach(e => {
+    const val = parseFloat(e.harvested);
+    if (!isNaN(val) && val > 0 && e.unit) {
+      totals[e.unit] = (totals[e.unit] || 0) + val;
+      if (val > bestVal) { bestVal = val; bestEntry = e; }
+    }
+  });
+
+  const totalNamed  = entries.filter(e => e.plantName).length;
+  const withHarvest = entries.filter(e => parseFloat(e.harvested) > 0).length;
+
+  return (
+    <div className="yield-stats-bar">
+      {Object.entries(totals).map(([unit, total]) => (
+        <div key={unit} className="yield-stat-chip">
+          <span className="yield-stat-val">{Number.isInteger(total) ? total : total.toFixed(1)}</span>
+          <span className="yield-stat-unit"> {unit}</span>
+        </div>
+      ))}
+      {bestEntry && (
+        <div className="yield-stat-chip highlight">
+          🏆 <strong>{bestEntry.plantName}</strong>{bestEntry.variety ? ` · ${bestEntry.variety}` : ''}
+        </div>
+      )}
+      <div className="yield-stat-chip muted">
+        {withHarvest}/{totalNamed} plante{totalNamed > 1 ? 's' : ''} récoltée{withHarvest > 1 ? 's' : ''}
+      </div>
+    </div>
+  );
+}
+
+// ── Bilan annuel IA ───────────────────────────────────────────────────────────
+function YearSummary({ entries, year, provider }) {
+  const [text, setText]     = useState(() => getYearBilan(year)?.text || '');
+  const [status, setStatus] = useState(() => getYearBilan(year) ? 'done' : 'idle');
+  const [error, setError]   = useState('');
+  const abortRef            = useRef(false);
+
+  useEffect(() => {
+    const saved = getYearBilan(year);
+    setText(saved?.text || '');
+    setStatus(saved ? 'done' : 'idle');
+    setError('');
+  }, [year]);
+
+  const ollamaModel = getOllamaModel();
+  const orKey       = getApiKey();
+  const orModel     = getSavedModel();
+  const hasEntries  = entries.filter(e => e.plantName).length > 0;
+
+  const canGenerate = hasEntries && (
+    provider === 'ollama' ? !!ollamaModel : !!(orKey && orModel)
+  );
+
+  async function generate() {
+    setStatus('loading');
+    setError('');
+    abortRef.current = false;
+    const prompt = buildYearSummaryPrompt(entries, year);
+    let full = '';
+
+    try {
+      const stream = provider === 'ollama'
+        ? askOllamaYieldStream(prompt, getOllamaUrl(), ollamaModel)
+        : askOpenRouterYieldStream(prompt);
+
+      for await (const chunk of stream) {
+        if (abortRef.current) break;
+        full += chunk;
+        setText(full);
+      }
+      setStatus('done');
+      if (full) saveYearBilan(year, full);
+    } catch (err) {
+      const msgs = { NO_KEY: 'Clé API manquante.', NO_MODEL: 'Modèle non configuré.', BAD_KEY: 'Clé invalide.', RATE_LIMIT: '⏳ Limite atteinte — attendez ~60s.' };
+      setError(msgs[err.message] || err.message);
+      setStatus('error');
+    }
+  }
+
+  function stop()  { abortRef.current = true; setStatus('done'); }
+  function remove() { deleteYearBilan(year); setText(''); setStatus('idle'); }
+
+  return (
+    <div className="yield-summary">
+      <div className="yield-summary-header">
+        <span className="yield-summary-title">✨ Bilan IA {year}</span>
+        <div className="yield-summary-actions">
+          {status === 'loading'
+            ? <button className="yield-btn-stop" onClick={stop}>⏹ Arrêter</button>
+            : (
+              <button
+                className="yield-btn-generate"
+                onClick={generate}
+                disabled={!canGenerate}
+                title={canGenerate ? `Générer le bilan ${year}` : 'Ajoutez des plantes ou configurez un modèle IA dans Paramètres'}
+              >
+                {text ? '🔄 Régénérer' : '✨ Générer le bilan'}
+              </button>
+            )
+          }
+          {text && status !== 'loading' && (
+            <button className="yield-btn-delete-bilan" onClick={remove} title="Supprimer le bilan">🗑</button>
+          )}
+        </div>
+      </div>
+
+      {error && <div className="yield-suggestion-error">{error}</div>}
+
+      {text ? (
+        <div className="yield-summary-text md-body">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
+          {status === 'loading' && <span className="chat-cursor">▋</span>}
+        </div>
+      ) : status === 'idle' && hasEntries && (
+        <p className="yield-summary-hint">
+          Synthèse IA de vos {entries.filter(e => e.plantName).length} cultures — points forts, axes d'amélioration et plan pour {year + 1}.
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ── Comparaison inter-années ──────────────────────────────────────────────────
+function YearComparison({ allYears, currentYear }) {
+  const sortedYears = [...allYears].sort((a, b) => Number(b) - Number(a)).slice(0, 4);
+
+  const table = {};
+  sortedYears.forEach(y => {
+    getYieldsForYear(y).forEach(e => {
+      if (!e.plantName || !e.harvested || parseFloat(e.harvested) <= 0) return;
+      if (!table[e.plantName]) table[e.plantName] = {};
+      table[e.plantName][y] = `${e.harvested} ${e.unit}`;
+    });
+  });
+
+  const plants = Object.keys(table).sort();
+  if (plants.length === 0) return null;
+
+  return (
+    <div className="yield-comparison">
+      <div className="yield-comparison-title">📊 Évolution inter-années</div>
+      <div className="yield-comparison-wrap">
+        <table className="yield-comparison-table">
+          <thead>
+            <tr>
+              <th className="yield-comp-th">Plante</th>
+              {sortedYears.map(y => (
+                <th key={y} className={`yield-comp-th${Number(y) === Number(currentYear) ? ' current' : ''}`}>{y}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {plants.map(plant => (
+              <tr key={plant} className="yield-comp-row">
+                <td className="yield-comp-plant">{plant}</td>
+                {sortedYears.map(y => (
+                  <td key={y} className={`yield-comp-val${Number(y) === Number(currentYear) ? ' current' : ''}`}>
+                    {table[plant][y] || <span className="yield-comp-empty">—</span>}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
 
 // Champ éditable inline avec sauvegarde sur blur/Enter
 function InlineField({ value, onChange, onSave, placeholder, className = '', type = 'text', list }) {
@@ -238,7 +414,7 @@ export default function YieldPanel() {
         {plantNames.map(n => <option key={n} value={n} />)}
       </datalist>
 
-      {/* ── Table des rendements ── */}
+      {/* ── Contenu principal ── */}
       {entries.length === 0 ? (
         <div className="yield-empty">
           <div className="yield-empty-icon">🌾</div>
@@ -246,6 +422,7 @@ export default function YieldPanel() {
         </div>
       ) : (
         <div className="yield-table-wrap">
+          <YieldStats entries={entries} />
           <table className="yield-table">
             <thead>
               <tr>
@@ -344,6 +521,9 @@ export default function YieldPanel() {
               ))}
             </tbody>
           </table>
+
+          <YearSummary entries={entries} year={year} provider={provider} />
+          {years.length >= 2 && <YearComparison allYears={years} currentYear={year} />}
         </div>
       )}
     </div>

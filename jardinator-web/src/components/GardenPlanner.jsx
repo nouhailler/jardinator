@@ -5,7 +5,7 @@ import { getCellHistory } from '../services/gardenService';
 import {
   analyzeBedAssociations, computeBiodiversityScore, scoreGrade,
   buildGardenAiPrompt, askOllamaGardenStream, askOpenRouterGardenStream,
-  getAlternatives, getCellNeighborStatus,
+  getAlternatives, getCellNeighborStatus, detectRotationIssues,
 } from '../services/gardenAnalysisService';
 import {
   saveGardenSnapshot, loadBedHistory, deleteGardenSnapshot, formatSnapshotDate,
@@ -308,7 +308,7 @@ function BedGrid({ bed, conflictCells, harmonyCells }) {
 }
 
 // ─── Companion Panel ───────────────────────────────────────────────────────
-function CompanionPanel({ bed, allPlants, conflicts, harmonies, bioScore }) {
+function CompanionPanel({ bed, allPlants, conflicts, harmonies, bioScore, rotationIssues = [] }) {
   const defaultTab = conflicts.length > 0 ? 0 : 1;
   const [tab, setTab]           = useState(defaultTab);
   const [provider, setProvider] = useState('ollama');
@@ -317,8 +317,9 @@ function CompanionPanel({ bed, allPlants, conflicts, harmonies, bioScore }) {
   const [aiError, setAiError]   = useState('');
   const [history, setHistory]   = useState(() => loadBedHistory(bed.id));
   const [expandedId, setExpandedId] = useState(null);
-  const abortRef  = useRef(false);
-  const scrollRef = useRef(null);
+  const abortRef   = useRef(false);
+  const scrollRef  = useRef(null);
+  const currentYear = new Date().getFullYear();
 
   // Refresh history when bed changes
   const bedId = bed.id;
@@ -351,7 +352,7 @@ function CompanionPanel({ bed, allPlants, conflicts, harmonies, bioScore }) {
     let full = '';
 
     try {
-      const prompt = buildGardenAiPrompt(bed, allPlants, conflicts, harmonies, bioScore);
+      const prompt = buildGardenAiPrompt(bed, allPlants, conflicts, harmonies, bioScore, rotationIssues);
       const stream = provider === 'ollama'
         ? askOllamaGardenStream(prompt)
         : askOpenRouterGardenStream(prompt);
@@ -394,10 +395,11 @@ function CompanionPanel({ bed, allPlants, conflicts, harmonies, bioScore }) {
   }
 
   const TABS = [
-    { label: `🌱 Compagnonnage${conflicts.length ? ` · ⚠️${conflicts.length}` : ''}`, key: 0 },
-    { label: `🧬 Biodiversité · ${score}/100`,                                          key: 1 },
-    { label: '🤖 Analyse IA',                                                           key: 2 },
-    { label: `📜 Historique${history.length ? ` (${history.length})` : ''}`,            key: 3 },
+    { label: `🌱 Compagnonnage${conflicts.length ? ` · ⚠️${conflicts.length}` : ''}`,          key: 0 },
+    { label: `🧬 Biodiversité · ${score}/100`,                                                   key: 1 },
+    { label: '🤖 Analyse IA',                                                                    key: 2 },
+    { label: `📜 Historique${history.length ? ` (${history.length})` : ''}`,                    key: 3 },
+    { label: `🔄 Rotation${rotationIssues.length ? ` · ⚠️${rotationIssues.length}` : ''}`,     key: 4 },
   ];
 
   return (
@@ -601,6 +603,46 @@ function CompanionPanel({ bed, allPlants, conflicts, harmonies, bioScore }) {
             </div>
           )}
 
+          {/* ── Tab 4: Rotation ── */}
+          {tab === 4 && (
+            <div className="gp-companion-content">
+              {rotationIssues.length === 0 ? (
+                <div className="gp-companion-empty">
+                  <span>✅ Aucun problème de rotation détecté.</span>
+                  <span className="gp-companion-hint">
+                    Compare les plantes actuelles avec {currentYear - 1}. Renseignez l'historique via les cases pour activer cette analyse.
+                  </span>
+                </div>
+              ) : (
+                <>
+                  <p className="gp-rotation-intro">
+                    {rotationIssues.length} problème{rotationIssues.length > 1 ? 's' : ''} détecté{rotationIssues.length > 1 ? 's' : ''} par rapport à {currentYear - 1}.
+                    La rotation des cultures limite l'épuisement du sol et les maladies.
+                  </p>
+                  {rotationIssues.map((issue, i) => {
+                    const [row, col] = issue.cellKey.split('-').map(Number);
+                    return (
+                      <div key={i} className={`gp-rotation-card ${issue.type}`}>
+                        <div className="gp-rotation-cell">📍 Case {col + 1}×{row + 1}</div>
+                        <div className="gp-rotation-plants">
+                          <span className="gp-rotation-prev">{issue.prevPlant.name}</span>
+                          <span className="gp-rotation-arrow">→ {currentYear} →</span>
+                          <span className={`gp-rotation-current ${issue.type}`}>{issue.plant.name}</span>
+                        </div>
+                        <div className="gp-rotation-reason">
+                          {issue.type === 'same_plant'
+                            ? `Même plante deux années de suite — risque de maladies et épuisement du sol`
+                            : `Même famille botanique (${issue.plant.family}) — changez de famille`
+                          }
+                        </div>
+                      </div>
+                    );
+                  })}
+                </>
+              )}
+            </div>
+          )}
+
           {/* ── Tab 3: Historique ── */}
           {tab === 3 && (
             <div className="gp-companion-content">
@@ -708,7 +750,7 @@ function Legend() {
 
 // ─── Main GardenPlanner Component ─────────────────────────────────────────
 export default function GardenPlanner() {
-  const { gardenBeds, activeGardenBedId, setActiveGardenBed, addGardenBed, removeGardenBed } = useStore();
+  const { gardenBeds, activeGardenBedId, setActiveGardenBed, addGardenBed, removeGardenBed, cropHistory } = useStore();
   const [showNewForm, setShowNewForm] = useState(gardenBeds.length === 0);
 
   const activeBed  = gardenBeds.find(b => b.id === activeGardenBedId) || null;
@@ -726,6 +768,11 @@ export default function GardenPlanner() {
 
   const conflictCells = useMemo(() => new Set(conflicts.flatMap(c => [c.cellA, c.cellB])), [conflicts]);
   const harmonyCells  = useMemo(() => new Set(harmonies.flatMap(h => [h.cellA, h.cellB])), [harmonies]);
+
+  const rotationIssues = useMemo(() => {
+    if (!activeBed || !Object.keys(activeBed.cells).length) return [];
+    return detectRotationIssues(activeBed, cropHistory, allPlants);
+  }, [activeBed?.cells, cropHistory]);
 
   const handleAddBed = (name, rows, cols, cellSize) => {
     addGardenBed(name, rows, cols, cellSize);
@@ -818,6 +865,7 @@ export default function GardenPlanner() {
           conflicts={conflicts}
           harmonies={harmonies}
           bioScore={bioScore}
+          rotationIssues={rotationIssues}
         />
       </div>
     </div>

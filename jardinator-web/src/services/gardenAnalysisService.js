@@ -134,7 +134,36 @@ export function scoreGrade(score) {
 
 // ── AI Prompt ─────────────────────────────────────────────────────────────────
 
-export function buildGardenAiPrompt(bed, allPlants, conflicts, harmonies, bioScore) {
+/**
+ * Detects rotation issues: same plant or same botanical family in the same cell
+ * compared to the previous year (uses cropHistory from the store).
+ */
+export function detectRotationIssues(bed, cropHistory, allPlants) {
+  const issues  = [];
+  const prevYear = new Date().getFullYear() - 1;
+
+  Object.entries(bed.cells).forEach(([cellKey, cell]) => {
+    const plant = allPlants.find(p => p.id === cell.plantId);
+    if (!plant) return;
+
+    const cellHist  = cropHistory[bed.id]?.[cellKey] || [];
+    const prevRecord = cellHist.find(r => r.year === prevYear);
+    if (!prevRecord) return;
+
+    const prevPlant = allPlants.find(p => p.id === prevRecord.plantId);
+    if (!prevPlant) return;
+
+    if (prevPlant.id === plant.id) {
+      issues.push({ cellKey, plant, prevPlant, year: prevYear, type: 'same_plant' });
+    } else if (prevPlant.family && plant.family && prevPlant.family === plant.family) {
+      issues.push({ cellKey, plant, prevPlant, year: prevYear, type: 'same_family' });
+    }
+  });
+
+  return issues;
+}
+
+export function buildGardenAiPrompt(bed, allPlants, conflicts, harmonies, bioScore, rotationIssues = []) {
   const occupied = Object.values(bed.cells);
   const plants   = [...new Set(occupied.map(c => allPlants.find(p => p.id === c.plantId)?.name).filter(Boolean))];
   const empty    = bed.rows * bed.cols - occupied.length;
@@ -149,6 +178,15 @@ export function buildGardenAiPrompt(bed, allPlants, conflicts, harmonies, bioSco
     ? harmonies.slice(0, 6).map(h => `• ${h.plantA.name} ↔ ${h.plantB.name} ✓`).join('\n')
     : '';
 
+  const rotLines = rotationIssues.length
+    ? `\nProblèmes de rotation (${rotationIssues.length}) :\n` +
+      rotationIssues.slice(0, 5).map(r =>
+        `• ${r.plant.name} : ${r.type === 'same_plant' ? 'même plante' : `même famille (${r.plant.family})`} qu'en ${r.year}`
+      ).join('\n')
+    : '';
+
+  const parts = rotationIssues.length > 0 ? 4 : 3;
+
   return `Tu es un expert en permaculture et jardinage potager. Analyse ce plan de potager :
 
 Planche : "${bed.name}" — ${bed.rows}×${bed.cols} cases${empty > 0 ? `, ${empty} cases vides` : ''}
@@ -157,12 +195,12 @@ Score biodiversité : ${bioScore.score}/100 (${label}) — ${speciesCount} espè
 
 Associations défavorables (${conflicts.length}) :
 ${confLines}
-${harmLines ? `\nBonnes associations (${harmonies.length}) :\n${harmLines}` : ''}
+${harmLines ? `\nBonnes associations (${harmonies.length}) :\n${harmLines}` : ''}${rotLines}
 
-Génère une analyse structurée en 3 parties :
+Génère une analyse structurée en ${parts} parties :
 **1. Bilan global** (1-2 phrases sur l'état général du potager)
 **2. Corrections prioritaires** (pour chaque conflit, propose une alternative concrète et simple)
-**3. Recommandations biodiversité** (3-4 actions pour améliorer le score${empty > 0 ? `, suggère des plantes pour les ${empty} cases vides` : ''})
+**3. Recommandations biodiversité** (3-4 actions pour améliorer le score${empty > 0 ? `, suggère des plantes pour les ${empty} cases vides` : ''})${rotationIssues.length > 0 ? '\n**4. Rotation des cultures** (actions correctives pour les problèmes de rotation détectés)' : ''}
 
 Format markdown simple. Réponds directement en français, sois concis et pratique.`;
 }

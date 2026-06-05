@@ -4677,10 +4677,195 @@ select, input { font: inherit; }
 }
 .yield-btn-stop:hover { background: #ffcdd2; }
 
+/* ── Stats bar ── */
+.yield-stats-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0 0 0.75rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.75rem;
+}
+.yield-stat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.3rem 0.75rem;
+  background: var(--green-bg);
+  border: 1.5px solid var(--green-primary);
+  border-radius: 20px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--green-dark);
+  white-space: nowrap;
+}
+.yield-stat-chip.highlight {
+  background: #FFF8E1;
+  border-color: #F9A825;
+  color: #5D4037;
+}
+.yield-stat-chip.muted {
+  background: var(--bg-card);
+  border-color: var(--border);
+  color: var(--text-light);
+  font-weight: 400;
+}
+.yield-stat-val  { font-size: 1rem; }
+.yield-stat-unit { font-size: 0.78rem; opacity: 0.8; }
+
+/* ── Bilan annuel IA ── */
+.yield-summary {
+  margin-top: 1.75rem;
+  border-top: 2px solid var(--green-primary);
+  padding-top: 1rem;
+}
+.yield-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+.yield-summary-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.yield-summary-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.yield-btn-delete-bilan {
+  padding: 0.28rem 0.6rem;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-light);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.yield-btn-delete-bilan:hover { background: #fff0f0; border-color: #ef9a9a; color: #c62828; }
+.yield-summary-text {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--green-bg);
+  border-left: 3px solid var(--green-primary);
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1rem;
+}
+.yield-summary-text p  { margin: 0.2rem 0; }
+.yield-summary-text h2,
+.yield-summary-text h3 { font-size: 0.9rem; margin: 0.5rem 0 0.2rem; }
+.yield-summary-hint {
+  font-size: 0.83rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin: 0;
+}
+
+/* ── Comparaison inter-années ── */
+.yield-comparison {
+  margin-top: 1.75rem;
+  border-top: 2px solid var(--border);
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+}
+.yield-comparison-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+.yield-comparison-wrap { overflow-x: auto; }
+.yield-comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+}
+.yield-comp-th {
+  background: var(--bg-card);
+  border-bottom: 2px solid var(--border);
+  padding: 0.45rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.yield-comp-th.current {
+  background: var(--green-bg);
+  border-bottom-color: var(--green-primary);
+  color: var(--green-dark);
+}
+.yield-comp-row { border-bottom: 1px solid var(--border); }
+.yield-comp-row:hover { background: var(--green-bg2, #f1f8e9); }
+.yield-comp-plant {
+  padding: 0.4rem 0.75rem;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+}
+.yield-comp-val {
+  padding: 0.4rem 0.75rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+.yield-comp-val.current { color: var(--green-dark); font-weight: 600; }
+.yield-comp-empty { color: var(--text-light); font-size: 0.78rem; }
+
 /* ── Responsive ── */
 @media (max-width: 800px) {
   .yield-table { font-size: 0.78rem; }
   .yield-th-notes, .yield-td-notes { display: none; }
+}
+
+/* ── Rotation des cultures (GardenPlanner) ── */
+.gp-rotation-intro {
+  font-size: 0.83rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+.gp-rotation-card {
+  padding: 0.65rem 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  border-left: 3px solid;
+}
+.gp-rotation-card.same_plant {
+  background: #fff3e0;
+  border-color: #ef6c00;
+}
+.gp-rotation-card.same_family {
+  background: #fff8e1;
+  border-color: #f9a825;
+}
+.gp-rotation-cell {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  margin-bottom: 0.3rem;
+}
+.gp-rotation-plants {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+  flex-wrap: wrap;
+}
+.gp-rotation-prev   { color: var(--text-light); font-weight: 400; }
+.gp-rotation-arrow  { color: var(--text-light); font-weight: 400; font-size: 0.78rem; }
+.gp-rotation-current.same_plant  { color: #bf360c; }
+.gp-rotation-current.same_family { color: #e65100; }
+.gp-rotation-reason {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  line-height: 1.4;
 }
 
 /* ═══════════════════════════════════════════════════════════════

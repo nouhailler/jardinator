@@ -157,3 +157,50 @@ export async function* askOllamaYieldStream(prompt, baseUrl, model) {
 export async function* askOpenRouterYieldStream(prompt) {
   yield* orStream(prompt, 512);
 }
+
+// ── Bilan annuel ──────────────────────────────────────────────────────────────
+
+const BILAN_KEY = 'jardinator_yields_bilan';
+
+function loadBilans() {
+  try { return JSON.parse(localStorage.getItem(BILAN_KEY) || '{}'); } catch { return {}; }
+}
+
+export function getYearBilan(year) {
+  return loadBilans()[String(year)] || null;
+}
+
+export function saveYearBilan(year, text) {
+  const data = loadBilans();
+  data[String(year)] = { text, savedAt: new Date().toISOString() };
+  try { localStorage.setItem(BILAN_KEY, JSON.stringify(data)); } catch {}
+}
+
+export function deleteYearBilan(year) {
+  const data = loadBilans();
+  delete data[String(year)];
+  try { localStorage.setItem(BILAN_KEY, JSON.stringify(data)); } catch {}
+}
+
+export function buildYearSummaryPrompt(entries, year) {
+  const filled = entries.filter(e => e.plantName);
+  if (!filled.length) return '';
+
+  const lines = filled.map(e => {
+    const name    = e.variety ? `${e.plantName} (${e.variety})` : e.plantName;
+    const harvest = e.harvested ? `${e.harvested} ${e.unit}` : 'récolte non renseignée';
+    const extra   = [e.planted ? `planté : ${e.planted}` : '', e.notes ? `notes : ${e.notes}` : ''].filter(Boolean).join(', ');
+    return `• ${name} — ${harvest}${extra ? ` [${extra}]` : ''}`;
+  }).join('\n');
+
+  return `Tu es un conseiller expert en jardinage potager. Voici le bilan des récoltes ${year} :
+
+${lines}
+
+Rédige en français un **bilan de saison ${year}** en 3 parties :
+**1. Points forts** — cultures productives, bonnes pratiques
+**2. Points à améliorer** — cultures décevantes, ajustements à faire
+**3. Plan d'action ${year + 1}** — recommandations concrètes pour la prochaine saison
+
+Sois synthétique (8-12 phrases max), pratique et encourageant.`;
+}
