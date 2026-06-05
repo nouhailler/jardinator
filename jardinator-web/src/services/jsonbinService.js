@@ -20,13 +20,12 @@ export function clearJsonbin() {
 
 // ── HTTP helper ───────────────────────────────────────────────────────────────
 
-async function request(method, path, key, body, extraHeaders = {}) {
+async function request(method, path, key, body) {
   const resp = await fetch(`${BASE}${path}`, {
     method,
     headers: {
-      'X-Master-Key':  key,
-      'Content-Type':  'application/json',
-      ...extraHeaders,
+      'X-Master-Key': key,
+      'Content-Type': 'application/json',
     },
     body: body !== undefined ? JSON.stringify(body) : undefined,
   });
@@ -47,10 +46,7 @@ export async function push(bundle) {
   if (binId) {
     await request('PUT', `/b/${binId}`, key, bundle);
   } else {
-    const res = await request('POST', '/b', key, bundle, {
-      'X-Bin-Name':    'jardinator-sync',
-      'X-Bin-Private': 'true',
-    });
+    const res = await request('POST', '/b', key, bundle);
     binId = res.metadata.id;
     saveBinId(binId);
   }
