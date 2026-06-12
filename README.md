@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="debian/usr/share/pixmaps/jardinator.svg" width="96" height="96" alt="Jardinator"/>
+<img src="legacy-pyqt/debian/usr/share/pixmaps/jardinator.svg" width="96" height="96" alt="Jardinator"/>
 
 # 🌱 Jardinator
 
@@ -358,10 +358,10 @@ jardinator/
 │   │   └── batch-ai.mjs          # Pré-génération IA en lot (208 plantes × 4 panneaux)
 │   └── package.json
 │
-├── main.py                      # 🖥️ Application Python/PyQt6 (version desktop legacy)
-├── debian/                      # 📦 Packaging Debian (app web)
-├── requirements.txt             # Dépendances Python
-└── *.json                       # Données partagées
+└── legacy-pyqt/                 # 🗄️ Ancienne app PyQt6 + packaging Debian (.deb)
+    ├── main.py / src/           # Application Python/PyQt6 (desktop legacy)
+    ├── debian/                  # Packaging Debian (app web)
+    └── *.json                   # Anciennes données (les données actuelles sont dans jardinator-web/src/data/)
 ```
 
 ---

@@ -1,4 +1,4 @@
-# Jardinator — Contexte technique (2026-06-03)
+# Jardinator — Contexte technique (2026-06-12)
 
 ## Vue d'ensemble
 
@@ -8,6 +8,12 @@ Application web de gestion du potager, convertie de PyQt6 vers React. Déployée
 - **Repo** : `main` branch → déploiement automatique Netlify sur push
 - **Dev** : `cd jardinator-web && npm run dev`
 - **Build** : `npm run build` (chunks : vendor / zustand / markdown / index ~720 kB)
+
+### Structure du dépôt (réorganisée 2026-06-12)
+
+- `jardinator-web/` — **l'application** (seul code actif)
+- `legacy-pyqt/` — ancienne app PyQt6 (main.py, src/, requirements.txt), packaging Debian (debian/, build_deb.sh, .deb) et anciens JSON racine. **Ne pas éditer les JSON de ce dossier** : les données actives sont dans `jardinator-web/src/data/`.
+- `netlify.toml` — doit rester à la racine (`base = "jardinator-web"`, `publish = "dist"`)
 
 ---
 
@@ -40,10 +46,21 @@ Zustand unique. État global : `plants`, `selectedPlant`, `favorites`, `imageOve
 | `identificationService.js` | Identifications de plantes par photo IA | `jardinator_identification_history` |
 | `customPlantsService.js` | Fiches plantes personnalisées | `jardinator_custom_plants` |
 | `inputsService.js` | Compost et traitements | `jardinator_compost`, `jardinator_treatments` |
-| `yieldService.js` | Rendements | `jardinator_yields` |
+| `yieldService.js` | Rendements + bilan IA annuel (`getYearBilan`, `buildYearSummaryPrompt`) | `jardinator_yields`, `jardinator_yields_bilan` |
 | `plantPdfService.js` | Export PDF fiche plante | — |
 | `icsService.js` | Export calendrier ICS | — |
 | `weatherService.js` | Météo (API externe) | — |
+| `bundleService.js` | `buildBundle()` / `applyBundle()` — bundle export/import partagé entre `ExportImport.jsx` et la sync cloud | — (agrège les clés des autres services) |
+| `googleDriveService.js` | Sync Google Drive (OAuth 2.0 GIS, scope `drive.file`, fichier `jardinator-sync.json`), `push()`/`pull()` | `jardinator_gdrive_token`, `jardinator_gdrive_clientid`, `jardinator_gdrive_lastsync` |
+| `jsonbinService.js` | Sync JSONBin.io v3 (bin privé), `push()`/`pull()` — alternative à GDrive. ⚠️ pas de headers `X-Bin-Private`/`X-Bin-Name` (bloqués par CORS) | `jardinator_jsonbin_key`, `jardinator_jsonbin_binid`, `jardinator_jsonbin_lastsync` |
+| `gardenAnalysisService.js` | Analyse compagnonnage du potager : voisinage 8 directions, score biodiversité, rotation des cultures, prompt IA (via `orStream`) | — |
+| `gardenHistoryService.js` | Snapshots des analyses IA par planche (50 max) | `jardinator_garden_ai_history` |
+| `climateLogService.js` | Historique climatique réel Open-Meteo (30 j), seuils thermiques, cache TTL 3 h | `jardinator_climate_history` |
+| `geminiService.js` | Clé API Google Gemini (gemini-1.5-flash) | `jardinator_gemini_key` |
+| `imageStoreService.js` | Blobs images dans IndexedDB (`jardinator_imgstore`) — le JSON ne stocke qu'un `imageId` | — (IndexedDB) |
+| `newPlantService.js` | Helpers création de fiche (mois FR, prompts IA pré-remplissage) | — |
+
+**Hook** : `hooks/useNetworkStatus.js` — état online/offline (events `online`/`offline`).
 
 ### Composants (`components/`)
 
@@ -123,11 +140,15 @@ Clé racine : `"profil_complet"`. Champs : `profil_sensoriel` (goût/texture/ar�
 
 ---
 
-## Export/Import (v4)
+## Export/Import (v4) & Sync cloud
 
-Bundle : `customPlants`, `gardenBeds`, `cropHistory`, `favorites`, `images`, `advice`, `history`, `gardenAiHistory`, `diagnosticHistory`, `identificationHistory`, `yields`, `compost`, `treatments`, `consumption`, `profile`.
+Bundle : `customPlants`, `gardenBeds`, `cropHistory`, `favorites`, `images`, `advice`, `history`, `gardenAiHistory`, `diagnosticHistory`, `identificationHistory`, `yields`, `yieldsBilan`, `compost`, `treatments`, `consumption`, `profile`.
 
 Rétrocompatible v2/v3.
+
+**Refactor (2026-06-05)** : la construction/application du bundle vit dans `bundleService.js` (`buildBundle`/`applyBundle`), partagé par `ExportImport.jsx` et la sync cloud (Google Drive via `googleDriveService`, JSONBin via `jsonbinService` — config dans les Paramètres).
+
+**Quota mobile** : `buildBundle()` tronque les historiques (`gardenAiHistory`, `diagnosticHistory`, `identificationHistory` → 20 entrées max, images retirées des diagnostics/identifications) ; `applyBundle()` applique chaque bloc dans son propre try/catch — en cas de `QuotaExceededError`, le bloc est signalé dans `warnings` au lieu de faire échouer tout l'import.
 
 **Import non-destructif** : state `protectExisting` (useState, défaut `true`) — pour chaque entrée `advice`/`history`/`consumption`/`profile`, vérifie via `getSaved*()` si une valeur existe déjà avant d'appeler `save*()`. Le message de confirmation détaille importés vs conservés.
 
@@ -148,7 +169,7 @@ Génère les 4 panneaux IA (advice / consumption / profile / history) pour les 2
 ## PWA / Déploiement
 
 - `vite-plugin-pwa` (Workbox, generateSW), `vite@7`, `@vitejs/plugin-react@4`
-- `netlify.toml` : `publish = "jardinator-web/dist"`, `command = "npm run build"`
+- `netlify.toml` (racine) : `base = "jardinator-web"`, `publish = "dist"`, `command = "npm run build"`
 - Push `main` → déploiement automatique Netlify
 
 ---
